@@ -9,8 +9,10 @@
 <meta property="og:title" content="Fai della Paganella con il passeggino — Guida 25-30 agosto 2026">
 <meta property="og:description" content="Itinerario per due adulti e un bimbo di 4 mesi: ogni tappa valutata per il passeggino, il meno possibile in auto.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/6a075ac7356b3a28c5fc6563/9fdff751-91dd-4b32-ae57-19efde11c397/logopiccolo.jpg?format=1500w">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/3/3f/Lake_Molveno_-_Molveno%2C_Trento%2C_Italy_-_July_11%2C_2021.jpg">
 <meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2312312A'/%3E%3Cpath d='M10 75 L35 35 L50 58 L62 42 L90 75 Z' fill='%23E8B03A'/%3E%3Ccircle cx='72' cy='28' r='9' fill='%23EDF1EE'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,11 +46,21 @@
   </div>
 </header>
 
+<nav class="nav-sezioni js-only" aria-label="Sezioni della guida">
+  <a href="#sezione-servizi">Servizi</a>
+  <a href="#sezione-mappa">Mappa</a>
+  <a href="#sezione-meteo">Meteo</a>
+  <a href="#sezione-luoghi">Luoghi</a>
+  <a href="#sezione-giorni">Giorni</a>
+  <a href="#sezione-numeri-utili">Numeri utili</a>
+  <a href="#sezione-checklist">Checklist</a>
+</nav>
+
 <main id="contenuto-principale" class="container">
 
   <section class="js-only" id="sezione-servizi" aria-labelledby="titolo-servizi">
     <h2 id="titolo-servizi">Nei dintorni dell'hotel</h2>
-    <p class="sezione__intro">Farmacia, spesa, ristoranti e bar a portata di mano, per le necessità quotidiane senza dover programmare una gita.</p>
+    <p class="sezione__intro">Farmacia, spesa, ristoranti e bar a portata di mano, per le necessità quotidiane senza dover programmare una gita. Gli orari fuori Fai della Paganella possono variare in stagione: prima di un giro apposta conviene una telefonata di conferma.</p>
     <div id="griglia-servizi"></div>
   </section>
 
@@ -77,6 +89,7 @@
   <section class="js-only" id="sezione-filtri" aria-labelledby="titolo-filtri">
     <h2 id="titolo-filtri">Filtri</h2>
     <p class="sezione__intro">Combina i filtri per trovare le tappe adatte alla giornata: passeggino, senza auto, al coperto per la pioggia, o per categoria.</p>
+    <input type="search" id="ricerca-luoghi" class="ricerca" placeholder="Cerca un luogo per nome o zona…" aria-label="Cerca un luogo per nome o zona">
     <div class="filtri__riga" id="filtri-principali">
       <button type="button" class="chip" data-filtro="passeggino" aria-pressed="false">🟢 Solo passeggino</button>
       <button type="button" class="chip" data-filtro="senzaAuto" aria-pressed="false">🚶 Senza auto</button>

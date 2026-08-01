@@ -169,6 +169,55 @@ select:focus-visible,
 }
 .btn-card:hover { background: var(--abete); color: var(--neve); }
 
+/* ---------- Nav sezioni ---------- */
+.nav-sezioni {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  background: var(--abete);
+  padding: 10px 16px;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.nav-sezioni a {
+  color: var(--ghiaccio);
+  text-decoration: none;
+  font-family: var(--font-testo);
+  font-weight: 600;
+  font-size: .82rem;
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  flex-shrink: 0;
+}
+
+.nav-sezioni a:hover,
+.nav-sezioni a:focus-visible {
+  border-color: var(--ghiaccio);
+  color: var(--neve);
+}
+
+/* ---------- Ricerca ---------- */
+.ricerca {
+  display: block;
+  width: 100%;
+  font-family: var(--font-testo);
+  font-size: .95rem;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border: 2px solid var(--roccia);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--abete);
+  min-height: 44px;
+}
+
+.ricerca::placeholder { color: var(--roccia); }
+
 /* ---------- Sezioni ---------- */
 section {
   padding: 28px 0;
@@ -623,6 +672,49 @@ section h2 {
   font-family: var(--font-mono);
   font-size: .78rem;
   color: var(--roccia);
+}
+
+.giorno__voce-azioni {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.giorno__voce-riordina {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.giorno__voce-riordina button {
+  width: 26px;
+  height: 22px;
+  line-height: 1;
+  border: 1px solid var(--roccia);
+  background: #fff;
+  color: var(--abete);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: .7rem;
+}
+
+.giorno__voce-riordina button:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.giorno__meteo-chip {
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  background: var(--neve);
+  border-radius: var(--radius);
+  padding: 3px 8px;
+}
+
+.meteo__nota-ricontrolla {
+  font-size: .82rem;
+  color: var(--roccia);
+  margin: 6px 0 12px;
 }
 
 .giorno__voce select {

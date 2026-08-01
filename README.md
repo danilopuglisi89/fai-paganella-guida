@@ -2,7 +2,9 @@
 
 Guida di viaggio a pagina singola per il soggiorno del 25–30 agosto 2026 a Fai della Paganella (TN), base Hotel Arcobaleno. Nessun framework, nessun build: `index.html` + `style.css` + `app.js` + `data/luoghi.json` + `data/servizi.json`.
 
-La mappa interattiva usa [Leaflet](https://leafletjs.com/) con le tile di OpenStreetMap, caricati via CDN (`unpkg.com`) — l'unica dipendenza esterna del sito, richiede una connessione internet per funzionare (non è installata via npm, nessun build step). Le foto dei luoghi vengono da Wikimedia Commons, con licenza e autore riportati sotto ogni immagine.
+La mappa interattiva usa [Leaflet](https://leafletjs.com/) con le tile di OpenStreetMap, caricati via CDN (`unpkg.com`) — l'unica dipendenza esterna del sito, richiede una connessione internet per il primo caricamento (non è installata via npm, nessun build step). Le foto dei luoghi vengono da Wikimedia Commons, con licenza e autore riportati sotto ogni immagine.
+
+Un service worker (`sw.js`) mette in cache pagina, dati e mappa dopo la prima visita: una volta aperta almeno una volta con rete, la guida resta consultabile anche con poco segnale in montagna (i dati meteo restano quelli dell'ultimo aggiornamento disponibile). Se modifichi i file, aggiorna `CACHE_VERSIONE` in cima a `sw.js` per forzare la sostituzione della cache sui dispositivi che hanno già visitato il sito.
 
 ## Provarla in locale
 

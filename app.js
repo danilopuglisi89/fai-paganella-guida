@@ -5,6 +5,7 @@
 
   var STORAGE_GIORNI = "faiPaganella:giorni";
   var STORAGE_CHECKLIST = "faiPaganella:checklist";
+  var STORAGE_ORDINE = "faiPaganella:ordine";
 
   var CHECKLIST_ITEMS = [
     "Termometro",
@@ -58,9 +59,11 @@
     base: null,
     servizi: [],
     numeriUtili: [],
-    filtri: { passeggino: false, senzaAuto: false, coperto: false, breve: false, categoria: null },
+    filtri: { passeggino: false, senzaAuto: false, coperto: false, breve: false, categoria: null, ricerca: "" },
     assegnazioni: {}, // id luogo -> giorno (numero) o null
+    ordinePerGiorno: {}, // giorno (numero) -> array di id luogo, ordine esplicito
     meteoGiornoPioggia: {}, // giorno -> bool
+    meteoPerGiorno: {}, // giorno -> {min, max, icona, pioggiaProb, storico}
     mappaGenerale: null,
     stratoMarkerGenerale: null,
     mappeGiorno: {} // giorno (numero) -> istanza Leaflet
@@ -86,6 +89,62 @@
 
   function salvaAssegnazioni() {
     localStorage.setItem(STORAGE_GIORNI, JSON.stringify(stato.assegnazioni));
+  }
+
+  function caricaOrdine() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_ORDINE) || "{}");
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function salvaOrdine() {
+    localStorage.setItem(STORAGE_ORDINE, JSON.stringify(stato.ordinePerGiorno));
+  }
+
+  function luoghiDelGiorno(g) {
+    var assegnati = stato.luoghi.filter(function (l) { return stato.assegnazioni[l.id] === g; });
+    var mappaId = {};
+    assegnati.forEach(function (l) { mappaId[l.id] = l; });
+
+    var risultato = [];
+    (stato.ordinePerGiorno[g] || []).forEach(function (id) {
+      if (mappaId[id]) {
+        risultato.push(mappaId[id]);
+        delete mappaId[id];
+      }
+    });
+    assegnati.forEach(function (l) {
+      if (mappaId[l.id]) risultato.push(l);
+    });
+    return risultato;
+  }
+
+  function aggiornaOrdineDopoSpostamento(id, vecchioGiorno, nuovoGiorno) {
+    if (vecchioGiorno && stato.ordinePerGiorno[vecchioGiorno]) {
+      stato.ordinePerGiorno[vecchioGiorno] = stato.ordinePerGiorno[vecchioGiorno].filter(function (x) { return x !== id; });
+    }
+    if (nuovoGiorno) {
+      if (!stato.ordinePerGiorno[nuovoGiorno]) stato.ordinePerGiorno[nuovoGiorno] = [];
+      if (stato.ordinePerGiorno[nuovoGiorno].indexOf(id) === -1) {
+        stato.ordinePerGiorno[nuovoGiorno].push(id);
+      }
+    }
+    salvaOrdine();
+  }
+
+  function spostaOrdineGiorno(g, id, direzione) {
+    var lista = luoghiDelGiorno(g).map(function (l) { return l.id; });
+    var idx = lista.indexOf(id);
+    var nuovoIdx = idx + direzione;
+    if (idx === -1 || nuovoIdx < 0 || nuovoIdx >= lista.length) return;
+    var tmp = lista[idx];
+    lista[idx] = lista[nuovoIdx];
+    lista[nuovoIdx] = tmp;
+    stato.ordinePerGiorno[g] = lista;
+    salvaOrdine();
+    renderGiorni();
   }
 
   function formatMinuti(min) {
@@ -249,6 +308,10 @@
     if (f.coperto && !luogo.coperto) return false;
     if (f.breve && !(luogo.tempo_viaggio_minuti != null && luogo.tempo_viaggio_minuti < 30)) return false;
     if (f.categoria && luogo.categoria !== f.categoria) return false;
+    if (f.ricerca) {
+      var testo = (luogo.nome + " " + luogo.zona).toLowerCase();
+      if (testo.indexOf(f.ricerca) === -1) return false;
+    }
     return true;
   }
 
@@ -283,6 +346,14 @@
   }
 
   function inizializzaFiltri() {
+    var campoRicerca = document.getElementById("ricerca-luoghi");
+    if (campoRicerca) {
+      campoRicerca.addEventListener("input", function () {
+        stato.filtri.ricerca = campoRicerca.value.trim().toLowerCase();
+        renderLuoghi();
+      });
+    }
+
     var riga1 = document.getElementById("filtri-principali");
     riga1.querySelectorAll("[data-filtro]").forEach(function (chip) {
       chip.addEventListener("click", function () {
@@ -447,8 +518,11 @@
     select.value = attuale ? String(attuale) : "";
 
     select.addEventListener("change", function () {
-      stato.assegnazioni[luogo.id] = select.value ? parseInt(select.value, 10) : null;
+      var vecchioGiorno = stato.assegnazioni[luogo.id];
+      var nuovoGiorno = select.value ? parseInt(select.value, 10) : null;
+      stato.assegnazioni[luogo.id] = nuovoGiorno;
       salvaAssegnazioni();
+      aggiornaOrdineDopoSpostamento(luogo.id, vecchioGiorno, nuovoGiorno);
       renderGiorni();
     });
 
@@ -460,9 +534,7 @@
     contenitore.innerHTML = "";
 
     GIORNI_ORDINE.forEach(function (g) {
-      var luoghiGiorno = stato.luoghi.filter(function (l) {
-        return stato.assegnazioni[l.id] === g;
-      });
+      var luoghiGiorno = luoghiDelGiorno(g);
 
       var box = document.createElement("div");
       box.className = "giorno";
@@ -475,6 +547,14 @@
       titolo.className = "giorno__titolo";
       titolo.textContent = GIORNI_DATE[g];
       intest.appendChild(titolo);
+
+      var meteoGiorno = stato.meteoPerGiorno[g];
+      if (meteoGiorno) {
+        var chipMeteo = document.createElement("span");
+        chipMeteo.className = "giorno__meteo-chip";
+        chipMeteo.textContent = meteoGiorno.icona + " " + meteoGiorno.min + "°/" + meteoGiorno.max + "°" + (meteoGiorno.storico ? " (media)" : "");
+        intest.appendChild(chipMeteo);
+      }
 
       var totaleMin = luoghiGiorno.reduce(function (s, l) {
         return s + (l.tempo_viaggio_minuti || 0);
@@ -499,14 +579,14 @@
         vuoto.textContent = "Nessun luogo assegnato.";
         box.appendChild(vuoto);
       } else {
-        luoghiGiorno.forEach(function (l) {
+        luoghiGiorno.forEach(function (l, indice) {
           var voce = document.createElement("div");
           voce.className = "giorno__voce";
 
           var info = document.createElement("div");
           var nomeEl = document.createElement("div");
           nomeEl.className = "giorno__voce-nome";
-          nomeEl.textContent = l.nome + (l.coperto ? " ☂" : "");
+          nomeEl.textContent = (indice + 1) + ". " + l.nome + (l.coperto ? " ☂" : "");
           var metaEl = document.createElement("div");
           metaEl.className = "giorno__voce-meta";
           metaEl.textContent = formatMinuti(l.tempo_viaggio_minuti) + " di viaggio · " + PASSEGGINO_ICONA[l.passeggino];
@@ -514,7 +594,29 @@
           info.appendChild(metaEl);
           voce.appendChild(info);
 
-          voce.appendChild(creaSelectGiorno(l));
+          var azioniVoce = document.createElement("div");
+          azioniVoce.className = "giorno__voce-azioni";
+
+          var riordina = document.createElement("div");
+          riordina.className = "giorno__voce-riordina";
+          var btnSu = document.createElement("button");
+          btnSu.type = "button";
+          btnSu.textContent = "▲";
+          btnSu.setAttribute("aria-label", "Sposta su " + l.nome);
+          btnSu.disabled = indice === 0;
+          btnSu.addEventListener("click", function () { spostaOrdineGiorno(g, l.id, -1); });
+          var btnGiu = document.createElement("button");
+          btnGiu.type = "button";
+          btnGiu.textContent = "▼";
+          btnGiu.setAttribute("aria-label", "Sposta giù " + l.nome);
+          btnGiu.disabled = indice === luoghiGiorno.length - 1;
+          btnGiu.addEventListener("click", function () { spostaOrdineGiorno(g, l.id, 1); });
+          riordina.appendChild(btnSu);
+          riordina.appendChild(btnGiu);
+          azioniVoce.appendChild(riordina);
+
+          azioniVoce.appendChild(creaSelectGiorno(l));
+          voce.appendChild(azioniVoce);
           box.appendChild(voce);
         });
       }
@@ -577,6 +679,14 @@
       if (giornoNum && pioggiaProb != null && pioggiaProb >= 50) {
         stato.meteoGiornoPioggia[giornoNum] = true;
       }
+      if (giornoNum) {
+        stato.meteoPerGiorno[giornoNum] = {
+          min: Math.round(dati.daily.temperature_2m_min[i]),
+          max: Math.round(dati.daily.temperature_2m_max[i]),
+          icona: iconaMeteo(dati.daily.weather_code[i]),
+          storico: false
+        };
+      }
 
       var box = document.createElement("div");
       box.className = "meteo__giorno";
@@ -600,6 +710,11 @@
     etichetta.className = "meteo__etichetta";
     etichetta.textContent = "Media degli ultimi 10 anni, non è una previsione";
     container.appendChild(etichetta);
+
+    var notaRicontrolla = document.createElement("p");
+    notaRicontrolla.className = "meteo__nota-ricontrolla";
+    notaRicontrolla.textContent = "La previsione reale è disponibile solo da circa 16 giorni prima della partenza: ricontrolla questa pagina più vicino al 25 agosto per vederla al posto della media.";
+    container.appendChild(notaRicontrolla);
 
     var griglia = document.createElement("div");
     griglia.className = "meteo__griglia";
@@ -634,6 +749,12 @@
       if (probPioggia != null && probPioggia >= 0.5) {
         stato.meteoGiornoPioggia[giornoNum] = true;
       }
+      stato.meteoPerGiorno[giornoNum] = {
+        min: mediaMin != null ? Math.round(mediaMin) : "n/d",
+        max: mediaMax != null ? Math.round(mediaMax) : "n/d",
+        icona: "📊",
+        storico: true
+      };
 
       var box = document.createElement("div");
       box.className = "meteo__giorno";
@@ -891,6 +1012,7 @@
     stato.base = datiLuoghi.base;
     stato.luoghi = datiLuoghi.luoghi;
     stato.assegnazioni = caricaAssegnazioni(datiLuoghi.luoghi);
+    stato.ordinePerGiorno = caricaOrdine();
     stato.servizi = (datiServizi && datiServizi.servizi) || [];
     stato.numeriUtili = (datiServizi && datiServizi.numeriUtili) || [];
 
@@ -903,6 +1025,12 @@
     renderLuoghi();
     renderGiorni();
     caricaMeteo();
+  }
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    });
   }
 
   var timerRidimensionamento = null;
