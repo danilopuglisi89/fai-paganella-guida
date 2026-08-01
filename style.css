@@ -385,6 +385,17 @@ section h2 {
 
 .card__extra a { color: var(--genziana); }
 
+.card__punto-foto {
+  font-size: .82rem;
+  color: var(--roccia);
+  margin: 0;
+  background: var(--neve);
+  border-left: 2px solid var(--ghiaccio);
+  padding: 6px 8px;
+}
+
+.card__punto-foto strong { color: var(--abete); }
+
 .card__azioni {
   display: flex;
   gap: 8px;
@@ -416,6 +427,18 @@ section h2 {
 }
 
 .card--servizio { padding-top: 16px; }
+
+.servizi-zona { margin-bottom: 20px; }
+.servizi-zona:last-child { margin-bottom: 0; }
+
+.servizi-zona__titolo {
+  font-size: .95rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--roccia);
+  margin-bottom: 10px;
+}
 
 /* ---------- Mappa ---------- */
 .mappa {

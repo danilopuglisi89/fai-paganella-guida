@@ -207,6 +207,13 @@
       art.appendChild(extra2);
     }
 
+    if (luogo.punto_foto) {
+      var puntoFoto = document.createElement("p");
+      puntoFoto.className = "card__punto-foto";
+      puntoFoto.innerHTML = "<strong>📷 Dove scattare:</strong> " + luogo.punto_foto;
+      art.appendChild(puntoFoto);
+    }
+
     var azioni = document.createElement("div");
     azioni.className = "card__azioni";
     var btnMaps = document.createElement("a");
@@ -703,12 +710,9 @@
   var TIPO_SERVIZIO_ICONA = { farmacia: "💊", supermercato: "🛒", ristorante: "🍽", bar: "☕" };
   var TIPO_SERVIZIO_LABEL = { farmacia: "Farmacia", supermercato: "Supermercato", ristorante: "Ristorante", bar: "Bar" };
 
-  function renderServizi() {
-    var griglia = document.getElementById("griglia-servizi");
-    if (!griglia) return;
-    griglia.innerHTML = "";
+  var ZONE_ORDINE_SERVIZI = ["Fai della Paganella", "Andalo", "Molveno", "Spormaggiore", "Mezzolombardo", "Mezzocorona"];
 
-    stato.servizi.forEach(function (s) {
+  function creaCardServizio(s) {
       var card = document.createElement("article");
       card.className = "card card--servizio";
 
@@ -759,7 +763,35 @@
       }
       card.appendChild(azioni);
 
-      griglia.appendChild(card);
+      return card;
+  }
+
+  function renderServizi() {
+    var contenitore = document.getElementById("griglia-servizi");
+    if (!contenitore) return;
+    contenitore.innerHTML = "";
+
+    var zoneUsate = ZONE_ORDINE_SERVIZI.filter(function (zona) {
+      return stato.servizi.some(function (s) { return s.zona === zona; });
+    });
+
+    zoneUsate.forEach(function (zona) {
+      var gruppo = document.createElement("div");
+      gruppo.className = "servizi-zona";
+
+      var titoloZona = document.createElement("h3");
+      titoloZona.className = "servizi-zona__titolo";
+      titoloZona.textContent = zona;
+      gruppo.appendChild(titoloZona);
+
+      var griglia = document.createElement("div");
+      griglia.className = "griglia-servizi";
+      stato.servizi.filter(function (s) { return s.zona === zona; }).forEach(function (s) {
+        griglia.appendChild(creaCardServizio(s));
+      });
+      gruppo.appendChild(griglia);
+
+      contenitore.appendChild(gruppo);
     });
   }
 

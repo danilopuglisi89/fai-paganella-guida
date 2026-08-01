@@ -16,7 +16,7 @@
       "nome": "Parco del Respiro",
       "zona": "Fai della Paganella",
       "categoria": "natura",
-      "descrizione": "Area di forest therapy di circa 36 ettari con più sentieri tematici. Il Sentiero dell'Otto è quasi tutto asfaltato; il Sentiero dei Reti arriva col passeggino da trekking fino al Belvedere Zen; il percorso Acqua e Faggi non è percorribile.",
+      "descrizione": "Area di forest therapy di circa 36 ettari con più sentieri tematici. Il Sentiero dell'Otto è un anello di circa 5 km (2,5 ore), quasi tutto asfaltato, tra masi, prati e coltivi con scorci sulla Valle dell'Adige. Il Sentiero dei Reti (3,4 km, un'ora, dislivello contenuto) attraversa i resti di un antico villaggio retico tra i faggi fino al Belvedere Zen, affacciato sulla Valle dell'Adige.",
       "durata_minuti": 90,
       "distanza_km": 0.8,
       "tempo_viaggio_minuti": 10,
@@ -36,14 +36,15 @@
       "telefono": null,
       "giorno_suggerito": 2,
       "priorita": "alta",
-      "immagine": null
+      "immagine": null,
+      "punto_foto": null
     },
     {
       "id": "belvedere-parco-giochi-fai",
       "nome": "Belvedere e parco giochi di Fai",
       "zona": "Fai della Paganella",
       "categoria": "bimbo",
-      "descrizione": "Terrazza panoramica sulla Val d'Adige con parco giochi attrezzato accanto. Percorso su asfalto e ghiaino compatto, panchine all'ombra.",
+      "descrizione": "Terrazza panoramica raggiunta con circa 20 minuti di cammino nel bosco da Piazza Italia Unita, con parco giochi attrezzato nei pressi del paese. Dal Belvedere lo sguardo spazia su Valle dell'Adige, Val di Cembra, Latemar, Catinaccio, Sella e Lagorai.",
       "durata_minuti": 60,
       "distanza_km": 0.4,
       "tempo_viaggio_minuti": 5,
@@ -68,14 +69,15 @@
         "autore": "Matteo Ianeselli (Ianezz)",
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Fai_della_Paganella-panorama_from_Mezzocorona.jpg"
-      }
+      },
+      "punto_foto": "Dalla terrazza del Sentiero dei Belvedere, meglio la mattina presto quando la luce arriva frontale sulla valle e non si scatta in controluce verso ovest."
     },
     {
       "id": "centro-fai",
       "nome": "Centro di Fai della Paganella",
       "zona": "Fai della Paganella",
       "categoria": "paese",
-      "descrizione": "Piazza principale, chiesa di San Vittore, negozi e alimentari per la spesa. Marciapiedi con qualche tratto in leggera pendenza.",
+      "descrizione": "Piazza principale, chiesa di San Nicolò, negozi e alimentari per la spesa. Marciapiedi con qualche tratto in leggera pendenza.",
       "durata_minuti": 45,
       "distanza_km": 0.3,
       "tempo_viaggio_minuti": 5,
@@ -95,7 +97,13 @@
       "telefono": null,
       "giorno_suggerito": 1,
       "priorita": "media",
-      "immagine": null
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Fai_della_Paganella%2C_chiesa_di_San_Nicol%C3%B2_01.jpg",
+        "autore": "Syrio",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Fai_della_Paganella,_chiesa_di_San_Nicolò_01.jpg"
+      },
+      "punto_foto": null
     },
     {
       "id": "ciclopedonale-fai-andalo",
@@ -127,7 +135,8 @@
         "autore": "Bonty",
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:View_mountains_Fai_della_Paganella.JPG"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "terrazza-delle-stelle",
@@ -154,14 +163,15 @@
       "telefono": null,
       "giorno_suggerito": null,
       "priorita": "bassa",
-      "immagine": null
+      "immagine": null,
+      "punto_foto": null
     },
     {
       "id": "lago-andalo",
       "nome": "Lago di Andalo",
       "zona": "Andalo",
       "categoria": "lago",
-      "descrizione": "Piccolo lago alpino con anello pianeggiante intorno, area relax e noleggio pedalò in stagione.",
+      "descrizione": "Piccolo lago alpino con anello pianeggiante di circa 2,6 km (circa un'ora) intorno, fondo in gran parte pavimentato, scorci sul Piz Galin e sullo sfondo sia le Dolomiti di Brenta sia la Paganella. Area relax e noleggio pedalò in stagione; il livello dell'acqua varia molto tra stagioni.",
       "durata_minuti": 60,
       "distanza_km": 6,
       "tempo_viaggio_minuti": 10,
@@ -187,7 +197,8 @@
         "autore": "Giorgio Galeotti",
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lago_di_Andalo_-_Andalo,_Trento,_Italia_-_2_Giugno_2025.jpg"
-      }
+      },
+      "punto_foto": "Sponda est del lago, all'alba o nel tardo pomeriggio: la luce radente mette in risalto i profili montuosi riflessi sull'acqua (l'effetto specchio dipende però dal livello stagionale del lago)."
     },
     {
       "id": "life-park-andalo",
@@ -220,7 +231,8 @@
         "autore": "Giorgio Galeotti",
         "licenza": "CC BY 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Andalo_-_Andalo,_Trento_Italy_-_January_1,_2012_03.jpg"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "piscine-andalo-life",
@@ -248,7 +260,8 @@
       "telefono": null,
       "giorno_suggerito": null,
       "priorita": "media",
-      "immagine": null
+      "immagine": null,
+      "punto_foto": null
     },
     {
       "id": "cabinovia-andalo-doss-pela",
@@ -282,7 +295,8 @@
         "autore": "Z thomas",
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Seilbahn_albi_de_mez_paganella_2019-08-30.jpg"
-      }
+      },
+      "punto_foto": "Proseguendo fino alla Cima Paganella (2.125 m, oltre il Doss Pelà) la vista è a 360°: nelle giornate più limpide si vedono sia il Lago di Molveno sia, in lontananza, il Lago di Garda. Meglio la mattina presto, prima che si formi foschia in valle."
     },
     {
       "id": "andalo-centro",
@@ -315,7 +329,8 @@
         "autore": "Giorgio Galeotti",
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Andalo_-_Andalo,_Trento,_Italia_-_2_Gennaio_2024.jpg"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "rifugio-dosson",
@@ -349,7 +364,8 @@
         "autore": "Marco Ronchetti",
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Paganella.jpg"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "lago-molveno",
@@ -381,14 +397,15 @@
         "autore": "Giorgio Galeotti",
         "licenza": "CC BY 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lake_Molveno_-_Molveno,_Trento,_Italy_-_July_11,_2021.jpg"
-      }
+      },
+      "punto_foto": "Sponda sud del lago verso il \"Ponte Romano\" lungo il giro del lago, dove l'acqua turchese fa da primo piano alle guglie del Brenta; oppure dall'alto, salendo con la funivia fino all'altopiano di Pradel."
     },
     {
       "id": "funivia-molveno-pradel",
       "nome": "Funivia Molveno–Pradel",
       "zona": "Molveno",
       "categoria": "impianti",
-      "descrizione": "Funivia che sale dal lago all'altopiano del Pradel, punto di partenza per passeggiate ed escursioni con vista sulle Dolomiti di Brenta.",
+      "descrizione": "Funivia \"La Panoramica\" che in circa 5 minuti sale dal lago (867 m) all'altopiano del Pradel (1.367 m): grande terrazzo erboso con vista sul Lago di Molveno e sulle guglie delle Dolomiti di Brenta. In cima ci sono il sentiero a tema scoiattolo \"Sciury\", un Forest Park tra gli alberi e una fattoria didattica, adatti a bambini piccoli nei tratti pianeggianti vicino alla stazione.",
       "durata_minuti": 180,
       "distanza_km": 13,
       "tempo_viaggio_minuti": 18,
@@ -414,7 +431,8 @@
         "autore": "Luca Lorenzi (Llorenzi)",
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Cestovia_Molveno-Pradel.JPG"
-      }
+      },
+      "punto_foto": "Dal \"Balcone delle Dolomiti\" vicino al rifugio Montanara, poco oltre il rifugio Pradel: nel tardo pomeriggio la luce radente illumina di rosa/arancio le pareti del Brenta (effetto enrosadira)."
     },
     {
       "id": "lido-molveno",
@@ -446,14 +464,15 @@
         "autore": "Franzfoto",
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Molveno_-_Badeplatz_am_See.JPG"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "lago-nembia",
       "nome": "Lago di Nembia (oasi WWF)",
       "zona": "Molveno",
       "categoria": "natura",
-      "descrizione": "Piccolo lago naturale e oasi WWF, collegato a Molveno da un sentiero quasi tutto pianeggiante tra vecchie case in pietra.",
+      "descrizione": "Piccolo lago di frana (come quello di Molveno, formatosi circa 3.000 anni fa) diventato oasi WWF di poco più di 2 ettari, con un sentiero didattico ad anello di quasi 3 km e pannelli informativi su zona umida e avifauna. Collegato a Molveno da un percorso di circa un'ora e mezza, quasi tutto pianeggiante, tra vecchie case in pietra.",
       "durata_minuti": 90,
       "distanza_km": 15,
       "tempo_viaggio_minuti": 25,
@@ -479,7 +498,8 @@
         "autore": "Giorgio Galeotti",
         "licenza": "CC BY 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lago_di_Nembia_-_San_Lorenzo_in_Banale,_Trento,_Italy_-_July_25,_2021.jpg"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "belpark-spormaggiore",
@@ -511,7 +531,8 @@
         "autore": "Luca Lorenzi (Llorenzi)",
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Orso_bruno_presso_Parco_Faunistico_Spormaggiore_01.JPG"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "piazza-duomo-trento",
@@ -543,7 +564,8 @@
         "autore": "Giovanni Iachello",
         "licenza": "CC BY-SA 2.5",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Piazza_Duomo_Trento_Italy.JPG"
-      }
+      },
+      "punto_foto": "Con le spalle al Duomo, verso il centro della piazza, per l'inquadratura classica con Fontana del Nettuno, Palazzo Pretorio e Torre Civica; per la vista dall'alto si salgono i 156 gradini della Torre Civica. Meglio mattina presto o tardo pomeriggio, quando il sole basso illumina le facciate affrescate senza abbagliare."
     },
     {
       "id": "muse-trento",
@@ -575,7 +597,8 @@
         "autore": "Lukra",
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:MUSE_(Trento).jpg"
-      }
+      },
+      "punto_foto": "Dal lato verso il fiume Adige e lo storico Palazzo delle Albere, dove il volume vetrato della serra tropicale si affianca al palazzo cinquecentesco. Meglio nel tardo pomeriggio, quando la luce radente accentua le linee inclinate del tetto e le vetrate riflettono il cielo."
     },
     {
       "id": "castello-buonconsiglio",
@@ -607,7 +630,8 @@
         "autore": "Alice90",
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Castello_del_Buonconsiglio_Trento_2017.jpg"
-      }
+      },
+      "punto_foto": "Dalla Fossa dei Martiri o dal piazzale antistante, con le torri e le logge affrescate in primo piano. Dall'interno, la Loggia Veneziana offre la vista migliore sulla città al crepuscolo."
     },
     {
       "id": "gallerie-piedicastello",
@@ -639,7 +663,8 @@
         "autore": "Marco Scoz",
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:300_metri_di_mostra_in_galleria.jpg"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "funivia-sardagna",
@@ -672,7 +697,8 @@
         "autore": "qwesy qwesy",
         "licenza": "CC BY 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Seilbahn_Funivia_Trento_-_Sardagna_-_panoramio.jpg"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "parco-gocciadoro",
@@ -699,14 +725,20 @@
       "telefono": null,
       "giorno_suggerito": null,
       "priorita": "bassa",
-      "immagine": null
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Gocciadoro-01.jpg",
+        "autore": "Anastasia Tereschunka",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Gocciadoro-01.jpg"
+      },
+      "punto_foto": null
     },
     {
       "id": "lago-tovel",
       "nome": "Lago di Tovel",
       "zona": "Val di Non",
       "categoria": "lago",
-      "descrizione": "Lago alpino nel Parco Naturale Adamello Brenta, meta classica ma lontana. Giro lago di circa 4 km su sterrato battuto.",
+      "descrizione": "Lago alpino nel Parco Naturale Adamello Brenta, noto storicamente come \"Lago Rosso\" per il fenomeno di arrossamento delle acque causato dall'alga Tovellia sanguinea, oggi non più visibile (cessato dagli anni '60). Giro lago di circa 3 km, dislivello minimo, con un breve tratto scalinato su roccia; sulla riva sud si trova la Casa del Parco - Lago Rosso, dedicata al fenomeno.",
       "durata_minuti": 240,
       "distanza_km": 45,
       "tempo_viaggio_minuti": 60,
@@ -732,7 +764,8 @@
         "autore": "Niccolò Caranti (Jaqen)",
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lago_di_Tovel.JPG"
-      }
+      },
+      "punto_foto": "Lungo il sentiero delle Glare, accessibile dal parcheggio Capriolo: fotogenico ad ogni ora, con colori più intensi in autunno; essendo zona a bassissimo inquinamento luminoso è adatto anche a scatti notturni della Via Lattea."
     },
     {
       "id": "santuario-san-romedio",
@@ -764,7 +797,8 @@
         "autore": "Rolandob",
         "licenza": "CC BY 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Santuario_di_San_Romedio_-_panoramio.jpg"
-      }
+      },
+      "punto_foto": "Vista frontale dal basso: dal sentiero proprio davanti all'ingresso del santuario. Per una vista dall'alto, il breve sentiero del Croz de l'Anzol da Salter. Meglio la mattina, quando il sole illumina la parete rocciosa frontalmente."
     },
     {
       "id": "canyon-rio-sass",
@@ -796,7 +830,8 @@
         "autore": "Syrio",
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Canyon_del_rio_Sass_-_Cascata_del_Lago_Smeraldo.jpg"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "castel-thun",
@@ -828,7 +863,8 @@
         "autore": "Luca Lorenzi (Llorenzi)",
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Castel_Thun4.JPG"
-      }
+      },
+      "punto_foto": null
     },
     {
       "id": "lago-smeraldo",
@@ -860,7 +896,8 @@
         "autore": "Luca Lorenzi (Llorenzi)",
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Fondo_-_Lago_Smeraldo_06.jpg"
-      }
+      },
+      "punto_foto": null
     }
   ]
 }
