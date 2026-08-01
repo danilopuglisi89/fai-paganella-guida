@@ -1,0 +1,46 @@
+# Fai della Paganella con il passeggino
+
+Guida di viaggio a pagina singola per il soggiorno del 25–30 agosto 2026 a Fai della Paganella (TN), base Hotel Arcobaleno. Nessun framework, nessun build: `index.html` + `style.css` + `app.js` + `data/luoghi.json`.
+
+## Provarla in locale
+
+Doppio clic su `index.html`. Se il browser blocca il caricamento di `data/luoghi.json` da file locale (succede con `file://` su alcuni browser), avvia un piccolo server nella cartella, ad esempio:
+
+```bash
+python -m http.server 8000
+```
+
+e apri `http://localhost:8000`.
+
+## Pubblicare su GitHub Pages
+
+1. **Crea il repository** su GitHub (pubblico, altrimenti GitHub Pages richiede un piano a pagamento). Nome suggerito: `fai-paganella-guida`.
+
+2. **Inizializza git e fai il primo push**, dalla cartella `guida-fai-paganella`:
+
+   ```bash
+   git init
+   git add .
+   git commit -m "Prima versione della guida"
+   git branch -M main
+   git remote add origin https://github.com/<tuo-utente>/fai-paganella-guida.git
+   git push -u origin main
+   ```
+
+3. **Attiva GitHub Pages**: sul repository, vai su **Settings → Pages**. In "Build and deployment" scegli **Source: Deploy from a branch**, poi **Branch: main** e cartella **/ (root)**. Salva.
+
+4. **Aspetta un paio di minuti**: GitHub pubblica il sito e mostra l'URL finale in cima alla pagina Pages, del tipo:
+
+   ```
+   https://<tuo-utente>.github.io/fai-paganella-guida/
+   ```
+
+5. **Manda il link su WhatsApp**: incollalo in una chat, oppure apri il sito pubblicato e usa il pulsante "Condividi su WhatsApp" in alto, che apre già il messaggio pronto.
+
+Il file `.nojekyll` nella root evita che GitHub Pages passi il sito attraverso Jekyll (non serve qui e potrebbe ignorare la cartella `data/`).
+
+## Aggiornare i dati
+
+Tutti i luoghi sono in `data/luoghi.json`. Ogni voce ha, tra gli altri campi, `giorno_suggerito` (1–6, dove 1 = 25 agosto) usato come assegnazione iniziale — l'utente può poi spostare i luoghi tra i giorni dall'interfaccia, e la scelta resta salvata nel browser (`localStorage`), non nel file.
+
+Dopo una modifica al JSON basta fare commit e push: GitHub Pages ripubblica automaticamente in un paio di minuti.
