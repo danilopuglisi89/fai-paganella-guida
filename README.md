@@ -1,6 +1,8 @@
 # Fai della Paganella con il passeggino
 
-Guida di viaggio a pagina singola per il soggiorno del 25–30 agosto 2026 a Fai della Paganella (TN), base Hotel Arcobaleno. Nessun framework, nessun build: `index.html` + `style.css` + `app.js` + `data/luoghi.json`.
+Guida di viaggio a pagina singola per il soggiorno del 25–30 agosto 2026 a Fai della Paganella (TN), base Hotel Arcobaleno. Nessun framework, nessun build: `index.html` + `style.css` + `app.js` + `data/luoghi.json` + `data/servizi.json`.
+
+La mappa interattiva usa [Leaflet](https://leafletjs.com/) con le tile di OpenStreetMap, caricati via CDN (`unpkg.com`) — l'unica dipendenza esterna del sito, richiede una connessione internet per funzionare (non è installata via npm, nessun build step). Le foto dei luoghi vengono da Wikimedia Commons, con licenza e autore riportati sotto ogni immagine.
 
 ## Provarla in locale
 
@@ -41,6 +43,10 @@ Il file `.nojekyll` nella root evita che GitHub Pages passi il sito attraverso J
 
 ## Aggiornare i dati
 
-Tutti i luoghi sono in `data/luoghi.json`. Ogni voce ha, tra gli altri campi, `giorno_suggerito` (1–6, dove 1 = 25 agosto) usato come assegnazione iniziale — l'utente può poi spostare i luoghi tra i giorni dall'interfaccia, e la scelta resta salvata nel browser (`localStorage`), non nel file.
+Tutti i luoghi sono in `data/luoghi.json`. Ogni voce ha, tra gli altri campi, `giorno_suggerito` (1–6, dove 1 = 25 agosto) usato come assegnazione iniziale — l'utente può poi spostare i luoghi tra i giorni dall'interfaccia, e la scelta resta salvata nel browser (`localStorage`), non nel file. Il campo `immagine` (quando presente) punta a un file Wikimedia Commons con `autore`, `licenza` e `pagina_fonte` per l'attribuzione mostrata sotto la foto.
 
-Dopo una modifica al JSON basta fare commit e push: GitHub Pages ripubblica automaticamente in un paio di minuti.
+Farmacia, supermercato, ristoranti/bar vicino all'hotel e i numeri utili sono in `data/servizi.json`.
+
+La checklist bagaglio e le note su quota/meteo sono contenuti statici dentro `index.html`/`app.js`: per modificarle si edita direttamente il codice, non serve toccare i JSON.
+
+Dopo una modifica ai file basta fare commit e push: GitHub Pages ripubblica automaticamente in un paio di minuti.

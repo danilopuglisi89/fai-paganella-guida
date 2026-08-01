@@ -1,0 +1,72 @@
+{
+  "servizi": [
+    {
+      "id": "farmacia-catanzaro",
+      "nome": "Farmacia Catanzaro",
+      "tipo": "farmacia",
+      "indirizzo": "Via Villa 35, 38010 Fai della Paganella (TN)",
+      "telefono": "0461583342",
+      "orari": "Lun-Sab 9:00-12:30 e 15:00-19:30; Dom 10:00-12:00 e 17:00-19:00 — verificare orari estivi aggiornati",
+      "note": null
+    },
+    {
+      "id": "supermercato-fai",
+      "nome": "Supermercato (Piazza Trentina)",
+      "tipo": "supermercato",
+      "indirizzo": "Piazza Trentina, 38010 Fai della Paganella (TN)",
+      "telefono": "0461437708",
+      "orari": null,
+      "note": "Nome dell'insegna e orari da verificare sul posto; in alternativa Despar ad Andalo (Via Fovo 5, tel. 0461585540) a 12 minuti d'auto."
+    },
+    {
+      "id": "ristorante-agostini",
+      "nome": "Ristorante Pizzeria Agostini",
+      "tipo": "ristorante",
+      "indirizzo": "Piazza Italia Unita 16, 38010 Fai della Paganella (TN)",
+      "telefono": "0461583301",
+      "orari": "12:00-14:30 e 18:00-22:30",
+      "note": "In centro paese, a piedi dall'hotel."
+    },
+    {
+      "id": "bar-locanda-centrale",
+      "nome": "Bar Locanda Centrale",
+      "tipo": "bar",
+      "indirizzo": "Piazza principale, 38010 Fai della Paganella (TN)",
+      "telefono": null,
+      "orari": null,
+      "note": "Sulla piazza del paese, davanti alla chiesa."
+    }
+  ],
+  "numeriUtili": [
+    {
+      "nome": "Emergenza unica",
+      "telefono": "112",
+      "nota": "Numero unico per ogni emergenza: ambulanza, vigili del fuoco, forze dell'ordine."
+    },
+    {
+      "nome": "Continuità assistenziale (guardia medica notturna e festiva)",
+      "telefono": "116117",
+      "nota": "Per problemi non urgenti fuori dall'orario degli ambulatori, di notte o nei festivi."
+    },
+    {
+      "nome": "Servizio medico turistico Altopiano della Paganella",
+      "telefono": "3358234451",
+      "nota": "Prenotazione visite, attivo 23 giugno - 12 settembre 2026, lun-ven 8:00-20:00. Visita ambulatoriale €30, a domicilio €40. Ambulatorio in Via Villa, Fai della Paganella."
+    },
+    {
+      "nome": "Pediatra di zona (dott.ssa Lorena Filippi)",
+      "telefono": "3381971781",
+      "nota": "Studio ad Andalo, verificare disponibilità e orario di ricevimento prima di chiamare."
+    },
+    {
+      "nome": "Hotel Arcobaleno",
+      "telefono": "0461583306",
+      "nota": "Via Cesare Battisti 45, Fai della Paganella."
+    },
+    {
+      "nome": "Farmacia Catanzaro",
+      "telefono": "0461583342",
+      "nota": "Via Villa 35, Fai della Paganella."
+    }
+  ]
+}

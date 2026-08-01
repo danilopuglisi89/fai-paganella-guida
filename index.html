@@ -16,6 +16,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Inter+Tight:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -44,10 +46,31 @@
 
 <main id="contenuto-principale" class="container">
 
+  <section class="js-only" id="sezione-servizi" aria-labelledby="titolo-servizi">
+    <h2 id="titolo-servizi">Nei dintorni dell'hotel</h2>
+    <p class="sezione__intro">Farmacia, spesa, ristoranti e bar a portata di mano, per le necessità quotidiane senza dover programmare una gita.</p>
+    <div class="griglia-servizi" id="griglia-servizi"></div>
+  </section>
+
+  <section class="js-only" id="sezione-mappa" aria-labelledby="titolo-mappa">
+    <h2 id="titolo-mappa">Mappa dei luoghi</h2>
+    <p class="sezione__intro">Segue gli stessi filtri della lista qui sotto. Verde, ambra e rosso indicano lo stesso giudizio sul passeggino dei badge nelle schede.</p>
+    <div id="mappa-generale" class="mappa mappa--generale"></div>
+  </section>
+
   <section class="js-only" id="sezione-meteo" aria-labelledby="titolo-meteo">
     <h2 id="titolo-meteo">Meteo dei sei giorni</h2>
     <div id="meteo-contenuto">
       <p>Caricamento previsioni…</p>
+    </div>
+    <div class="note-pratiche">
+      <h3>Note pratiche quota e meteo, con un neonato di 4 mesi</h3>
+      <ul>
+        <li>Sopra i 1500–2100 m (Doss Pelà, Pradel, Rifugio Dosson) la temperatura scende anche di 8-10°C rispetto al fondovalle: porta comunque una giacca a vento leggera per il bimbo anche in agosto.</li>
+        <li>Nelle ore centrali (12:00–15:00) il sole in quota è più intenso che in pianura: meglio le tappe in altura la mattina presto o nel tardo pomeriggio, con cappellino e ombrellino parasole sul passeggino.</li>
+        <li>Prima di salire con gli impianti sopra i 2000 m, è prudente sentire il pediatra: non è una controindicazione assoluta a 4 mesi, ma la scelta va valutata caso per caso.</li>
+        <li>In valle (900–1000 m) le temperature medie di agosto sono comprese tra 12°C di notte e 22-23°C di giorno, ma possono cambiare in fretta con un temporale: controlla il meteo la sera prima di ogni gita.</li>
+      </ul>
     </div>
   </section>
 
@@ -75,12 +98,25 @@
     <div id="giorni-lista"></div>
   </section>
 
+  <section class="js-only" id="sezione-numeri-utili" aria-labelledby="titolo-numeri-utili">
+    <h2 id="titolo-numeri-utili">Numeri utili ed emergenze</h2>
+    <p class="sezione__intro">Da salvare in rubrica prima di partire.</p>
+    <ul class="lista-numeri" id="lista-numeri-utili"></ul>
+  </section>
+
+  <section class="js-only" id="sezione-checklist" aria-labelledby="titolo-checklist">
+    <h2 id="titolo-checklist">Checklist bagaglio neonato</h2>
+    <p class="sezione__intro">Le spunte si salvano nel browser: puoi riaprire questa pagina mentre fai le valigie.</p>
+    <ul class="checklist" id="checklist-bagaglio"></ul>
+  </section>
+
 </main>
 
 <footer class="container">
   <p>Guida creata per uso personale. Orari, prezzi e coordinate vanno sempre riverificati prima della partenza sui siti ufficiali collegati a ogni scheda.</p>
 </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="app.js"></script>
 </body>
 </html>

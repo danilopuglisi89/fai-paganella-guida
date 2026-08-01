@@ -291,6 +291,41 @@ section h2 {
   gap: 8px;
 }
 
+.card__figura {
+  margin: -16px -16px 4px;
+  position: relative;
+}
+
+.card__figura img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.card__figura--segnaposto {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  background: var(--neve);
+  color: var(--roccia);
+}
+
+.card__credito {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 49, 42, .72);
+  color: var(--neve);
+  font-size: .68rem;
+  padding: 3px 7px;
+  max-width: 100%;
+}
+
+.card__credito a { color: var(--neve); text-decoration: underline; }
+
 .card__zona {
   font-family: var(--font-mono);
   font-size: .75rem;
@@ -371,6 +406,147 @@ section h2 {
   color: var(--roccia);
   font-style: italic;
   padding: 20px 0;
+}
+
+/* ---------- Servizi vicino hotel ---------- */
+.griglia-servizi {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.card--servizio { padding-top: 16px; }
+
+/* ---------- Mappa ---------- */
+.mappa {
+  width: 100%;
+  border: 1px solid #dbe0da;
+  border-radius: var(--radius);
+  background: var(--neve);
+}
+
+.mappa--generale { height: 380px; }
+
+.mappa--giorno {
+  height: 200px;
+  margin-top: 10px;
+}
+
+.mappa__pin-wrapper { background: transparent; border: none; }
+
+.mappa__pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.4);
+  font-size: 12px;
+}
+
+.mappa__popup {
+  font-family: var(--font-testo);
+  font-size: .85rem;
+  line-height: 1.4;
+}
+
+.mappa__popup strong { font-family: var(--font-titoli); }
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  border-radius: var(--radius);
+}
+
+/* ---------- Note pratiche ---------- */
+.note-pratiche {
+  margin-top: 20px;
+  background: #fff;
+  border: 1px solid #dbe0da;
+  border-left: 3px solid var(--ambra);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.note-pratiche h3 {
+  font-size: .95rem;
+  margin-bottom: 8px;
+}
+
+.note-pratiche ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--roccia);
+  font-size: .88rem;
+}
+
+.note-pratiche li { margin-bottom: 6px; }
+
+/* ---------- Numeri utili ---------- */
+.lista-numeri {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.numero-utile {
+  background: #fff;
+  border: 1px solid #dbe0da;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.numero-utile__nome {
+  font-weight: 700;
+  font-size: .92rem;
+}
+
+.numero-utile__nota {
+  font-size: .8rem;
+  color: var(--roccia);
+  margin-top: 2px;
+}
+
+.numero-utile__telefono {
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+/* ---------- Checklist ---------- */
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 4px 20px;
+}
+
+.checklist__voce {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eef1ee;
+}
+
+.checklist__voce input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: var(--genziana);
+}
+
+.checklist__voce label {
+  font-size: .9rem;
+  cursor: pointer;
 }
 
 /* ---------- Giorni ---------- */
@@ -466,4 +642,5 @@ footer {
   .testata { padding: 28px 0 24px; }
   .card__azioni { flex-direction: column; }
   .btn-card { flex: 1 1 100%; }
+  .mappa--generale { height: 280px; }
 }

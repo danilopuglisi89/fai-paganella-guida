@@ -4,6 +4,26 @@
   document.documentElement.classList.add("js-attivo");
 
   var STORAGE_GIORNI = "faiPaganella:giorni";
+  var STORAGE_CHECKLIST = "faiPaganella:checklist";
+
+  var CHECKLIST_ITEMS = [
+    "Termometro",
+    "Cambio completo per 3 volte al giorno",
+    "Pannolini e salviette",
+    "Crema anti-arrossamento",
+    "Cappellino da sole e copertina leggera",
+    "Giacca a vento leggera (per la sera in quota)",
+    "Marsupio o fascia porta-bebè (indispensabile per San Romedio e Rio Sass)",
+    "Passeggino da trekking, se disponibile",
+    "Ombrellino parasole per il passeggino",
+    "Crema solare pediatrica",
+    "Borsa frigo per latte o pappe",
+    "Ciuccio di scorta",
+    "Libretto pediatrico e tessera sanitaria",
+    "Farmaci da banco indicati dal pediatra (febbre, ecc.)"
+  ];
+
+  var COLORE_PASSEGGINO = { ok: "#2E7D4F", parziale: "#E8B03A", no: "#B23A2E" };
   var GIORNI_DATE = {
     1: "Martedì 25 agosto",
     2: "Mercoledì 26 agosto",
@@ -28,12 +48,22 @@
   var PASSEGGINO_LABEL = { ok: "Passeggino ok", parziale: "Passeggino parziale", no: "Serve il marsupio" };
   var PASSEGGINO_ICONA = { ok: "🟢", parziale: "🟡", no: "🔴" };
 
+  var ICONE_CATEGORIA = {
+    natura: "🌲", lago: "🏞", impianti: "🚡", paese: "🏘",
+    citta: "🏛", museo: "🖼", mangiare: "🍽", bimbo: "🎈"
+  };
+
   var stato = {
     luoghi: [],
     base: null,
+    servizi: [],
+    numeriUtili: [],
     filtri: { passeggino: false, senzaAuto: false, coperto: false, breve: false, categoria: null },
     assegnazioni: {}, // id luogo -> giorno (numero) o null
-    meteoGiornoPioggia: {} // giorno -> bool
+    meteoGiornoPioggia: {}, // giorno -> bool
+    mappaGenerale: null,
+    stratoMarkerGenerale: null,
+    mappeGiorno: {} // giorno (numero) -> istanza Leaflet
   };
 
   function caricaAssegnazioni(luoghi) {
@@ -87,6 +117,38 @@
     var art = document.createElement("article");
     art.className = "card";
     art.dataset.id = luogo.id;
+
+    if (luogo.immagine && luogo.immagine.url) {
+      var figura = document.createElement("figure");
+      figura.className = "card__figura";
+      var img = document.createElement("img");
+      img.src = luogo.immagine.url;
+      img.alt = luogo.nome;
+      img.loading = "lazy";
+      figura.appendChild(img);
+      if (luogo.immagine.autore) {
+        var credito = document.createElement("figcaption");
+        credito.className = "card__credito";
+        var testoCredito = "Foto: " + luogo.immagine.autore + (luogo.immagine.licenza ? " (" + luogo.immagine.licenza + ")" : "");
+        if (luogo.immagine.pagina_fonte) {
+          var linkCredito = document.createElement("a");
+          linkCredito.href = luogo.immagine.pagina_fonte;
+          linkCredito.target = "_blank";
+          linkCredito.rel = "noopener";
+          linkCredito.textContent = testoCredito;
+          credito.appendChild(linkCredito);
+        } else {
+          credito.textContent = testoCredito;
+        }
+        figura.appendChild(credito);
+      }
+      art.appendChild(figura);
+    } else {
+      var segnaposto = document.createElement("div");
+      segnaposto.className = "card__figura card__figura--segnaposto";
+      segnaposto.textContent = ICONE_CATEGORIA[luogo.categoria] || "📍";
+      art.appendChild(segnaposto);
+    }
 
     var zona = document.createElement("p");
     zona.className = "card__zona";
@@ -201,6 +263,8 @@
 
     var contatore = document.getElementById("filtri-contatore");
     contatore.textContent = visibili.length + " luoghi su " + stato.luoghi.length;
+
+    aggiornaMappaGenerale(visibili);
   }
 
   function aggiornaChipCategoria(container) {
@@ -237,6 +301,118 @@
       });
       rigaCat.appendChild(chip);
     });
+  }
+
+  // ---------- Mappa ----------
+  function creaIconaMarker(colore, opzioni) {
+    opzioni = opzioni || {};
+    var dimensione = opzioni.grande ? 26 : 18;
+    var simbolo = opzioni.simbolo || "";
+    var html = '<span class="mappa__pin" style="background:' + colore + ';width:' + dimensione + 'px;height:' + dimensione + 'px;">' + simbolo + '</span>';
+    return L.divIcon({
+      className: "mappa__pin-wrapper",
+      html: html,
+      iconSize: [dimensione, dimensione],
+      iconAnchor: [dimensione / 2, dimensione / 2],
+      popupAnchor: [0, -dimensione / 2]
+    });
+  }
+
+  function iconaHotel() {
+    return creaIconaMarker("#12312A", { grande: true, simbolo: "🏨" });
+  }
+
+  function popupHtmlLuogo(luogo) {
+    return '<div class="mappa__popup">' +
+      '<strong>' + luogo.nome + '</strong><br>' +
+      '<span>' + PASSEGGINO_ICONA[luogo.passeggino] + ' ' + PASSEGGINO_LABEL[luogo.passeggino] + '</span><br>' +
+      '<a href="' + urlMaps(luogo) + '" target="_blank" rel="noopener">Apri su Maps</a> · ' +
+      '<a href="' + urlDirezioni(luogo) + '" target="_blank" rel="noopener">Come arrivare</a>' +
+      '</div>';
+  }
+
+  function inizializzaMappaGenerale() {
+    if (typeof L === "undefined") return;
+    var el = document.getElementById("mappa-generale");
+    if (!el) return;
+    var mappa = L.map(el, { scrollWheelZoom: false });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> collaboratori'
+    }).addTo(mappa);
+    stato.mappaGenerale = mappa;
+    stato.stratoMarkerGenerale = L.layerGroup().addTo(mappa);
+  }
+
+  function aggiornaMappaGenerale(luoghi) {
+    if (!stato.mappaGenerale) return;
+    stato.stratoMarkerGenerale.clearLayers();
+
+    var puntiPerBounds = [];
+
+    if (stato.base) {
+      var hotelMarker = L.marker([stato.base.lat, stato.base.lng], { icon: iconaHotel() });
+      hotelMarker.bindPopup('<div class="mappa__popup"><strong>' + stato.base.nome + '</strong><br>Base del soggiorno</div>');
+      stato.stratoMarkerGenerale.addLayer(hotelMarker);
+      puntiPerBounds.push([stato.base.lat, stato.base.lng]);
+    }
+
+    luoghi.forEach(function (l) {
+      var marker = L.marker([l.lat, l.lng], { icon: creaIconaMarker(COLORE_PASSEGGINO[l.passeggino]) });
+      marker.bindPopup(popupHtmlLuogo(l));
+      stato.stratoMarkerGenerale.addLayer(marker);
+      puntiPerBounds.push([l.lat, l.lng]);
+    });
+
+    if (puntiPerBounds.length > 0) {
+      stato.mappaGenerale.fitBounds(puntiPerBounds, { padding: [24, 24], maxZoom: 13 });
+    }
+  }
+
+  function creaMappaGiorno(contenitoreGiorno, idMappa, luoghiGiorno) {
+    if (typeof L === "undefined") return;
+    if (stato.mappeGiorno[idMappa]) {
+      stato.mappeGiorno[idMappa].remove();
+      delete stato.mappeGiorno[idMappa];
+    }
+    if (luoghiGiorno.length === 0) return;
+
+    var div = document.createElement("div");
+    div.className = "mappa mappa--giorno";
+    div.id = idMappa;
+    contenitoreGiorno.appendChild(div);
+
+    var mappa = L.map(div, { scrollWheelZoom: false, zoomControl: false });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(mappa);
+
+    var punti = [];
+    var percorso = [];
+
+    if (stato.base) {
+      L.marker([stato.base.lat, stato.base.lng], { icon: iconaHotel() })
+        .bindPopup('<div class="mappa__popup"><strong>' + stato.base.nome + '</strong></div>')
+        .addTo(mappa);
+      punti.push([stato.base.lat, stato.base.lng]);
+      percorso.push([stato.base.lat, stato.base.lng]);
+    }
+
+    luoghiGiorno.forEach(function (l) {
+      L.marker([l.lat, l.lng], { icon: creaIconaMarker(COLORE_PASSEGGINO[l.passeggino]) })
+        .bindPopup(popupHtmlLuogo(l))
+        .addTo(mappa);
+      punti.push([l.lat, l.lng]);
+      percorso.push([l.lat, l.lng]);
+    });
+
+    if (percorso.length > 1) {
+      L.polyline(percorso, { color: "#22409A", weight: 2, dashArray: "6 6", opacity: .7 }).addTo(mappa);
+    }
+
+    mappa.fitBounds(punti, { padding: [20, 20], maxZoom: 14 });
+    stato.mappeGiorno[idMappa] = mappa;
   }
 
   function nomeLuogo(id) {
@@ -337,6 +513,7 @@
       }
 
       contenitore.appendChild(box);
+      creaMappaGiorno(box, "mappa-giorno-" + g, luoghiGiorno);
     });
   }
 
@@ -522,6 +699,145 @@
       });
   }
 
+  // ---------- Servizi vicino hotel ----------
+  var TIPO_SERVIZIO_ICONA = { farmacia: "💊", supermercato: "🛒", ristorante: "🍽", bar: "☕" };
+  var TIPO_SERVIZIO_LABEL = { farmacia: "Farmacia", supermercato: "Supermercato", ristorante: "Ristorante", bar: "Bar" };
+
+  function renderServizi() {
+    var griglia = document.getElementById("griglia-servizi");
+    if (!griglia) return;
+    griglia.innerHTML = "";
+
+    stato.servizi.forEach(function (s) {
+      var card = document.createElement("article");
+      card.className = "card card--servizio";
+
+      var tipo = document.createElement("p");
+      tipo.className = "card__zona";
+      tipo.textContent = (TIPO_SERVIZIO_ICONA[s.tipo] || "📍") + " " + (TIPO_SERVIZIO_LABEL[s.tipo] || s.tipo);
+      card.appendChild(tipo);
+
+      var nome = document.createElement("h3");
+      nome.className = "card__nome";
+      nome.textContent = s.nome;
+      card.appendChild(nome);
+
+      var indirizzo = document.createElement("p");
+      indirizzo.className = "card__descrizione";
+      indirizzo.textContent = s.indirizzo;
+      card.appendChild(indirizzo);
+
+      var dati = document.createElement("div");
+      dati.className = "card__dati";
+      dati.innerHTML =
+        "<span>🕒 " + (s.orari || "orari da verificare") + "</span>" +
+        (s.telefono ? "<span>📞 " + s.telefono + "</span>" : "");
+      card.appendChild(dati);
+
+      if (s.note) {
+        var nota = document.createElement("p");
+        nota.className = "card__nota-passeggino";
+        nota.textContent = s.note;
+        card.appendChild(nota);
+      }
+
+      var azioni = document.createElement("div");
+      azioni.className = "card__azioni";
+      var btnMaps = document.createElement("a");
+      btnMaps.className = "btn btn-card";
+      btnMaps.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.indirizzo);
+      btnMaps.target = "_blank";
+      btnMaps.rel = "noopener";
+      btnMaps.textContent = "Apri su Maps";
+      azioni.appendChild(btnMaps);
+      if (s.telefono) {
+        var btnTel = document.createElement("a");
+        btnTel.className = "btn btn-card";
+        btnTel.href = "tel:" + s.telefono;
+        btnTel.textContent = "Chiama";
+        azioni.appendChild(btnTel);
+      }
+      card.appendChild(azioni);
+
+      griglia.appendChild(card);
+    });
+  }
+
+  // ---------- Numeri utili ----------
+  function renderNumeriUtili() {
+    var lista = document.getElementById("lista-numeri-utili");
+    if (!lista) return;
+    lista.innerHTML = "";
+
+    stato.numeriUtili.forEach(function (n) {
+      var voce = document.createElement("li");
+      voce.className = "numero-utile";
+
+      var testo = document.createElement("div");
+      var nomeEl = document.createElement("div");
+      nomeEl.className = "numero-utile__nome";
+      nomeEl.textContent = n.nome;
+      var notaEl = document.createElement("div");
+      notaEl.className = "numero-utile__nota";
+      notaEl.textContent = n.nota;
+      testo.appendChild(nomeEl);
+      testo.appendChild(notaEl);
+      voce.appendChild(testo);
+
+      var link = document.createElement("a");
+      link.className = "btn btn-card numero-utile__telefono";
+      link.href = "tel:" + n.telefono;
+      link.textContent = n.telefono;
+      voce.appendChild(link);
+
+      lista.appendChild(voce);
+    });
+  }
+
+  // ---------- Checklist bagaglio ----------
+  function caricaChecklist() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_CHECKLIST) || "{}");
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function salvaChecklist(stati) {
+    localStorage.setItem(STORAGE_CHECKLIST, JSON.stringify(stati));
+  }
+
+  function renderChecklist() {
+    var lista = document.getElementById("checklist-bagaglio");
+    if (!lista) return;
+    lista.innerHTML = "";
+    var salvati = caricaChecklist();
+
+    CHECKLIST_ITEMS.forEach(function (voce, i) {
+      var li = document.createElement("li");
+      li.className = "checklist__voce";
+
+      var id = "checklist-item-" + i;
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = id;
+      checkbox.checked = !!salvati[i];
+      checkbox.addEventListener("change", function () {
+        var stati = caricaChecklist();
+        stati[i] = checkbox.checked;
+        salvaChecklist(stati);
+      });
+
+      var label = document.createElement("label");
+      label.htmlFor = id;
+      label.textContent = voce;
+
+      li.appendChild(checkbox);
+      li.appendChild(label);
+      lista.appendChild(li);
+    });
+  }
+
   // ---------- Condivisione ----------
   function inizializzaCondivisione() {
     var btn = document.getElementById("btn-condividi");
@@ -539,24 +855,50 @@
   }
 
   // ---------- Avvio ----------
-  function avvia(dati) {
-    stato.base = dati.base;
-    stato.luoghi = dati.luoghi;
-    stato.assegnazioni = caricaAssegnazioni(dati.luoghi);
+  function avvia(datiLuoghi, datiServizi) {
+    stato.base = datiLuoghi.base;
+    stato.luoghi = datiLuoghi.luoghi;
+    stato.assegnazioni = caricaAssegnazioni(datiLuoghi.luoghi);
+    stato.servizi = (datiServizi && datiServizi.servizi) || [];
+    stato.numeriUtili = (datiServizi && datiServizi.numeriUtili) || [];
 
     inizializzaFiltri();
     inizializzaCondivisione();
+    inizializzaMappaGenerale();
+    renderServizi();
+    renderNumeriUtili();
+    renderChecklist();
     renderLuoghi();
     renderGiorni();
     caricaMeteo();
   }
 
-  fetch("data/luoghi.json")
-    .then(function (r) {
+  var timerRidimensionamento = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(timerRidimensionamento);
+    timerRidimensionamento = setTimeout(function () {
+      if (stato.mappaGenerale) stato.mappaGenerale.invalidateSize();
+      Object.keys(stato.mappeGiorno).forEach(function (id) {
+        stato.mappeGiorno[id].invalidateSize();
+      });
+    }, 200);
+  });
+
+  Promise.all([
+    fetch("data/luoghi.json").then(function (r) {
       if (!r.ok) throw new Error("Impossibile caricare i dati dei luoghi");
       return r.json();
+    }),
+    fetch("data/servizi.json").then(function (r) {
+      if (!r.ok) throw new Error("Impossibile caricare i dati dei servizi");
+      return r.json();
+    }).catch(function () {
+      return { servizi: [], numeriUtili: [] };
     })
-    .then(avvia)
+  ])
+    .then(function (risultati) {
+      avvia(risultati[0], risultati[1]);
+    })
     .catch(function (err) {
       var main = document.getElementById("contenuto-principale");
       var p = document.createElement("p");

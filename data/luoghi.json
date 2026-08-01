@@ -20,7 +20,9 @@
       "durata_minuti": 90,
       "distanza_km": 0.8,
       "tempo_viaggio_minuti": 10,
-      "mezzo": ["piedi"],
+      "mezzo": [
+        "piedi"
+      ],
       "passeggino": "parziale",
       "passeggino_nota": "Solo il Sentiero dell'Otto (quasi tutto asfaltato) è accessibile a un passeggino normale; gli altri sentieri richiedono passeggino da trekking o non sono percorribili.",
       "quota_m": 1000,
@@ -33,7 +35,8 @@
       "sito": "https://www.parcodelrespiro.it/",
       "telefono": null,
       "giorno_suggerito": 2,
-      "priorita": "alta"
+      "priorita": "alta",
+      "immagine": null
     },
     {
       "id": "belvedere-parco-giochi-fai",
@@ -44,7 +47,9 @@
       "durata_minuti": 60,
       "distanza_km": 0.4,
       "tempo_viaggio_minuti": 5,
-      "mezzo": ["piedi"],
+      "mezzo": [
+        "piedi"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Tutto il percorso è su asfalto o ghiaino compatto.",
       "quota_m": 958,
@@ -57,7 +62,13 @@
       "sito": null,
       "telefono": null,
       "giorno_suggerito": 1,
-      "priorita": "alta"
+      "priorita": "alta",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/55/Fai_della_Paganella-panorama_from_Mezzocorona.jpg",
+        "autore": "Matteo Ianeselli (Ianezz)",
+        "licenza": "CC BY-SA 3.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Fai_della_Paganella-panorama_from_Mezzocorona.jpg"
+      }
     },
     {
       "id": "centro-fai",
@@ -68,7 +79,9 @@
       "durata_minuti": 45,
       "distanza_km": 0.3,
       "tempo_viaggio_minuti": 5,
-      "mezzo": ["piedi"],
+      "mezzo": [
+        "piedi"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Marciapiedi regolari, un paio di tratti in salita leggera.",
       "quota_m": 958,
@@ -76,12 +89,13 @@
       "costo": "gratis",
       "orari": "sempre aperto",
       "lat": 46.1758,
-      "lng": 11.0710,
+      "lng": 11.071,
       "place_id": null,
       "sito": null,
       "telefono": null,
       "giorno_suggerito": 1,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": null
     },
     {
       "id": "ciclopedonale-fai-andalo",
@@ -92,20 +106,28 @@
       "durata_minuti": 75,
       "distanza_km": 3.5,
       "tempo_viaggio_minuti": 0,
-      "mezzo": ["piedi"],
+      "mezzo": [
+        "piedi"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Interamente asfaltata, pendenza leggera e costante.",
       "quota_m": 1000,
       "coperto": false,
       "costo": "gratis",
       "orari": "sempre aperto",
-      "lat": 46.1690,
-      "lng": 11.0530,
+      "lat": 46.169,
+      "lng": 11.053,
       "place_id": null,
       "sito": null,
       "telefono": null,
       "giorno_suggerito": 2,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/10/View_mountains_Fai_della_Paganella.JPG",
+        "autore": "Bonty",
+        "licenza": "CC BY-SA 3.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:View_mountains_Fai_della_Paganella.JPG"
+      }
     },
     {
       "id": "terrazza-delle-stelle",
@@ -116,20 +138,23 @@
       "durata_minuti": 120,
       "distanza_km": 4,
       "tempo_viaggio_minuti": 15,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "parziale",
       "passeggino_nota": "Piazzale d'ingresso accessibile, l'ultimo tratto verso le postazioni di osservazione è sterrato.",
       "quota_m": 1400,
       "coperto": false,
       "costo": null,
       "orari": null,
-      "lat": 46.1610,
-      "lng": 11.0640,
+      "lat": 46.161,
+      "lng": 11.064,
       "place_id": null,
       "sito": "https://www.terrazzadellestelle.it/",
       "telefono": null,
       "giorno_suggerito": null,
-      "priorita": "bassa"
+      "priorita": "bassa",
+      "immagine": null
     },
     {
       "id": "lago-andalo",
@@ -140,7 +165,10 @@
       "durata_minuti": 60,
       "distanza_km": 6,
       "tempo_viaggio_minuti": 10,
-      "mezzo": ["auto", "navetta"],
+      "mezzo": [
+        "auto",
+        "navetta"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Anello con fondo compatto, completamente pianeggiante.",
       "quota_m": 1042,
@@ -153,7 +181,13 @@
       "sito": null,
       "telefono": null,
       "giorno_suggerito": 5,
-      "priorita": "alta"
+      "priorita": "alta",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Lago_di_Andalo_-_Andalo%2C_Trento%2C_Italia_-_2_Giugno_2025.jpg",
+        "autore": "Giorgio Galeotti",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lago_di_Andalo_-_Andalo,_Trento,_Italia_-_2_Giugno_2025.jpg"
+      }
     },
     {
       "id": "life-park-andalo",
@@ -164,7 +198,10 @@
       "durata_minuti": 150,
       "distanza_km": 6.5,
       "tempo_viaggio_minuti": 12,
-      "mezzo": ["auto", "navetta"],
+      "mezzo": [
+        "auto",
+        "navetta"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Vialetti asfaltati in tutto il parco.",
       "quota_m": 1030,
@@ -177,7 +214,13 @@
       "sito": "https://www.andalo.life/",
       "telefono": null,
       "giorno_suggerito": 5,
-      "priorita": "alta"
+      "priorita": "alta",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Andalo_-_Andalo%2C_Trento_Italy_-_January_1%2C_2012_03.jpg",
+        "autore": "Giorgio Galeotti",
+        "licenza": "CC BY 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Andalo_-_Andalo,_Trento_Italy_-_January_1,_2012_03.jpg"
+      }
     },
     {
       "id": "piscine-andalo-life",
@@ -188,7 +231,10 @@
       "durata_minuti": 120,
       "distanza_km": 6.5,
       "tempo_viaggio_minuti": 12,
-      "mezzo": ["auto", "navetta"],
+      "mezzo": [
+        "auto",
+        "navetta"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Ingresso e spogliatoi accessibili, piano unico.",
       "quota_m": 1030,
@@ -201,7 +247,8 @@
       "sito": "https://www.andalo.life/",
       "telefono": null,
       "giorno_suggerito": null,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": null
     },
     {
       "id": "cabinovia-andalo-doss-pela",
@@ -212,7 +259,11 @@
       "durata_minuti": 180,
       "distanza_km": 6,
       "tempo_viaggio_minuti": 12,
-      "mezzo": ["auto", "navetta", "impianti"],
+      "mezzo": [
+        "auto",
+        "navetta",
+        "impianti"
+      ],
       "passeggino": "parziale",
       "passeggino_nota": "Il passeggino va chiuso per salire in cabina; in quota i sentieri sono sterrati e irregolari.",
       "quota_m": 2125,
@@ -225,7 +276,13 @@
       "sito": "https://www.paganella.net/",
       "telefono": null,
       "giorno_suggerito": 5,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/25/Seilbahn_albi_de_mez_paganella_2019-08-30.jpg",
+        "autore": "Z thomas",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Seilbahn_albi_de_mez_paganella_2019-08-30.jpg"
+      }
     },
     {
       "id": "andalo-centro",
@@ -236,20 +293,29 @@
       "durata_minuti": 60,
       "distanza_km": 6,
       "tempo_viaggio_minuti": 12,
-      "mezzo": ["auto", "navetta"],
+      "mezzo": [
+        "auto",
+        "navetta"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Isola pedonale con pavimentazione regolare.",
       "quota_m": 1042,
       "coperto": false,
       "costo": "gratis",
       "orari": "sempre aperto",
-      "lat": 46.1670,
+      "lat": 46.167,
       "lng": 11.0186,
       "place_id": null,
       "sito": null,
       "telefono": null,
       "giorno_suggerito": 2,
-      "priorita": "bassa"
+      "priorita": "bassa",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Andalo_-_Andalo%2C_Trento%2C_Italia_-_2_Gennaio_2024.jpg",
+        "autore": "Giorgio Galeotti",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Andalo_-_Andalo,_Trento,_Italia_-_2_Gennaio_2024.jpg"
+      }
     },
     {
       "id": "rifugio-dosson",
@@ -260,20 +326,30 @@
       "durata_minuti": 90,
       "distanza_km": 6,
       "tempo_viaggio_minuti": 12,
-      "mezzo": ["auto", "navetta", "impianti"],
+      "mezzo": [
+        "auto",
+        "navetta",
+        "impianti"
+      ],
       "passeggino": "parziale",
       "passeggino_nota": "La terrazza del rifugio è raggiungibile, i sentieri intorno no.",
       "quota_m": 1800,
       "coperto": false,
       "costo": "€€",
       "orari": null,
-      "lat": 46.1650,
-      "lng": 11.0280,
+      "lat": 46.165,
+      "lng": 11.028,
       "place_id": null,
       "sito": null,
       "telefono": null,
       "giorno_suggerito": 5,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Paganella.jpg",
+        "autore": "Marco Ronchetti",
+        "licenza": "CC BY-SA 3.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Paganella.jpg"
+      }
     },
     {
       "id": "lago-molveno",
@@ -284,7 +360,9 @@
       "durata_minuti": 120,
       "distanza_km": 13,
       "tempo_viaggio_minuti": 18,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "parziale",
       "passeggino_nota": "Passeggiata pavimentata sul lato paese; il giro completo del lago ha tratti sterrati e stretti.",
       "quota_m": 864,
@@ -297,7 +375,13 @@
       "sito": null,
       "telefono": null,
       "giorno_suggerito": 3,
-      "priorita": "alta"
+      "priorita": "alta",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Lake_Molveno_-_Molveno%2C_Trento%2C_Italy_-_July_11%2C_2021.jpg",
+        "autore": "Giorgio Galeotti",
+        "licenza": "CC BY 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lake_Molveno_-_Molveno,_Trento,_Italy_-_July_11,_2021.jpg"
+      }
     },
     {
       "id": "funivia-molveno-pradel",
@@ -308,7 +392,10 @@
       "durata_minuti": 180,
       "distanza_km": 13,
       "tempo_viaggio_minuti": 18,
-      "mezzo": ["auto", "impianti"],
+      "mezzo": [
+        "auto",
+        "impianti"
+      ],
       "passeggino": "parziale",
       "passeggino_nota": "In cabina il passeggino ci sta aperto; in quota l'altopiano è in parte prato e sterrato.",
       "quota_m": 1373,
@@ -316,12 +403,18 @@
       "costo": "€€",
       "orari": "27 giugno - 6 settembre 2026: sez. I Molveno-Pradel 08:00-18:45",
       "lat": 46.1418,
-      "lng": 10.9540,
+      "lng": 10.954,
       "place_id": null,
       "sito": "https://www.funiviemolveno.it/",
       "telefono": "0461587008",
       "giorno_suggerito": 3,
-      "priorita": "alta"
+      "priorita": "alta",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Cestovia_Molveno-Pradel.JPG",
+        "autore": "Luca Lorenzi (Llorenzi)",
+        "licenza": "CC BY-SA 3.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Cestovia_Molveno-Pradel.JPG"
+      }
     },
     {
       "id": "lido-molveno",
@@ -332,20 +425,28 @@
       "durata_minuti": 120,
       "distanza_km": 13,
       "tempo_viaggio_minuti": 18,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Prato pianeggiante con vialetti, accesso comodo.",
       "quota_m": 864,
       "coperto": false,
       "costo": "gratis",
       "orari": "sempre aperto",
-      "lat": 46.1400,
+      "lat": 46.14,
       "lng": 10.9605,
       "place_id": null,
       "sito": null,
       "telefono": null,
       "giorno_suggerito": 3,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/74/Molveno_-_Badeplatz_am_See.JPG",
+        "autore": "Franzfoto",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Molveno_-_Badeplatz_am_See.JPG"
+      }
     },
     {
       "id": "lago-nembia",
@@ -356,7 +457,10 @@
       "durata_minuti": 90,
       "distanza_km": 15,
       "tempo_viaggio_minuti": 25,
-      "mezzo": ["auto", "piedi"],
+      "mezzo": [
+        "auto",
+        "piedi"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Anello di circa un'ora e mezza quasi tutto piano, percorribile con passeggino da trekking.",
       "quota_m": 850,
@@ -369,7 +473,13 @@
       "sito": null,
       "telefono": null,
       "giorno_suggerito": null,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Lago_di_Nembia_-_San_Lorenzo_in_Banale%2C_Trento%2C_Italy_-_July_25%2C_2021.jpg",
+        "autore": "Giorgio Galeotti",
+        "licenza": "CC BY 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lago_di_Nembia_-_San_Lorenzo_in_Banale,_Trento,_Italy_-_July_25,_2021.jpg"
+      }
     },
     {
       "id": "belpark-spormaggiore",
@@ -380,7 +490,9 @@
       "durata_minuti": 120,
       "distanza_km": 7,
       "tempo_viaggio_minuti": 12,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "parziale",
       "passeggino_nota": "Percorso nel bosco con salite e tratti sterrati; fattibile in due persone, faticoso da soli con il passeggino.",
       "quota_m": 800,
@@ -393,7 +505,13 @@
       "sito": "https://www.belpark.it/",
       "telefono": "3406575780",
       "giorno_suggerito": 6,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Orso_bruno_presso_Parco_Faunistico_Spormaggiore_01.JPG",
+        "autore": "Luca Lorenzi (Llorenzi)",
+        "licenza": "CC BY-SA 3.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Orso_bruno_presso_Parco_Faunistico_Spormaggiore_01.JPG"
+      }
     },
     {
       "id": "piazza-duomo-trento",
@@ -404,7 +522,9 @@
       "durata_minuti": 90,
       "distanza_km": 24,
       "tempo_viaggio_minuti": 30,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Centro pedonale con pavimentazione in porfido liscio.",
       "quota_m": 194,
@@ -417,7 +537,13 @@
       "sito": null,
       "telefono": null,
       "giorno_suggerito": 4,
-      "priorita": "alta"
+      "priorita": "alta",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Piazza_Duomo_Trento_Italy.JPG",
+        "autore": "Giovanni Iachello",
+        "licenza": "CC BY-SA 2.5",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Piazza_Duomo_Trento_Italy.JPG"
+      }
     },
     {
       "id": "muse-trento",
@@ -428,7 +554,9 @@
       "durata_minuti": 180,
       "distanza_km": 24,
       "tempo_viaggio_minuti": 30,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Ascensori a tutti i piani, fasciatoio disponibile.",
       "quota_m": 194,
@@ -441,7 +569,13 @@
       "sito": "https://www.muse.it/",
       "telefono": "+390461270311",
       "giorno_suggerito": 4,
-      "priorita": "alta"
+      "priorita": "alta",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/38/MUSE_%28Trento%29.jpg",
+        "autore": "Lukra",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:MUSE_(Trento).jpg"
+      }
     },
     {
       "id": "castello-buonconsiglio",
@@ -452,7 +586,9 @@
       "durata_minuti": 120,
       "distanza_km": 24,
       "tempo_viaggio_minuti": 32,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "parziale",
       "passeggino_nota": "Cortili e piano terra accessibili, le torri e i piani superiori sono raggiungibili solo con le scale.",
       "quota_m": 194,
@@ -465,7 +601,13 @@
       "sito": "https://www.buonconsiglio.it/",
       "telefono": "+390461233770",
       "giorno_suggerito": null,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/4/49/Castello_del_Buonconsiglio_Trento_2017.jpg",
+        "autore": "Alice90",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Castello_del_Buonconsiglio_Trento_2017.jpg"
+      }
     },
     {
       "id": "gallerie-piedicastello",
@@ -476,7 +618,9 @@
       "durata_minuti": 75,
       "distanza_km": 24,
       "tempo_viaggio_minuti": 30,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Percorso interamente in piano dentro le due gallerie.",
       "quota_m": 194,
@@ -489,7 +633,13 @@
       "sito": "https://legallerietrento.it/",
       "telefono": "+390461147000",
       "giorno_suggerito": 4,
-      "priorita": "media"
+      "priorita": "media",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/e9/300_metri_di_mostra_in_galleria.jpg",
+        "autore": "Marco Scoz",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:300_metri_di_mostra_in_galleria.jpg"
+      }
     },
     {
       "id": "funivia-sardagna",
@@ -500,7 +650,10 @@
       "durata_minuti": 90,
       "distanza_km": 24,
       "tempo_viaggio_minuti": 30,
-      "mezzo": ["auto", "impianti"],
+      "mezzo": [
+        "auto",
+        "impianti"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Cabine a raso senza gradini, passeggino aperto ammesso.",
       "quota_m": 605,
@@ -513,7 +666,13 @@
       "sito": null,
       "telefono": null,
       "giorno_suggerito": null,
-      "priorita": "bassa"
+      "priorita": "bassa",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Seilbahn_Funivia_Trento_-_Sardagna_-_panoramio.jpg",
+        "autore": "qwesy qwesy",
+        "licenza": "CC BY 3.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Seilbahn_Funivia_Trento_-_Sardagna_-_panoramio.jpg"
+      }
     },
     {
       "id": "parco-gocciadoro",
@@ -524,7 +683,9 @@
       "durata_minuti": 75,
       "distanza_km": 25,
       "tempo_viaggio_minuti": 32,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Vialetti asfaltati in tutto il parco.",
       "quota_m": 280,
@@ -537,7 +698,8 @@
       "sito": null,
       "telefono": null,
       "giorno_suggerito": null,
-      "priorita": "bassa"
+      "priorita": "bassa",
+      "immagine": null
     },
     {
       "id": "lago-tovel",
@@ -548,7 +710,10 @@
       "durata_minuti": 240,
       "distanza_km": 45,
       "tempo_viaggio_minuti": 60,
-      "mezzo": ["auto", "navetta"],
+      "mezzo": [
+        "auto",
+        "navetta"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Il giro del lago è su sterrato compatto e pianeggiante, adatto al passeggino da trekking.",
       "quota_m": 1178,
@@ -561,7 +726,13 @@
       "sito": null,
       "telefono": null,
       "giorno_suggerito": null,
-      "priorita": "bassa"
+      "priorita": "bassa",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Lago_di_Tovel.JPG",
+        "autore": "Niccolò Caranti (Jaqen)",
+        "licenza": "CC BY-SA 3.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lago_di_Tovel.JPG"
+      }
     },
     {
       "id": "santuario-san-romedio",
@@ -572,20 +743,28 @@
       "durata_minuti": 120,
       "distanza_km": 33,
       "tempo_viaggio_minuti": 45,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "no",
       "passeggino_nota": "La lunga scalinata e il fondo sconnesso rendono il percorso impraticabile col passeggino: serve il marsupio o la fascia porta-bebe.",
       "quota_m": 900,
       "coperto": false,
       "costo": "gratis",
       "orari": null,
-      "lat": 46.3350,
+      "lat": 46.335,
       "lng": 11.0247,
       "place_id": null,
       "sito": null,
       "telefono": "+390463536198",
       "giorno_suggerito": null,
-      "priorita": "bassa"
+      "priorita": "bassa",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Santuario_di_San_Romedio_-_panoramio.jpg",
+        "autore": "Rolandob",
+        "licenza": "CC BY 3.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Santuario_di_San_Romedio_-_panoramio.jpg"
+      }
     },
     {
       "id": "canyon-rio-sass",
@@ -596,7 +775,9 @@
       "durata_minuti": 90,
       "distanza_km": 47,
       "tempo_viaggio_minuti": 60,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "no",
       "passeggino_nota": "Passerelle strette, scale a chiocciola e caschetto obbligatorio: il passeggino non entra.",
       "quota_m": 988,
@@ -609,7 +790,13 @@
       "sito": "https://www.canyonriosass.it/",
       "telefono": "0463850000",
       "giorno_suggerito": null,
-      "priorita": "bassa"
+      "priorita": "bassa",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/7f/Canyon_del_rio_Sass_-_Cascata_del_Lago_Smeraldo.jpg",
+        "autore": "Syrio",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Canyon_del_rio_Sass_-_Cascata_del_Lago_Smeraldo.jpg"
+      }
     },
     {
       "id": "castel-thun",
@@ -620,7 +807,9 @@
       "durata_minuti": 120,
       "distanza_km": 35,
       "tempo_viaggio_minuti": 45,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "parziale",
       "passeggino_nota": "Cortile, biglietteria e parte del percorso museale hanno rampe e ascensore; torri e alcune sale superiori solo a scale.",
       "quota_m": 800,
@@ -633,7 +822,13 @@
       "sito": "https://www.castelthun.com/",
       "telefono": "+390461657816",
       "giorno_suggerito": null,
-      "priorita": "bassa"
+      "priorita": "bassa",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Castel_Thun4.JPG",
+        "autore": "Luca Lorenzi (Llorenzi)",
+        "licenza": "CC BY-SA 3.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Castel_Thun4.JPG"
+      }
     },
     {
       "id": "lago-smeraldo",
@@ -644,7 +839,9 @@
       "durata_minuti": 60,
       "distanza_km": 47,
       "tempo_viaggio_minuti": 60,
-      "mezzo": ["auto"],
+      "mezzo": [
+        "auto"
+      ],
       "passeggino": "ok",
       "passeggino_nota": "Anello breve, piano, fondo compatto.",
       "quota_m": 988,
@@ -657,7 +854,13 @@
       "sito": null,
       "telefono": null,
       "giorno_suggerito": null,
-      "priorita": "bassa"
+      "priorita": "bassa",
+      "immagine": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Fondo_-_Lago_Smeraldo_06.jpg",
+        "autore": "Luca Lorenzi (Llorenzi)",
+        "licenza": "CC BY-SA 4.0",
+        "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Fondo_-_Lago_Smeraldo_06.jpg"
+      }
     }
   ]
 }
