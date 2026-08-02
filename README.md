@@ -1,6 +1,8 @@
 # Fai della Paganella con il passeggino
 
-Guida di viaggio a pagina singola per il soggiorno del 25–30 agosto 2026 a Fai della Paganella (TN), base Hotel Arcobaleno. Nessun framework, nessun build: `index.html` + `style.css` + `app.js` + `data/luoghi.json` + `data/servizi.json`.
+Guida di viaggio a Fai della Paganella (TN), base Hotel Arcobaleno, per il soggiorno del 25–30 agosto 2026. Nessun framework, nessun build: `index.html` + `style.css` + `app.js` + i file in `data/`.
+
+È una piccola app a schede (Oggi · Luoghi · Giorni · Mangiare · Info) con navigazione fissa in basso: il "routing" tra schede e il dettaglio di ogni luogo (`#luogo/<id>`, condivisibile come link diretto) sono gestiti via `location.hash` in `app.js`, senza librerie. Un countdown in testata cambia da solo prima/durante/dopo il soggiorno (25-30 agosto 2026).
 
 La mappa interattiva usa [Leaflet](https://leafletjs.com/) con le tile di OpenStreetMap, caricati via CDN (`unpkg.com`) — l'unica dipendenza esterna del sito, richiede una connessione internet per il primo caricamento (non è installata via npm, nessun build step). Le foto dei luoghi vengono da Wikimedia Commons, con licenza e autore riportati sotto ogni immagine.
 

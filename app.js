@@ -9,6 +9,7 @@
   var STORAGE_VISITATI = "faiPaganella:visitati";
   var STORAGE_PRENOTAZIONI = "faiPaganella:prenotazioniFatte";
   var STORAGE_PARTENZE = "faiPaganella:orariPartenza";
+  var STORAGE_DIARIO = "faiPaganella:diario";
 
   var CHECKLIST_ITEMS = [
     "Termometro",
@@ -29,12 +30,8 @@
 
   var COLORE_PASSEGGINO = { ok: "#2E7D4F", parziale: "#E8B03A", no: "#B23A2E" };
   var GIORNI_DATE = {
-    1: "Martedì 25 agosto",
-    2: "Mercoledì 26 agosto",
-    3: "Giovedì 27 agosto",
-    4: "Venerdì 28 agosto",
-    5: "Sabato 29 agosto",
-    6: "Domenica 30 agosto"
+    1: "Martedì 25 agosto", 2: "Mercoledì 26 agosto", 3: "Giovedì 27 agosto",
+    4: "Venerdì 28 agosto", 5: "Sabato 29 agosto", 6: "Domenica 30 agosto"
   };
   var GIORNI_DATA_ISO = {
     1: [2026, 8, 25], 2: [2026, 8, 26], 3: [2026, 8, 27],
@@ -42,6 +39,17 @@
   };
   var GIORNI_ORDINE = [1, 2, 3, 4, 5, 6];
   var GIORNI_SETTIMANA_JS = ["dom", "lun", "mar", "mer", "gio", "ven", "sab"];
+
+  // Alba/tramonto calcolati per Fai della Paganella (46.1746, 11.0657) con l'equazione
+  // solare standard (Almanac for Computers, 1990), verificati contro valori noti della zona.
+  var SOLE_PER_GIORNO = {
+    1: { alba: "06:27", tramonto: "20:08" },
+    2: { alba: "06:28", tramonto: "20:06" },
+    3: { alba: "06:29", tramonto: "20:05" },
+    4: { alba: "06:31", tramonto: "20:03" },
+    5: { alba: "06:32", tramonto: "20:01" },
+    6: { alba: "06:33", tramonto: "19:59" }
+  };
 
   var CATEGORIE_LABEL = {
     natura: "Natura", lago: "Lago", impianti: "Impianti", paese: "Paese",
@@ -59,53 +67,32 @@
   var TIPO_LOCALE_ICONA = { ristorante: "🍽", pizzeria: "🍕", bar: "☕", gelateria: "🍦", rifugio: "🏔" };
   var TIPO_LOCALE_LABEL = { ristorante: "Ristorante", pizzeria: "Pizzeria", bar: "Bar", gelateria: "Gelateria", rifugio: "Rifugio" };
 
+  var TAB_VALIDI = ["oggi", "luoghi", "giorni", "mangiare", "info"];
+
   var stato = {
-    luoghi: [],
-    base: null,
-    servizi: [],
-    numeriUtili: [],
-    locali: [],
-    eventi: [],
-    eventiNota: "",
-    prenotazioni: [],
-    guestCard: null,
-    trasportiPubblici: null,
-    viaggio: null,
+    luoghi: [], base: null, servizi: [], numeriUtili: [], locali: [],
+    eventi: [], eventiNota: "", prenotazioni: [], guestCard: null,
+    trasportiPubblici: null, viaggio: null,
     filtri: { passeggino: false, senzaAuto: false, coperto: false, breve: false, categoria: null, ricerca: "" },
     filtriLocali: { tipo: null },
-    assegnazioni: {},
-    ordinePerGiorno: {},
-    meteoGiornoPioggia: {},
-    meteoPerGiorno: {},
-    visitati: {},
-    prenotazioniFatte: {},
-    partenzePerGiorno: {},
-    mappaGenerale: null,
-    stratoMarkerGenerale: null,
-    mappeGiorno: {}
+    assegnazioni: {}, ordinePerGiorno: {}, meteoGiornoPioggia: {}, meteoPerGiorno: {},
+    visitati: {}, prenotazioniFatte: {}, partenzePerGiorno: {}, diario: {},
+    mappaGenerale: null, stratoMarkerGenerale: null, mappeGiorno: {},
+    tabAttivo: "oggi", countdownTimer: null
   };
 
   // ---------- Persistenza ----------
   function caricaJson(chiave, fallback) {
-    try {
-      return JSON.parse(localStorage.getItem(chiave) || JSON.stringify(fallback));
-    } catch (e) {
-      return fallback;
-    }
+    try { return JSON.parse(localStorage.getItem(chiave) || JSON.stringify(fallback)); }
+    catch (e) { return fallback; }
   }
-  function salvaJson(chiave, valore) {
-    localStorage.setItem(chiave, JSON.stringify(valore));
-  }
+  function salvaJson(chiave, valore) { localStorage.setItem(chiave, JSON.stringify(valore)); }
 
   function caricaAssegnazioni(luoghi) {
     var salvate = caricaJson(STORAGE_GIORNI, {});
     var assegnazioni = {};
     luoghi.forEach(function (l) {
-      if (Object.prototype.hasOwnProperty.call(salvate, l.id)) {
-        assegnazioni[l.id] = salvate[l.id];
-      } else {
-        assegnazioni[l.id] = l.giorno_suggerito || null;
-      }
+      assegnazioni[l.id] = Object.prototype.hasOwnProperty.call(salvate, l.id) ? salvate[l.id] : (l.giorno_suggerito || null);
     });
     return assegnazioni;
   }
@@ -149,17 +136,13 @@
   function formatMinuti(min) {
     if (min == null) return "n/d";
     if (min < 60) return min + " min";
-    var h = Math.floor(min / 60);
-    var m = min % 60;
+    var h = Math.floor(min / 60), m = min % 60;
     return h + "h" + (m ? " " + m + "min" : "");
   }
-
   function formatOra(minutiDaMezzanotte) {
-    var h = Math.floor(minutiDaMezzanotte / 60) % 24;
-    var m = minutiDaMezzanotte % 60;
+    var h = Math.floor(minutiDaMezzanotte / 60) % 24, m = minutiDaMezzanotte % 60;
     return (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m;
   }
-
   function parseOra(hhmm) {
     var parti = hhmm.split(":");
     return parseInt(parti[0], 10) * 60 + parseInt(parti[1], 10);
@@ -171,15 +154,25 @@
     if (luogo.place_id) url += "&query_place_id=" + encodeURIComponent(luogo.place_id);
     return url;
   }
-
   function urlDirezioni(luogo) {
     var mezzo = luogo.mezzo && luogo.mezzo.indexOf("piedi") !== -1 && luogo.mezzo.indexOf("auto") === -1 ? "walking" : "driving";
-    var origin = "Hotel Arcobaleno Fai della Paganella";
-    var url = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origin) +
-      "&destination=" + encodeURIComponent(luogo.lat + "," + luogo.lng) +
-      "&travelmode=" + mezzo;
+    var url = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent("Hotel Arcobaleno Fai della Paganella") +
+      "&destination=" + encodeURIComponent(luogo.lat + "," + luogo.lng) + "&travelmode=" + mezzo;
     if (luogo.place_id) url += "&destination_place_id=" + encodeURIComponent(luogo.place_id);
     return url;
+  }
+
+  function condividiTesto(titolo, testo, url) {
+    if (navigator.share) {
+      navigator.share({ title: titolo, text: testo, url: url }).catch(function () {});
+    } else {
+      window.open("https://wa.me/?text=" + encodeURIComponent(testo + " " + url), "_blank", "noopener");
+    }
+  }
+
+  function condividiLuogo(luogo) {
+    var url = window.location.origin + window.location.pathname + "#luogo/" + luogo.id;
+    condividiTesto(luogo.nome, luogo.nome + " — " + luogo.zona + ".", url);
   }
 
   function calcolaGiornoOggi() {
@@ -192,56 +185,172 @@
     return null;
   }
 
-  // Calcola lo stato apertura di un luogo in base a orari_struttura e all'ora reale corrente.
+  // 'prima' | 'durante' | 'dopo'
+  function calcolaFaseVacanza() {
+    var giorno = calcolaGiornoOggi();
+    if (giorno) return { fase: "durante", giorno: giorno };
+    var oggi = new Date();
+    var inizio = new Date(2026, 7, 25, 0, 0, 0);
+    var fine = new Date(2026, 7, 30, 23, 59, 59);
+    if (oggi < inizio) return { fase: "prima", msMancanti: inizio - oggi };
+    return { fase: "dopo" };
+  }
+
   function statoApertura(orariStruttura) {
     if (!orariStruttura) return null;
     if (orariStruttura.sempre_aperto) return { stato: "aperto", testo: "Sempre aperto" };
-
     var ora = new Date();
     var giornoSettimana = ora.getDay();
     var minutiOra = ora.getHours() * 60 + ora.getMinutes();
-
     if (orariStruttura.giorni_chiusura && orariStruttura.giorni_chiusura.indexOf(giornoSettimana) !== -1) {
       return { stato: "chiuso", testo: "Chiuso oggi" };
     }
-
     var fasce = orariStruttura.fasce || [];
     if (fasce.length === 0) return null;
-
     for (var i = 0; i < fasce.length; i++) {
-      var inizio = parseOra(fasce[i][0]);
-      var fine = parseOra(fasce[i][1]);
+      var inizio = parseOra(fasce[i][0]), fine = parseOra(fasce[i][1]);
       if (minutiOra >= inizio && minutiOra <= fine) {
-        if (fine - minutiOra <= 30) {
-          return { stato: "chiude-a-breve", testo: "Chiude tra " + (fine - minutiOra) + " min" };
-        }
+        if (fine - minutiOra <= 30) return { stato: "chiude-a-breve", testo: "Chiude tra " + (fine - minutiOra) + " min" };
         return { stato: "aperto", testo: "Aperto ora, chiude alle " + fasce[i][1] };
       }
     }
-
-    var primaFascia = fasce[0];
-    if (minutiOra < parseOra(primaFascia[0])) {
-      return { stato: "chiuso", testo: "Apre alle " + primaFascia[0] };
-    }
+    if (minutiOra < parseOra(fasce[0][0])) return { stato: "chiuso", testo: "Apre alle " + fasce[0][0] };
     return { stato: "chiuso", testo: "Chiuso ora" };
   }
 
-  // ---------- Card luogo ----------
-  function creaCard(luogo) {
-    var art = document.createElement("article");
-    art.className = "card";
-    art.dataset.id = luogo.id;
+  // ---------- Router a schede ----------
+  function analizzaHash() {
+    var hash = window.location.hash.replace("#", "");
+    if (hash.indexOf("luogo/") === 0) return { tipo: "luogo", id: hash.slice(6) };
+    if (TAB_VALIDI.indexOf(hash) !== -1) return { tipo: "tab", tab: hash };
+    return { tipo: "tab", tab: "oggi" };
+  }
 
-    var vis = stato.visitati[luogo.id];
-    if (vis && vis.visitato) art.classList.add("card--visitato");
+  function mostraTab(tab) {
+    stato.tabAttivo = tab;
+    document.querySelectorAll(".vista").forEach(function (v) {
+      v.classList.toggle("vista--attiva", v.dataset.vista === tab);
+    });
+    document.querySelectorAll(".tabbar a").forEach(function (a) {
+      var attivo = a.dataset.tab === tab;
+      a.classList.toggle("tabbar__voce--attiva", attivo);
+      if (attivo) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    window.scrollTo(0, 0);
+    setTimeout(sistemaMappeVisibili, 80);
+  }
+
+  function sistemaMappeVisibili() {
+    if (stato.tabAttivo === "luoghi" && stato.mappaGenerale) {
+      stato.mappaGenerale.invalidateSize();
+    }
+    if (stato.tabAttivo === "giorni") {
+      Object.keys(stato.mappeGiorno).forEach(function (id) { stato.mappeGiorno[id].invalidateSize(); });
+    }
+  }
+
+  function chiudiOverlay() {
+    var overlay = document.getElementById("overlay-dettaglio");
+    overlay.hidden = true;
+    document.body.classList.remove("overlay-aperto");
+  }
+
+  function gestisciCambioHash() {
+    var info = analizzaHash();
+    if (info.tipo === "luogo") {
+      var luogo = stato.luoghi.filter(function (l) { return l.id === info.id; })[0];
+      if (luogo) apriDettaglioLuogo(luogo);
+      else window.location.hash = "#luoghi";
+    } else {
+      chiudiOverlay();
+      mostraTab(info.tab);
+    }
+  }
+
+  function inizializzaRouter() {
+    window.addEventListener("hashchange", gestisciCambioHash);
+    document.getElementById("btn-chiudi-overlay").addEventListener("click", function () {
+      window.location.hash = "#" + stato.tabAttivo;
+    });
+    document.getElementById("overlay-dettaglio").addEventListener("click", function (e) {
+      if (e.target.id === "overlay-dettaglio") window.location.hash = "#" + stato.tabAttivo;
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !document.getElementById("overlay-dettaglio").hidden) {
+        window.location.hash = "#" + stato.tabAttivo;
+      }
+    });
+    gestisciCambioHash();
+  }
+
+  // ---------- Card compatta + dettaglio luogo ----------
+  function creaCardCompatta(luogo) {
+    var art = document.createElement("article");
+    art.className = "card-compatta";
+    if (stato.visitati[luogo.id] && stato.visitati[luogo.id].visitato) art.classList.add("card-compatta--visitato");
+    art.tabIndex = 0;
+    art.setAttribute("role", "button");
+    art.setAttribute("aria-label", "Apri dettaglio: " + luogo.nome);
+
+    var apri = function () { window.location.hash = "#luogo/" + luogo.id; };
+    art.addEventListener("click", apri);
+    art.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); apri(); } });
+
+    var figura = document.createElement("div");
+    figura.className = "card-compatta__figura";
+    if (luogo.immagine && luogo.immagine.url) {
+      var img = document.createElement("img");
+      img.src = luogo.immagine.url;
+      img.alt = "";
+      img.loading = "lazy";
+      figura.appendChild(img);
+    } else {
+      figura.classList.add("card-compatta__figura--segnaposto");
+      figura.textContent = ICONE_CATEGORIA[luogo.categoria] || "📍";
+    }
+    var badgePasseggino = document.createElement("span");
+    badgePasseggino.className = "card-compatta__badge badge-passeggino " + luogo.passeggino;
+    badgePasseggino.textContent = PASSEGGINO_ICONA[luogo.passeggino];
+    figura.appendChild(badgePasseggino);
+    art.appendChild(figura);
+
+    var corpo = document.createElement("div");
+    corpo.className = "card-compatta__corpo";
+    var zona = document.createElement("p");
+    zona.className = "card-compatta__zona";
+    zona.textContent = luogo.zona;
+    var nome = document.createElement("h3");
+    nome.className = "card-compatta__nome";
+    nome.textContent = luogo.nome;
+    var meta = document.createElement("p");
+    meta.className = "card-compatta__meta";
+    meta.textContent = "🚗 " + formatMinuti(luogo.tempo_viaggio_minuti);
+    corpo.appendChild(zona);
+    corpo.appendChild(nome);
+    corpo.appendChild(meta);
+    art.appendChild(corpo);
+
+    var btnCondividi = document.createElement("button");
+    btnCondividi.type = "button";
+    btnCondividi.className = "card-compatta__condividi";
+    btnCondividi.setAttribute("aria-label", "Condividi " + luogo.nome + " su WhatsApp");
+    btnCondividi.textContent = "📲";
+    btnCondividi.addEventListener("click", function (e) { e.stopPropagation(); condividiLuogo(luogo); });
+    art.appendChild(btnCondividi);
+
+    return art;
+  }
+
+  function creaDettaglioLuogo(luogo) {
+    var wrap = document.createElement("div");
+    wrap.className = "dettaglio-luogo";
 
     if (luogo.immagine && luogo.immagine.url) {
       var figura = document.createElement("figure");
-      figura.className = "card__figura";
+      figura.className = "dettaglio-luogo__figura";
       var img = document.createElement("img");
       img.src = luogo.immagine.url;
       img.alt = luogo.nome;
-      img.loading = "lazy";
       figura.appendChild(img);
       if (luogo.immagine.autore) {
         var credito = document.createElement("figcaption");
@@ -250,46 +359,41 @@
         if (luogo.immagine.pagina_fonte) {
           var linkCredito = document.createElement("a");
           linkCredito.href = luogo.immagine.pagina_fonte;
-          linkCredito.target = "_blank";
-          linkCredito.rel = "noopener";
+          linkCredito.target = "_blank"; linkCredito.rel = "noopener";
           linkCredito.textContent = testoCredito;
           credito.appendChild(linkCredito);
-        } else {
-          credito.textContent = testoCredito;
-        }
+        } else { credito.textContent = testoCredito; }
         figura.appendChild(credito);
       }
-      art.appendChild(figura);
+      wrap.appendChild(figura);
     } else {
       var segnaposto = document.createElement("div");
-      segnaposto.className = "card__figura card__figura--segnaposto";
+      segnaposto.className = "dettaglio-luogo__figura dettaglio-luogo__figura--segnaposto";
       segnaposto.textContent = ICONE_CATEGORIA[luogo.categoria] || "📍";
-      art.appendChild(segnaposto);
+      wrap.appendChild(segnaposto);
     }
 
     var zona = document.createElement("p");
     zona.className = "card__zona";
     zona.textContent = luogo.zona + " · " + (CATEGORIE_LABEL[luogo.categoria] || luogo.categoria);
-    art.appendChild(zona);
+    wrap.appendChild(zona);
 
-    var nome = document.createElement("h3");
-    nome.className = "card__nome";
+    var nome = document.createElement("h2");
+    nome.className = "dettaglio-luogo__nome";
     nome.textContent = luogo.nome;
-    art.appendChild(nome);
+    wrap.appendChild(nome);
 
     var desc = document.createElement("p");
     desc.className = "card__descrizione";
     desc.textContent = luogo.descrizione;
-    art.appendChild(desc);
+    wrap.appendChild(desc);
 
     var badgeRiga = document.createElement("div");
     badgeRiga.className = "card__badge-riga";
-
     var badge = document.createElement("span");
     badge.className = "badge-passeggino " + luogo.passeggino;
     badge.textContent = PASSEGGINO_ICONA[luogo.passeggino] + " " + PASSEGGINO_LABEL[luogo.passeggino];
     badgeRiga.appendChild(badge);
-
     var apertura = statoApertura(luogo.orari_struttura);
     if (apertura) {
       var badgeApertura = document.createElement("span");
@@ -297,34 +401,30 @@
       badgeApertura.textContent = apertura.testo;
       badgeRiga.appendChild(badgeApertura);
     }
-
     if (luogo.prenotazione && luogo.prenotazione.obbligatoria) {
       var badgePren = document.createElement("span");
       badgePren.className = "badge-prenotazione";
       badgePren.textContent = "📅 Prenotazione obbligatoria";
       badgeRiga.appendChild(badgePren);
     }
-
-    art.appendChild(badgeRiga);
+    wrap.appendChild(badgeRiga);
 
     if (luogo.passeggino_nota) {
       var nota = document.createElement("p");
       nota.className = "card__nota-passeggino";
       nota.textContent = luogo.passeggino_nota;
-      art.appendChild(nota);
+      wrap.appendChild(nota);
     }
 
     var dati = document.createElement("div");
     dati.className = "card__dati";
-    dati.innerHTML =
-      "<span>⏱ " + formatMinuti(luogo.durata_minuti) + " sul posto</span>" +
+    dati.innerHTML = "<span>⏱ " + formatMinuti(luogo.durata_minuti) + " sul posto</span>" +
       "<span>🚗 " + formatMinuti(luogo.tempo_viaggio_minuti) + " di viaggio</span>" +
       "<span>💰 " + (luogo.costo || "da verificare") + "</span>";
-    art.appendChild(dati);
+    wrap.appendChild(dati);
 
     if (luogo.servizi_bimbo) {
-      var sb = luogo.servizi_bimbo;
-      var righeBimbo = [];
+      var sb = luogo.servizi_bimbo, righeBimbo = [];
       if (sb.fasciatoio === true) righeBimbo.push("🚼 Fasciatoio");
       else if (sb.fasciatoio === false) righeBimbo.push("🚼 Fasciatoio non risulta");
       if (sb.bagni === true) righeBimbo.push("🚻 Bagni");
@@ -333,12 +433,12 @@
         var bimboRiga = document.createElement("p");
         bimboRiga.className = "card__servizi-bimbo";
         bimboRiga.textContent = righeBimbo.join(" · ");
-        art.appendChild(bimboRiga);
+        wrap.appendChild(bimboRiga);
         if (sb.allattamento) {
           var allatt = document.createElement("p");
           allatt.className = "card__nota-passeggino";
           allatt.textContent = "🍼 " + sb.allattamento;
-          art.appendChild(allatt);
+          wrap.appendChild(allatt);
         }
       }
     }
@@ -347,61 +447,55 @@
       var parcheggioP = document.createElement("p");
       parcheggioP.className = "card__parcheggio";
       parcheggioP.innerHTML = "<strong>🅿️ Parcheggio:</strong> " + luogo.parcheggio.testo;
-      art.appendChild(parcheggioP);
+      wrap.appendChild(parcheggioP);
     }
 
-    var extraBits = [];
-    if (luogo.orari) extraBits.push("Orari: " + luogo.orari);
-    else extraBits.push("Orari: da verificare");
+    var extraBits = [luogo.orari ? "Orari: " + luogo.orari : "Orari: da verificare"];
     if (luogo.coperto) extraBits.push("al coperto");
+    var extra = document.createElement("p");
+    extra.className = "card__extra";
+    extra.textContent = extraBits.join(" · ") + (luogo.sito ? " · " : "");
     if (luogo.sito) {
-      var extra = document.createElement("p");
-      extra.className = "card__extra";
-      extra.textContent = extraBits.join(" · ") + " · ";
       var a = document.createElement("a");
-      a.href = luogo.sito;
-      a.target = "_blank";
-      a.rel = "noopener";
+      a.href = luogo.sito; a.target = "_blank"; a.rel = "noopener";
       a.textContent = "sito ufficiale";
       extra.appendChild(a);
-      art.appendChild(extra);
-    } else {
-      var extra2 = document.createElement("p");
-      extra2.className = "card__extra";
-      extra2.textContent = extraBits.join(" · ");
-      art.appendChild(extra2);
     }
+    wrap.appendChild(extra);
 
     if (luogo.punto_foto) {
       var puntoFoto = document.createElement("p");
       puntoFoto.className = "card__punto-foto";
       puntoFoto.innerHTML = "<strong>📷 Dove scattare:</strong> " + luogo.punto_foto;
-      art.appendChild(puntoFoto);
+      wrap.appendChild(puntoFoto);
     }
 
     var azioni = document.createElement("div");
     azioni.className = "card__azioni";
     var btnMaps = document.createElement("a");
     btnMaps.className = "btn btn-card";
-    btnMaps.href = urlMaps(luogo);
-    btnMaps.target = "_blank";
-    btnMaps.rel = "noopener";
+    btnMaps.href = urlMaps(luogo); btnMaps.target = "_blank"; btnMaps.rel = "noopener";
     btnMaps.textContent = "Apri su Maps";
     var btnDir = document.createElement("a");
     btnDir.className = "btn btn-card";
-    btnDir.href = urlDirezioni(luogo);
-    btnDir.target = "_blank";
-    btnDir.rel = "noopener";
+    btnDir.href = urlDirezioni(luogo); btnDir.target = "_blank"; btnDir.rel = "noopener";
     btnDir.textContent = "Come arrivare";
+    var btnCondividi = document.createElement("button");
+    btnCondividi.type = "button";
+    btnCondividi.className = "btn btn-card";
+    btnCondividi.textContent = "📲 Condividi su WhatsApp";
+    btnCondividi.addEventListener("click", function () { condividiLuogo(luogo); });
     azioni.appendChild(btnMaps);
     azioni.appendChild(btnDir);
-    art.appendChild(azioni);
+    azioni.appendChild(btnCondividi);
+    wrap.appendChild(azioni);
 
+    var vis = stato.visitati[luogo.id];
     var visitatoBox = document.createElement("div");
     visitatoBox.className = "card__visitato";
     var checkboxVis = document.createElement("input");
     checkboxVis.type = "checkbox";
-    var idCheck = "visitato-" + luogo.id;
+    var idCheck = "visitato-dettaglio-" + luogo.id;
     checkboxVis.id = idCheck;
     checkboxVis.checked = !!(vis && vis.visitato);
     var labelVis = document.createElement("label");
@@ -412,7 +506,6 @@
     noteVis.className = "card__nota-libera";
     noteVis.placeholder = "Nota libera (es. tornare al tramonto)…";
     noteVis.value = (vis && vis.nota) || "";
-
     checkboxVis.addEventListener("change", function () {
       var attuale = stato.visitati[luogo.id] || {};
       attuale.visitato = checkboxVis.checked;
@@ -426,13 +519,22 @@
       stato.visitati[luogo.id] = attuale;
       salvaJson(STORAGE_VISITATI, stato.visitati);
     });
-
     visitatoBox.appendChild(checkboxVis);
     visitatoBox.appendChild(labelVis);
     visitatoBox.appendChild(noteVis);
-    art.appendChild(visitatoBox);
+    wrap.appendChild(visitatoBox);
 
-    return art;
+    return wrap;
+  }
+
+  function apriDettaglioLuogo(luogo) {
+    var overlay = document.getElementById("overlay-dettaglio");
+    var contenuto = document.getElementById("overlay-contenuto");
+    contenuto.innerHTML = "";
+    contenuto.appendChild(creaDettaglioLuogo(luogo));
+    overlay.hidden = false;
+    document.body.classList.add("overlay-aperto");
+    overlay.querySelector(".overlay__pannello").scrollTop = 0;
   }
 
   function luogoPassaFiltri(luogo) {
@@ -469,20 +571,29 @@
       vuoto.textContent = "Nessun luogo corrisponde ai filtri scelti. Prova a toglierne qualcuno.";
       griglia.appendChild(vuoto);
     } else {
-      visibili.forEach(function (l) { griglia.appendChild(creaCard(l)); });
+      visibili.forEach(function (l) { griglia.appendChild(creaCardCompatta(l)); });
     }
 
     var contatore = document.getElementById("filtri-contatore");
     contatore.textContent = visibili.length + " luoghi su " + stato.luoghi.length;
 
     aggiornaMappaGenerale(visibili);
+    aggiornaProgressoLuoghi();
+  }
+
+  function aggiornaProgressoLuoghi() {
+    var el = document.getElementById("progresso-luoghi");
+    if (!el) return;
+    var totale = stato.luoghi.length;
+    var visitati = stato.luoghi.filter(function (l) { return stato.visitati[l.id] && stato.visitati[l.id].visitato; }).length;
+    var pct = totale ? Math.round((visitati / totale) * 100) : 0;
+    el.innerHTML = "<span>" + visitati + " luoghi visitati su " + totale + "</span><span class=\"barra-progresso__traccia\"><span class=\"barra-progresso__riempimento\" style=\"width:" + pct + "%\"></span></span>";
   }
 
   function aggiornaChipCategoria(container) {
     var chips = container.querySelectorAll("[data-categoria]");
     chips.forEach(function (chip) {
-      var attivo = stato.filtri.categoria === chip.dataset.categoria;
-      chip.setAttribute("aria-pressed", attivo ? "true" : "false");
+      chip.setAttribute("aria-pressed", stato.filtri.categoria === chip.dataset.categoria ? "true" : "false");
     });
   }
 
@@ -494,7 +605,6 @@
         renderLuoghi();
       });
     }
-
     var riga1 = document.getElementById("filtri-principali");
     riga1.querySelectorAll("[data-filtro]").forEach(function (chip) {
       chip.addEventListener("click", function () {
@@ -504,13 +614,10 @@
         renderLuoghi();
       });
     });
-
     var rigaCat = document.getElementById("filtri-categorie");
     Object.keys(CATEGORIE_LABEL).forEach(function (cat) {
       var chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "chip";
-      chip.dataset.categoria = cat;
+      chip.type = "button"; chip.className = "chip"; chip.dataset.categoria = cat;
       chip.setAttribute("aria-pressed", "false");
       chip.textContent = CATEGORIE_LABEL[cat];
       chip.addEventListener("click", function () {
@@ -528,20 +635,15 @@
     var dimensione = opzioni.grande ? 26 : 18;
     var simbolo = opzioni.simbolo || "";
     var html = '<span class="mappa__pin" style="background:' + colore + ';width:' + dimensione + 'px;height:' + dimensione + 'px;">' + simbolo + '</span>';
-    return L.divIcon({
-      className: "mappa__pin-wrapper", html: html,
-      iconSize: [dimensione, dimensione], iconAnchor: [dimensione / 2, dimensione / 2], popupAnchor: [0, -dimensione / 2]
-    });
+    return L.divIcon({ className: "mappa__pin-wrapper", html: html, iconSize: [dimensione, dimensione], iconAnchor: [dimensione / 2, dimensione / 2], popupAnchor: [0, -dimensione / 2] });
   }
   function iconaHotel() { return creaIconaMarker("#12312A", { grande: true, simbolo: "🏨" }); }
 
   function popupHtmlLuogo(luogo) {
-    return '<div class="mappa__popup">' +
-      '<strong>' + luogo.nome + '</strong><br>' +
+    return '<div class="mappa__popup"><strong>' + luogo.nome + '</strong><br>' +
       '<span>' + PASSEGGINO_ICONA[luogo.passeggino] + ' ' + PASSEGGINO_LABEL[luogo.passeggino] + '</span><br>' +
-      '<a href="' + urlMaps(luogo) + '" target="_blank" rel="noopener">Apri su Maps</a> · ' +
-      '<a href="' + urlDirezioni(luogo) + '" target="_blank" rel="noopener">Come arrivare</a>' +
-      '</div>';
+      '<a href="#luogo/' + luogo.id + '">Vedi scheda</a> · ' +
+      '<a href="' + urlDirezioni(luogo) + '" target="_blank" rel="noopener">Come arrivare</a></div>';
   }
 
   function inizializzaMappaGenerale() {
@@ -550,8 +652,7 @@
     if (!el) return;
     var mappa = L.map(el, { scrollWheelZoom: false });
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 18,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> collaboratori'
+      maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> collaboratori'
     }).addTo(mappa);
     stato.mappaGenerale = mappa;
     stato.stratoMarkerGenerale = L.layerGroup().addTo(mappa);
@@ -573,37 +674,29 @@
       stato.stratoMarkerGenerale.addLayer(marker);
       puntiPerBounds.push([l.lat, l.lng]);
     });
-    if (puntiPerBounds.length > 0) {
-      stato.mappaGenerale.fitBounds(puntiPerBounds, { padding: [24, 24], maxZoom: 13 });
-    }
+    if (puntiPerBounds.length > 0) stato.mappaGenerale.fitBounds(puntiPerBounds, { padding: [24, 24], maxZoom: 13 });
   }
 
   function creaMappaGiorno(contenitoreGiorno, idMappa, luoghiGiorno) {
     if (typeof L === "undefined") return;
     if (stato.mappeGiorno[idMappa]) { stato.mappeGiorno[idMappa].remove(); delete stato.mappeGiorno[idMappa]; }
     if (luoghiGiorno.length === 0) return;
-
     var div = document.createElement("div");
     div.className = "mappa mappa--giorno";
     div.id = idMappa;
     contenitoreGiorno.appendChild(div);
-
     var mappa = L.map(div, { scrollWheelZoom: false, zoomControl: false });
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: '&copy; OpenStreetMap' }).addTo(mappa);
-
     var punti = [], percorso = [];
     if (stato.base) {
       L.marker([stato.base.lat, stato.base.lng], { icon: iconaHotel() }).bindPopup('<div class="mappa__popup"><strong>' + stato.base.nome + '</strong></div>').addTo(mappa);
-      punti.push([stato.base.lat, stato.base.lng]);
-      percorso.push([stato.base.lat, stato.base.lng]);
+      punti.push([stato.base.lat, stato.base.lng]); percorso.push([stato.base.lat, stato.base.lng]);
     }
     luoghiGiorno.forEach(function (l) {
       L.marker([l.lat, l.lng], { icon: creaIconaMarker(COLORE_PASSEGGINO[l.passeggino]) }).bindPopup(popupHtmlLuogo(l)).addTo(mappa);
-      punti.push([l.lat, l.lng]);
-      percorso.push([l.lat, l.lng]);
+      punti.push([l.lat, l.lng]); percorso.push([l.lat, l.lng]);
     });
     if (percorso.length > 1) L.polyline(percorso, { color: "#22409A", weight: 2, dashArray: "6 6", opacity: .7 }).addTo(mappa);
-
     mappa.fitBounds(punti, { padding: [20, 20], maxZoom: 14 });
     stato.mappeGiorno[idMappa] = mappa;
   }
@@ -612,22 +705,16 @@
   function creaSelectGiorno(luogo) {
     var select = document.createElement("select");
     select.setAttribute("aria-label", "Sposta " + luogo.nome + " in un altro giorno");
-
     var optNessuno = document.createElement("option");
-    optNessuno.value = "";
-    optNessuno.textContent = "Non assegnato";
+    optNessuno.value = ""; optNessuno.textContent = "Non assegnato";
     select.appendChild(optNessuno);
-
     GIORNI_ORDINE.forEach(function (g) {
       var opt = document.createElement("option");
-      opt.value = String(g);
-      opt.textContent = GIORNI_DATE[g];
+      opt.value = String(g); opt.textContent = GIORNI_DATE[g];
       select.appendChild(opt);
     });
-
     var attuale = stato.assegnazioni[luogo.id];
     select.value = attuale ? String(attuale) : "";
-
     select.addEventListener("change", function () {
       var vecchioGiorno = stato.assegnazioni[luogo.id];
       var nuovoGiorno = select.value ? parseInt(select.value, 10) : null;
@@ -637,7 +724,6 @@
       renderGiorni();
       aggiornaBudget();
     });
-
     return select;
   }
 
@@ -657,20 +743,38 @@
     return wrapper;
   }
 
+  function creaDiarioGiorno(g) {
+    var wrapper = document.createElement("div");
+    wrapper.className = "giorno__diario";
+    var label = document.createElement("label");
+    label.htmlFor = "diario-" + g;
+    label.textContent = "📓 Com'è andata questa giornata?";
+    var textarea = document.createElement("textarea");
+    textarea.id = "diario-" + g;
+    textarea.rows = 2;
+    textarea.placeholder = "Due righe da ricordare…";
+    textarea.value = stato.diario[g] || "";
+    textarea.addEventListener("change", function () {
+      stato.diario[g] = textarea.value;
+      salvaJson(STORAGE_DIARIO, stato.diario);
+    });
+    wrapper.appendChild(label);
+    wrapper.appendChild(textarea);
+    return wrapper;
+  }
+
   function renderGiorni() {
     var contenitore = document.getElementById("giorni-lista");
     contenitore.innerHTML = "";
 
     GIORNI_ORDINE.forEach(function (g) {
       var luoghiGiorno = luoghiDelGiorno(g);
-
       var box = document.createElement("div");
       box.className = "giorno";
       if (stato.meteoGiornoPioggia[g]) box.classList.add("giorno--pioggia");
 
       var intest = document.createElement("div");
       intest.className = "giorno__intestazione";
-
       var titolo = document.createElement("h3");
       titolo.className = "giorno__titolo";
       titolo.textContent = GIORNI_DATE[g];
@@ -683,6 +787,13 @@
         chipMeteo.textContent = meteoGiorno.icona + " " + meteoGiorno.min + "°/" + meteoGiorno.max + "°" + (meteoGiorno.storico ? " (media)" : "");
         intest.appendChild(chipMeteo);
       }
+      var sole = SOLE_PER_GIORNO[g];
+      if (sole) {
+        var chipSole = document.createElement("span");
+        chipSole.className = "giorno__meteo-chip";
+        chipSole.textContent = "🌅 " + sole.alba + " 🌇 " + sole.tramonto;
+        intest.appendChild(chipSole);
+      }
 
       var totaleMin = luoghiGiorno.reduce(function (s, l) { return s + (l.tempo_viaggio_minuti || 0); }, 0);
       var durataMin = luoghiGiorno.reduce(function (s, l) { return s + (l.durata_minuti || 0); }, 0);
@@ -690,7 +801,6 @@
       totale.className = "giorno__totale";
       totale.textContent = formatMinuti(totaleMin) + " di viaggio totali";
       intest.appendChild(totale);
-
       box.appendChild(intest);
 
       if (stato.meteoGiornoPioggia[g]) {
@@ -723,7 +833,6 @@
         box.appendChild(vuoto);
       } else {
         box.appendChild(creaInputPartenza(g));
-
         var orarioCorrente = parseOra(stato.partenzePerGiorno[g] || "09:30");
 
         luoghiGiorno.forEach(function (l, indice) {
@@ -733,9 +842,9 @@
 
           var voce = document.createElement("div");
           voce.className = "giorno__voce";
-
           var info = document.createElement("div");
-          var nomeEl = document.createElement("div");
+          var nomeEl = document.createElement("a");
+          nomeEl.href = "#luogo/" + l.id;
           nomeEl.className = "giorno__voce-nome";
           nomeEl.textContent = (indice + 1) + ". " + l.nome + (l.coperto ? " ☂" : "");
           var metaEl = document.createElement("div");
@@ -747,25 +856,20 @@
 
           var azioniVoce = document.createElement("div");
           azioniVoce.className = "giorno__voce-azioni";
-
           var riordina = document.createElement("div");
           riordina.className = "giorno__voce-riordina";
           var btnSu = document.createElement("button");
-          btnSu.type = "button";
-          btnSu.textContent = "▲";
+          btnSu.type = "button"; btnSu.textContent = "▲";
           btnSu.setAttribute("aria-label", "Sposta su " + l.nome);
           btnSu.disabled = indice === 0;
           btnSu.addEventListener("click", function () { spostaOrdineGiorno(g, l.id, -1); });
           var btnGiu = document.createElement("button");
-          btnGiu.type = "button";
-          btnGiu.textContent = "▼";
+          btnGiu.type = "button"; btnGiu.textContent = "▼";
           btnGiu.setAttribute("aria-label", "Sposta giù " + l.nome);
           btnGiu.disabled = indice === luoghiGiorno.length - 1;
           btnGiu.addEventListener("click", function () { spostaOrdineGiorno(g, l.id, 1); });
-          riordina.appendChild(btnSu);
-          riordina.appendChild(btnGiu);
+          riordina.appendChild(btnSu); riordina.appendChild(btnGiu);
           azioniVoce.appendChild(riordina);
-
           azioniVoce.appendChild(creaSelectGiorno(l));
           voce.appendChild(azioniVoce);
           box.appendChild(voce);
@@ -777,23 +881,35 @@
         box.appendChild(rientro);
       }
 
+      box.appendChild(creaDiarioGiorno(g));
+
       contenitore.appendChild(box);
       creaMappaGiorno(box, "mappa-giorno-" + g, luoghiGiorno);
     });
 
-    var giornoOggi = calcolaGiornoOggi();
-    if (giornoOggi) renderOggi();
+    aggiornaProgressoGiorni();
+  }
+
+  function aggiornaProgressoGiorni() {
+    var el = document.getElementById("progresso-giorni");
+    if (!el) return;
+    var oggi = new Date();
+    var trascorsi = GIORNI_ORDINE.filter(function (g) {
+      var iso = GIORNI_DATA_ISO[g];
+      var dataGiorno = new Date(iso[0], iso[1] - 1, iso[2], 23, 59, 59);
+      return oggi > dataGiorno;
+    }).length;
+    var pct = Math.round((trascorsi / 6) * 100);
+    el.innerHTML = "<span>" + trascorsi + " giorni su 6 trascorsi</span><span class=\"barra-progresso__traccia\"><span class=\"barra-progresso__riempimento\" style=\"width:" + pct + "%\"></span></span>";
   }
 
   function aggiornaBudget() {
     var el = document.getElementById("budget-totale");
     if (!el) return;
-    var totale = 0;
-    var mancanti = 0;
+    var totale = 0, mancanti = 0;
     stato.luoghi.forEach(function (l) {
       if (stato.assegnazioni[l.id]) {
-        if (l.costo_eur != null) totale += l.costo_eur;
-        else mancanti++;
+        if (l.costo_eur != null) totale += l.costo_eur; else mancanti++;
       }
     });
     var testo = "Spesa stimata per le tappe assegnate ai giorni (2 adulti, biglietti e impianti, escluso parcheggio e cibo): circa " + totale + " €.";
@@ -802,11 +918,8 @@
   }
 
   // ---------- Meteo ----------
-  var METEO_LAT = 46.1746;
-  var METEO_LNG = 11.0657;
-  var DATA_INIZIO = "2026-08-25";
-  var DATA_FINE = "2026-08-30";
-
+  var METEO_LAT = 46.1746, METEO_LNG = 11.0657;
+  var DATA_INIZIO = "2026-08-25", DATA_FINE = "2026-08-30";
   var WEATHER_ICONE = {
     0: "☀️", 1: "🌤", 2: "⛅", 3: "☁️", 45: "🌫", 48: "🌫",
     51: "🌦", 53: "🌦", 55: "🌦", 61: "🌧", 63: "🌧", 65: "🌧",
@@ -814,12 +927,10 @@
     95: "⛈", 96: "⛈", 99: "⛈"
   };
   function iconaMeteo(codice) { return WEATHER_ICONE[codice] || "🌡"; }
-
   function formatDataBreve(iso) {
     var d = new Date(iso + "T00:00:00");
     return GIORNI_SETTIMANA_JS[d.getDay()] + " " + d.getDate() + "/08";
   }
-
   function mappaGiornoDaData(iso) {
     var mappaData = { "2026-08-25": 1, "2026-08-26": 2, "2026-08-27": 3, "2026-08-28": 4, "2026-08-29": 5, "2026-08-30": 6 };
     return mappaData[iso];
@@ -828,38 +939,34 @@
   function renderMeteoPrevisione(dati) {
     var container = document.getElementById("meteo-contenuto");
     container.innerHTML = "";
-
     var etichetta = document.createElement("p");
     etichetta.className = "meteo__etichetta";
-    var oggi = new Date().toISOString().slice(0, 10);
-    etichetta.textContent = "Previsione aggiornata al " + formatDataBreve(oggi);
+    etichetta.textContent = "Previsione aggiornata al " + formatDataBreve(new Date().toISOString().slice(0, 10));
     container.appendChild(etichetta);
 
     var griglia = document.createElement("div");
     griglia.className = "meteo__griglia";
-
     dati.daily.time.forEach(function (data, i) {
       var pioggiaProb = dati.daily.precipitation_probability_max[i];
       var giornoNum = mappaGiornoDaData(data);
       if (giornoNum && pioggiaProb != null && pioggiaProb >= 50) stato.meteoGiornoPioggia[giornoNum] = true;
       if (giornoNum) {
         stato.meteoPerGiorno[giornoNum] = {
-          min: Math.round(dati.daily.temperature_2m_min[i]),
-          max: Math.round(dati.daily.temperature_2m_max[i]),
-          icona: iconaMeteo(dati.daily.weather_code[i]),
-          storico: false
+          min: Math.round(dati.daily.temperature_2m_min[i]), max: Math.round(dati.daily.temperature_2m_max[i]),
+          icona: iconaMeteo(dati.daily.weather_code[i]), storico: false
         };
       }
+      var sole = giornoNum ? SOLE_PER_GIORNO[giornoNum] : null;
       var box = document.createElement("div");
       box.className = "meteo__giorno";
       box.innerHTML =
         '<div class="meteo__giorno-data">' + formatDataBreve(data) + '</div>' +
         '<div class="meteo__giorno-icona">' + iconaMeteo(dati.daily.weather_code[i]) + '</div>' +
         '<div class="meteo__giorno-temp">' + Math.round(dati.daily.temperature_2m_min[i]) + '° / ' + Math.round(dati.daily.temperature_2m_max[i]) + '°</div>' +
-        '<div class="meteo__giorno-pioggia">💧 ' + (pioggiaProb != null ? pioggiaProb + '%' : 'n/d') + '</div>';
+        '<div class="meteo__giorno-pioggia">💧 ' + (pioggiaProb != null ? pioggiaProb + '%' : 'n/d') + '</div>' +
+        (sole ? '<div class="meteo__giorno-sole">🌅' + sole.alba + ' 🌇' + sole.tramonto + '</div>' : '');
       griglia.appendChild(box);
     });
-
     container.appendChild(griglia);
     renderGiorni();
     renderOggi();
@@ -868,12 +975,10 @@
   function renderMeteoStorico(dati) {
     var container = document.getElementById("meteo-contenuto");
     container.innerHTML = "";
-
     var etichetta = document.createElement("p");
     etichetta.className = "meteo__etichetta";
     etichetta.textContent = "Media degli ultimi 10 anni, non è una previsione";
     container.appendChild(etichetta);
-
     var notaRicontrolla = document.createElement("p");
     notaRicontrolla.className = "meteo__nota-ricontrolla";
     notaRicontrolla.textContent = "La previsione reale è disponibile solo da circa 16 giorni prima della partenza: ricontrolla questa pagina più vicino al 25 agosto per vederla al posto della media.";
@@ -881,51 +986,39 @@
 
     var griglia = document.createElement("div");
     griglia.className = "meteo__griglia";
-
     var giorniTarget = ["08-25", "08-26", "08-27", "08-28", "08-29", "08-30"];
     var perGiorno = {};
     giorniTarget.forEach(function (g) { perGiorno[g] = { max: [], min: [], pioggia: [] }; });
-
     dati.daily.time.forEach(function (data, i) {
       var mmgg = data.slice(5);
       if (perGiorno[mmgg]) {
-        var max = dati.daily.temperature_2m_max[i];
-        var min = dati.daily.temperature_2m_min[i];
-        var prec = dati.daily.precipitation_sum[i];
+        var max = dati.daily.temperature_2m_max[i], min = dati.daily.temperature_2m_min[i], prec = dati.daily.precipitation_sum[i];
         if (max != null) perGiorno[mmgg].max.push(max);
         if (min != null) perGiorno[mmgg].min.push(min);
         if (prec != null) perGiorno[mmgg].pioggia.push(prec > 1 ? 1 : 0);
       }
     });
-
-    function media(arr) {
-      if (!arr.length) return null;
-      return arr.reduce(function (a, b) { return a + b; }, 0) / arr.length;
-    }
+    function media(arr) { if (!arr.length) return null; return arr.reduce(function (a, b) { return a + b; }, 0) / arr.length; }
 
     giorniTarget.forEach(function (mmgg, idx) {
-      var g = perGiorno[mmgg];
-      var mediaMax = media(g.max);
-      var mediaMin = media(g.min);
-      var probPioggia = media(g.pioggia);
+      var g = perGiorno[mmgg], mediaMax = media(g.max), mediaMin = media(g.min), probPioggia = media(g.pioggia);
       var giornoNum = idx + 1;
       if (probPioggia != null && probPioggia >= 0.5) stato.meteoGiornoPioggia[giornoNum] = true;
       stato.meteoPerGiorno[giornoNum] = {
-        min: mediaMin != null ? Math.round(mediaMin) : "n/d",
-        max: mediaMax != null ? Math.round(mediaMax) : "n/d",
+        min: mediaMin != null ? Math.round(mediaMin) : "n/d", max: mediaMax != null ? Math.round(mediaMax) : "n/d",
         icona: "📊", storico: true
       };
-
+      var sole = SOLE_PER_GIORNO[giornoNum];
       var box = document.createElement("div");
       box.className = "meteo__giorno";
       box.innerHTML =
         '<div class="meteo__giorno-data">' + GIORNI_DATE[giornoNum].split(" ")[1] + ' ' + mmgg.replace("08-", "") + '/08</div>' +
         '<div class="meteo__giorno-icona">📊</div>' +
         '<div class="meteo__giorno-temp">' + (mediaMin != null ? Math.round(mediaMin) : "n/d") + '° / ' + (mediaMax != null ? Math.round(mediaMax) : "n/d") + '°</div>' +
-        '<div class="meteo__giorno-pioggia">💧 ' + (probPioggia != null ? Math.round(probPioggia * 100) + '%' : 'n/d') + '</div>';
+        '<div class="meteo__giorno-pioggia">💧 ' + (probPioggia != null ? Math.round(probPioggia * 100) + '%' : 'n/d') + '</div>' +
+        (sole ? '<div class="meteo__giorno-sole">🌅' + sole.alba + ' 🌇' + sole.tramonto + '</div>' : '');
       griglia.appendChild(box);
     });
-
     container.appendChild(griglia);
     renderGiorni();
     renderOggi();
@@ -944,39 +1037,25 @@
     var urlPrevisione = "https://api.open-meteo.com/v1/forecast?latitude=" + METEO_LAT + "&longitude=" + METEO_LNG +
       "&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,weather_code" +
       "&timezone=Europe%2FRome&start_date=" + DATA_INIZIO + "&end_date=" + DATA_FINE;
-
-    fetch(urlPrevisione)
-      .then(function (r) { return r.json(); })
-      .then(function (dati) {
-        if (dati.daily && dati.daily.time && dati.daily.time.length > 0 &&
-          dati.daily.temperature_2m_max.some(function (v) { return v != null; })) {
-          renderMeteoPrevisione(dati);
-        } else {
-          caricaMeteoStorico();
-        }
-      })
-      .catch(function () { caricaMeteoStorico(); });
+    fetch(urlPrevisione).then(function (r) { return r.json(); }).then(function (dati) {
+      if (dati.daily && dati.daily.time && dati.daily.time.length > 0 && dati.daily.temperature_2m_max.some(function (v) { return v != null; })) {
+        renderMeteoPrevisione(dati);
+      } else { caricaMeteoStorico(); }
+    }).catch(function () { caricaMeteoStorico(); });
   }
 
   function caricaMeteoStorico() {
     var annoCorrente = new Date().getFullYear();
-    var startArchivio = (annoCorrente - 10) + "-08-25";
-    var endArchivio = (annoCorrente - 1) + "-08-30";
-
     var url = "https://archive-api.open-meteo.com/v1/archive?latitude=" + METEO_LAT + "&longitude=" + METEO_LNG +
-      "&start_date=" + startArchivio + "&end_date=" + endArchivio +
+      "&start_date=" + (annoCorrente - 10) + "-08-25&end_date=" + (annoCorrente - 1) + "-08-30" +
       "&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe%2FRome";
-
-    fetch(url)
-      .then(function (r) { return r.json(); })
-      .then(function (dati) {
-        if (dati.daily && dati.daily.time) renderMeteoStorico(dati);
-        else renderMeteoErrore("Non è stato possibile caricare i dati meteo storici. Riprova più tardi.");
-      })
-      .catch(function () { renderMeteoErrore("Non è stato possibile contattare il servizio meteo. Controlla la connessione e riprova."); });
+    fetch(url).then(function (r) { return r.json(); }).then(function (dati) {
+      if (dati.daily && dati.daily.time) renderMeteoStorico(dati);
+      else renderMeteoErrore("Non è stato possibile caricare i dati meteo storici. Riprova più tardi.");
+    }).catch(function () { renderMeteoErrore("Non è stato possibile contattare il servizio meteo. Controlla la connessione e riprova."); });
   }
 
-  // ---------- Servizi vicino hotel (farmacia/supermercato) ----------
+  // ---------- Servizi vicino hotel ----------
   var TIPO_SERVIZIO_ICONA = { farmacia: "💊", supermercato: "🛒" };
   var TIPO_SERVIZIO_LABEL = { farmacia: "Farmacia", supermercato: "Supermercato" };
   var ZONE_ORDINE_SERVIZI = ["Fai della Paganella", "Andalo", "Molveno", "Spormaggiore", "Mezzolombardo", "Mezzocorona"];
@@ -984,48 +1063,35 @@
   function creaCardServizio(s) {
     var card = document.createElement("article");
     card.className = "card card--servizio";
-
     var tipo = document.createElement("p");
     tipo.className = "card__zona";
     tipo.textContent = (TIPO_SERVIZIO_ICONA[s.tipo] || "📍") + " " + (TIPO_SERVIZIO_LABEL[s.tipo] || s.tipo);
     card.appendChild(tipo);
-
     var nome = document.createElement("h3");
-    nome.className = "card__nome";
-    nome.textContent = s.nome;
+    nome.className = "card__nome"; nome.textContent = s.nome;
     card.appendChild(nome);
-
     var indirizzo = document.createElement("p");
-    indirizzo.className = "card__descrizione";
-    indirizzo.textContent = s.indirizzo;
+    indirizzo.className = "card__descrizione"; indirizzo.textContent = s.indirizzo;
     card.appendChild(indirizzo);
-
     var dati = document.createElement("div");
     dati.className = "card__dati";
     dati.innerHTML = "<span>🕒 " + (s.orari || "orari da verificare") + "</span>" + (s.telefono ? "<span>📞 " + s.telefono + "</span>" : "");
     card.appendChild(dati);
-
     if (s.note) {
       var nota = document.createElement("p");
-      nota.className = "card__nota-passeggino";
-      nota.textContent = s.note;
+      nota.className = "card__nota-passeggino"; nota.textContent = s.note;
       card.appendChild(nota);
     }
-
     var azioni = document.createElement("div");
     azioni.className = "card__azioni";
     var btnMaps = document.createElement("a");
     btnMaps.className = "btn btn-card";
     btnMaps.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.indirizzo);
-    btnMaps.target = "_blank";
-    btnMaps.rel = "noopener";
-    btnMaps.textContent = "Apri su Maps";
+    btnMaps.target = "_blank"; btnMaps.rel = "noopener"; btnMaps.textContent = "Apri su Maps";
     azioni.appendChild(btnMaps);
     if (s.telefono) {
       var btnTel = document.createElement("a");
-      btnTel.className = "btn btn-card";
-      btnTel.href = "tel:" + s.telefono;
-      btnTel.textContent = "Chiama";
+      btnTel.className = "btn btn-card"; btnTel.href = "tel:" + s.telefono; btnTel.textContent = "Chiama";
       azioni.appendChild(btnTel);
     }
     card.appendChild(azioni);
@@ -1036,24 +1102,16 @@
     var contenitore = document.getElementById("griglia-servizi");
     if (!contenitore) return;
     contenitore.innerHTML = "";
-
-    var zoneUsate = ZONE_ORDINE_SERVIZI.filter(function (zona) {
-      return stato.servizi.some(function (s) { return s.zona === zona; });
-    });
-
+    var zoneUsate = ZONE_ORDINE_SERVIZI.filter(function (zona) { return stato.servizi.some(function (s) { return s.zona === zona; }); });
     zoneUsate.forEach(function (zona) {
       var gruppo = document.createElement("div");
       gruppo.className = "servizi-zona";
       var titoloZona = document.createElement("h3");
-      titoloZona.className = "servizi-zona__titolo";
-      titoloZona.textContent = zona;
+      titoloZona.className = "servizi-zona__titolo"; titoloZona.textContent = zona;
       gruppo.appendChild(titoloZona);
-
       var griglia = document.createElement("div");
       griglia.className = "griglia-servizi";
-      stato.servizi.filter(function (s) { return s.zona === zona; }).forEach(function (s) {
-        griglia.appendChild(creaCardServizio(s));
-      });
+      stato.servizi.filter(function (s) { return s.zona === zona; }).forEach(function (s) { griglia.appendChild(creaCardServizio(s)); });
       gruppo.appendChild(griglia);
       contenitore.appendChild(gruppo);
     });
@@ -1063,60 +1121,55 @@
   function creaCardLocale(loc) {
     var card = document.createElement("article");
     card.className = "card card--servizio";
-
     var tipo = document.createElement("p");
     tipo.className = "card__zona";
     tipo.textContent = (TIPO_LOCALE_ICONA[loc.tipo] || "📍") + " " + (TIPO_LOCALE_LABEL[loc.tipo] || loc.tipo) + " · " + loc.zona;
     card.appendChild(tipo);
-
     var nome = document.createElement("h3");
-    nome.className = "card__nome";
-    nome.textContent = loc.nome;
+    nome.className = "card__nome"; nome.textContent = loc.nome;
     card.appendChild(nome);
-
     if (loc.indirizzo) {
       var indirizzo = document.createElement("p");
-      indirizzo.className = "card__descrizione";
-      indirizzo.textContent = loc.indirizzo;
+      indirizzo.className = "card__descrizione"; indirizzo.textContent = loc.indirizzo;
       card.appendChild(indirizzo);
     }
-
     var dati = document.createElement("div");
     dati.className = "card__dati";
     dati.innerHTML = "<span>🕒 " + (loc.orari || "orari da verificare") + "</span>" + (loc.telefono ? "<span>📞 " + loc.telefono + "</span>" : "");
     card.appendChild(dati);
-
     if (loc.family) {
       var fam = document.createElement("p");
-      fam.className = "card__servizi-bimbo";
-      fam.textContent = "👶 " + loc.family;
+      fam.className = "card__servizi-bimbo"; fam.textContent = "👶 " + loc.family;
       card.appendChild(fam);
     }
     if (loc.note) {
       var nota = document.createElement("p");
-      nota.className = "card__nota-passeggino";
-      nota.textContent = loc.note;
+      nota.className = "card__nota-passeggino"; nota.textContent = loc.note;
       card.appendChild(nota);
     }
-
     var azioni = document.createElement("div");
     azioni.className = "card__azioni";
     if (loc.indirizzo) {
       var btnMaps = document.createElement("a");
       btnMaps.className = "btn btn-card";
       btnMaps.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(loc.indirizzo);
-      btnMaps.target = "_blank";
-      btnMaps.rel = "noopener";
-      btnMaps.textContent = "Apri su Maps";
+      btnMaps.target = "_blank"; btnMaps.rel = "noopener"; btnMaps.textContent = "Apri su Maps";
       azioni.appendChild(btnMaps);
     }
     if (loc.telefono) {
       var btnTel = document.createElement("a");
-      btnTel.className = "btn btn-card";
-      btnTel.href = "tel:" + loc.telefono;
-      btnTel.textContent = "Chiama";
+      btnTel.className = "btn btn-card"; btnTel.href = "tel:" + loc.telefono; btnTel.textContent = "Chiama";
       azioni.appendChild(btnTel);
     }
+    var btnCondividi = document.createElement("button");
+    btnCondividi.type = "button";
+    btnCondividi.className = "btn btn-card";
+    btnCondividi.textContent = "📲";
+    btnCondividi.setAttribute("aria-label", "Condividi " + loc.nome + " su WhatsApp");
+    btnCondividi.addEventListener("click", function () {
+      condividiTesto(loc.nome, loc.nome + " — " + (loc.indirizzo || loc.zona) + (loc.telefono ? " · " + loc.telefono : "") + ".", window.location.href);
+    });
+    azioni.appendChild(btnCondividi);
     card.appendChild(azioni);
     return card;
   }
@@ -1125,15 +1178,12 @@
     var chips = document.getElementById("filtri-locali");
     var griglia = document.getElementById("griglia-locali");
     if (!griglia) return;
-
     if (chips && chips.children.length === 0) {
       var tipiPresenti = [];
       stato.locali.forEach(function (l) { if (tipiPresenti.indexOf(l.tipo) === -1) tipiPresenti.push(l.tipo); });
       tipiPresenti.forEach(function (tipo) {
         var chip = document.createElement("button");
-        chip.type = "button";
-        chip.className = "chip";
-        chip.dataset.tipo = tipo;
+        chip.type = "button"; chip.className = "chip"; chip.dataset.tipo = tipo;
         chip.setAttribute("aria-pressed", "false");
         chip.textContent = (TIPO_LOCALE_ICONA[tipo] || "") + " " + (TIPO_LOCALE_LABEL[tipo] || tipo);
         chip.addEventListener("click", function () {
@@ -1146,12 +1196,9 @@
         chips.appendChild(chip);
       });
     }
-
     griglia.innerHTML = "";
-    var visibili = stato.locali.filter(function (l) {
-      return !stato.filtriLocali.tipo || l.tipo === stato.filtriLocali.tipo;
-    });
-    visibili.forEach(function (l) { griglia.appendChild(creaCardLocale(l)); });
+    stato.locali.filter(function (l) { return !stato.filtriLocali.tipo || l.tipo === stato.filtriLocali.tipo; })
+      .forEach(function (l) { griglia.appendChild(creaCardLocale(l)); });
   }
 
   // ---------- Eventi ----------
@@ -1160,19 +1207,15 @@
     var notaEl = document.getElementById("eventi-nota");
     if (!griglia) return;
     if (notaEl) notaEl.textContent = stato.eventiNota || "";
-
     griglia.innerHTML = "";
     GIORNI_ORDINE.forEach(function (g) {
       var eventiGiorno = stato.eventi.filter(function (e) { return e.giorno === g; });
       if (eventiGiorno.length === 0) return;
-
       var gruppo = document.createElement("div");
       gruppo.className = "servizi-zona";
       var titolo = document.createElement("h3");
-      titolo.className = "servizi-zona__titolo";
-      titolo.textContent = GIORNI_DATE[g];
+      titolo.className = "servizi-zona__titolo"; titolo.textContent = GIORNI_DATE[g];
       gruppo.appendChild(titolo);
-
       var lista = document.createElement("div");
       lista.className = "griglia-servizi";
       eventiGiorno.forEach(function (e) {
@@ -1183,12 +1226,10 @@
         meta.textContent = "🎉 " + e.luogo + (e.orario ? " · " + e.orario : "");
         card.appendChild(meta);
         var nome = document.createElement("h3");
-        nome.className = "card__nome";
-        nome.textContent = e.nome;
+        nome.className = "card__nome"; nome.textContent = e.nome;
         card.appendChild(nome);
         var desc = document.createElement("p");
-        desc.className = "card__descrizione";
-        desc.textContent = e.descrizione;
+        desc.className = "card__descrizione"; desc.textContent = e.descrizione;
         card.appendChild(desc);
         var badge = document.createElement("p");
         badge.className = "card__extra";
@@ -1207,32 +1248,23 @@
     if (!lista) return;
     lista.innerHTML = "";
     var fatte = stato.prenotazioniFatte;
-
     stato.prenotazioni.forEach(function (p, i) {
       var li = document.createElement("li");
       li.className = "checklist__voce checklist__voce--prenotazione";
       var id = "prenotazione-" + i;
       var checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.id = id;
-      checkbox.checked = !!fatte[i];
-      checkbox.addEventListener("change", function () {
-        fatte[i] = checkbox.checked;
-        salvaJson(STORAGE_PRENOTAZIONI, fatte);
-      });
+      checkbox.type = "checkbox"; checkbox.id = id; checkbox.checked = !!fatte[i];
+      checkbox.addEventListener("change", function () { fatte[i] = checkbox.checked; salvaJson(STORAGE_PRENOTAZIONI, fatte); });
       var label = document.createElement("label");
       label.htmlFor = id;
-      var nomeLuogoTesto = "";
       var luogoCollegato = stato.luoghi.filter(function (l) { return l.id === p.luogo_id; })[0];
-      if (luogoCollegato) nomeLuogoTesto = luogoCollegato.nome + " — ";
+      var nomeLuogoTesto = luogoCollegato ? luogoCollegato.nome + " — " : "";
       label.innerHTML = "<strong>" + nomeLuogoTesto + p.cosa + "</strong><br><span class=\"prenotazione__dettaglio\">Entro: " + p.entro + " · Come: " + p.come + "</span><br><span class=\"prenotazione__dettaglio\">" + p.nota + "</span>";
-      li.appendChild(checkbox);
-      li.appendChild(label);
+      li.appendChild(checkbox); li.appendChild(label);
       lista.appendChild(li);
     });
   }
 
-  // ---------- Guest Card ----------
   function renderGuestCard() {
     var el = document.getElementById("contenuto-guestcard");
     if (!el || !stato.guestCard) return;
@@ -1242,19 +1274,15 @@
       '<p><strong>' + gc.nome + '</strong> — ' + (gc.gratuita ? 'gratuita' : 'a pagamento') + '</p>' +
       '<p>' + gc.comeSiOttiene + '</p>' +
       '<p><strong>Trasporti inclusi:</strong> ' + gc.trasportiInclusi + '</p>' +
-      '<p><strong>Sconti principali:</strong></p>' +
-      '<ul>' + gc.sconti.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
+      '<p><strong>Sconti principali:</strong></p><ul>' + gc.sconti.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
       '<p><strong>Bambini:</strong> ' + gc.noteBambini + '</p>' +
-      '<p class="riquadro-info__nota">' + gc.note + '</p>' +
-      '</div>';
+      '<p class="riquadro-info__nota">' + gc.note + '</p></div>';
   }
 
-  // ---------- Trasporti pubblici ----------
   function renderTrasporti() {
     var el = document.getElementById("contenuto-trasporti");
     if (!el || !stato.trasportiPubblici) return;
-    var t = stato.trasportiPubblici;
-    var linea = t.lineaPrincipale;
+    var t = stato.trasportiPubblici, linea = t.lineaPrincipale;
     el.innerHTML =
       '<div class="riquadro-info">' +
       '<p><strong>' + linea.nome + '</strong></p>' +
@@ -1263,11 +1291,9 @@
       '<p><strong>Durata:</strong> ' + linea.durata + '</p>' +
       '<p>' + linea.note + '</p>' +
       '<p><strong>Navetta locale:</strong> ' + t.navettaLocale + '</p>' +
-      '<p><strong>Passeggino sui bus:</strong> ' + t.passegginoSuiBus + '</p>' +
-      '</div>';
+      '<p><strong>Passeggino sui bus:</strong> ' + t.passegginoSuiBus + '</p></div>';
   }
 
-  // ---------- Viaggio A/R ----------
   function renderViaggio() {
     var el = document.getElementById("contenuto-viaggio");
     if (!el || !stato.viaggio) return;
@@ -1278,8 +1304,7 @@
       '<p>' + Math.round(v.distanzaKm) + ' km circa, ' + formatMinuti(v.durataMinuti) + ' di guida (esclusa la sosta), pedaggio stimato ' + v.pedaggioStimatoEur + ' € a tratta.</p>' +
       '<p><strong>Percorso:</strong> ' + v.percorso + '</p>' +
       '<p><strong>Soste con un neonato:</strong> ' + v.noteSoste + '</p>' +
-      '<p class="riquadro-info__nota">' + v.fonte + ' Lo stesso percorso, a ritroso, vale per il rientro del 30 agosto.</p>' +
-      '</div>';
+      '<p class="riquadro-info__nota">' + v.fonte + ' Lo stesso percorso, a ritroso, vale per il rientro del 30 agosto.</p></div>';
   }
 
   // ---------- Modalità Oggi + suggeritore ----------
@@ -1287,14 +1312,12 @@
     var giorno = calcolaGiornoOggi();
     var pioggia = giorno ? !!stato.meteoGiornoPioggia[giorno] : false;
     var assegnatiOggi = giorno ? luoghiDelGiorno(giorno).map(function (l) { return l.id; }) : [];
-
     var candidati = stato.luoghi.slice().sort(function (a, b) {
       var scoreA = (assegnatiOggi.indexOf(a.id) !== -1 ? -1000 : 0) + (pioggia && !a.coperto ? 2000 : 0) + (a.tempo_viaggio_minuti || 0);
       var scoreB = (assegnatiOggi.indexOf(b.id) !== -1 ? -1000 : 0) + (pioggia && !b.coperto ? 2000 : 0) + (b.tempo_viaggio_minuti || 0);
       return scoreA - scoreB;
     });
-
-    return { pioggia: pioggia, giorno: giorno, scelti: candidati.slice(0, 3) };
+    return { pioggia: pioggia, scelti: candidati.slice(0, 3) };
   }
 
   function renderSuggerimento(contenitore) {
@@ -1302,43 +1325,86 @@
     var motivazione = s.pioggia ? "Piove probabilmente oggi, quindi propongo tappe al coperto o vicine." : "Ecco le tappe più comode partendo da adesso.";
     var html = '<p class="suggeritore__motivo">' + motivazione + '</p><ul class="suggeritore__lista">';
     s.scelti.forEach(function (l) {
-      html += '<li><strong>' + l.nome + '</strong> — ' + formatMinuti(l.tempo_viaggio_minuti) + ' di viaggio' + (l.coperto ? ', al coperto ☂' : '') + '</li>';
+      html += '<li><a href="#luogo/' + l.id + '"><strong>' + l.nome + '</strong></a> — ' + formatMinuti(l.tempo_viaggio_minuti) + ' di viaggio' + (l.coperto ? ', al coperto ☂' : '') + '</li>';
     });
     html += '</ul>';
     contenitore.innerHTML = html;
   }
 
   function renderOggi() {
-    var sezione = document.getElementById("sezione-oggi");
-    var box = document.getElementById("riquadro-oggi");
-    if (!sezione || !box) return;
-
+    var sezione = document.getElementById("riquadro-oggi");
+    if (!sezione) return;
     var g = calcolaGiornoOggi();
-    if (!g) { sezione.hidden = true; return; }
-    sezione.hidden = false;
+    if (!g) { sezione.innerHTML = ""; return; }
 
     var luoghiOggi = luoghiDelGiorno(g);
     var meteoOggi = stato.meteoPerGiorno[g];
+    var sole = SOLE_PER_GIORNO[g];
 
-    var html = '<h2 id="titolo-oggi">Oggi — ' + GIORNI_DATE[g] + '</h2>';
+    var html = '<div class="riquadro-oggi"><h2>Oggi — ' + GIORNI_DATE[g] + '</h2>';
     if (meteoOggi) {
-      html += '<p class="riquadro-oggi__meteo">' + meteoOggi.icona + ' ' + meteoOggi.min + '°/' + meteoOggi.max + '°' + (stato.meteoGiornoPioggia[g] ? ' · ☔ pioggia probabile' : '') + '</p>';
+      html += '<p class="riquadro-oggi__meteo">' + meteoOggi.icona + ' ' + meteoOggi.min + '°/' + meteoOggi.max + '°' + (stato.meteoGiornoPioggia[g] ? ' · ☔ pioggia probabile' : '') + (sole ? ' · 🌅 ' + sole.alba + ' 🌇 ' + sole.tramonto : '') + '</p>';
     }
     if (luoghiOggi.length > 0) {
-      html += '<p><strong>In programma:</strong> ' + luoghiOggi.map(function (l) { return l.nome; }).join(' → ') + '</p>';
+      html += '<p><strong>In programma:</strong> ' + luoghiOggi.map(function (l) { return '<a href="#luogo/' + l.id + '">' + l.nome + '</a>'; }).join(' → ') + '</p>';
     } else {
       html += '<p>Nessuna tappa assegnata a oggi.</p>';
     }
     html += '<button type="button" class="btn btn-primario" id="btn-suggerisci">Cosa facciamo adesso?</button>';
-    html += '<div id="risultato-suggerimento"></div>';
+    html += '<div id="risultato-suggerimento"></div></div>';
 
-    box.innerHTML = html;
-
+    sezione.innerHTML = html;
     var btn = document.getElementById("btn-suggerisci");
-    if (btn) {
-      btn.addEventListener("click", function () {
-        renderSuggerimento(document.getElementById("risultato-suggerimento"));
-      });
+    if (btn) btn.addEventListener("click", function () { renderSuggerimento(document.getElementById("risultato-suggerimento")); });
+  }
+
+  function renderRicordo() {
+    var el = document.getElementById("riquadro-ricordo");
+    if (!el) return;
+    var fase = calcolaFaseVacanza();
+    if (fase.fase !== "dopo") { el.innerHTML = ""; return; }
+
+    var visitati = stato.luoghi.filter(function (l) { return stato.visitati[l.id] && stato.visitati[l.id].visitato; });
+    var kmVisti = visitati.reduce(function (s, l) { return s + (l.tempo_viaggio_minuti || 0); }, 0);
+    var righeDiario = GIORNI_ORDINE.filter(function (g) { return stato.diario[g]; })
+      .map(function (g) { return '<p><strong>' + GIORNI_DATE[g] + ':</strong> ' + stato.diario[g] + '</p>'; }).join('');
+
+    var testoBadge = "Sei giorni a Fai della Paganella: " + visitati.length + " luoghi visitati su " + stato.luoghi.length + ", " + Math.round(kmVisti) + " minuti di viaggio in totale. 👶🏔";
+
+    var html = '<div class="riquadro-oggi riquadro-ricordo">' +
+      '<h2>Com\'è andata?</h2>' +
+      '<p>' + testoBadge + '</p>' +
+      righeDiario +
+      '<button type="button" class="btn btn-primario" id="btn-condividi-ricordo">📲 Condividi il ricordo</button>' +
+      '</div>';
+    el.innerHTML = html;
+    var btn = document.getElementById("btn-condividi-ricordo");
+    if (btn) btn.addEventListener("click", function () { condividiTesto("Il nostro Trentino", testoBadge, window.location.origin + window.location.pathname); });
+  }
+
+  // ---------- Testata: countdown / durante / dopo ----------
+  function renderTestata() {
+    var el = document.getElementById("testata-countdown");
+    if (!el) return;
+    var fase = calcolaFaseVacanza();
+
+    if (stato.countdownTimer) { clearInterval(stato.countdownTimer); stato.countdownTimer = null; }
+
+    if (fase.fase === "prima") {
+      var aggiorna = function () {
+        var ms = new Date(2026, 7, 25, 0, 0, 0) - new Date();
+        if (ms <= 0) { renderTestata(); return; }
+        var giorni = Math.floor(ms / 86400000);
+        var ore = Math.floor((ms % 86400000) / 3600000);
+        var minuti = Math.floor((ms % 3600000) / 60000);
+        el.innerHTML = '<p class="testata__countdown">− ' + giorni + 'g ' + ore + 'h ' + minuti + 'm al Trentino</p>';
+      };
+      aggiorna();
+      stato.countdownTimer = setInterval(aggiorna, 30000);
+    } else if (fase.fase === "dopo") {
+      el.innerHTML = '<p class="testata__countdown"><a href="#oggi">Com\'è andata? →</a></p>';
+    } else {
+      el.innerHTML = '<p class="testata__countdown">📍 Siete a Fai della Paganella — buon soggiorno!</p>';
     }
   }
 
@@ -1352,18 +1418,14 @@
       voce.className = "numero-utile";
       var testo = document.createElement("div");
       var nomeEl = document.createElement("div");
-      nomeEl.className = "numero-utile__nome";
-      nomeEl.textContent = n.nome;
+      nomeEl.className = "numero-utile__nome"; nomeEl.textContent = n.nome;
       var notaEl = document.createElement("div");
-      notaEl.className = "numero-utile__nota";
-      notaEl.textContent = n.nota;
-      testo.appendChild(nomeEl);
-      testo.appendChild(notaEl);
+      notaEl.className = "numero-utile__nota"; notaEl.textContent = n.nota;
+      testo.appendChild(nomeEl); testo.appendChild(notaEl);
       voce.appendChild(testo);
       var link = document.createElement("a");
       link.className = "btn btn-card numero-utile__telefono";
-      link.href = "tel:" + n.telefono;
-      link.textContent = n.telefono;
+      link.href = "tel:" + n.telefono; link.textContent = n.telefono;
       voce.appendChild(link);
       lista.appendChild(voce);
     });
@@ -1375,25 +1437,20 @@
     if (!lista) return;
     lista.innerHTML = "";
     var salvati = caricaJson(STORAGE_CHECKLIST, {});
-
     CHECKLIST_ITEMS.forEach(function (voce, i) {
       var li = document.createElement("li");
       li.className = "checklist__voce";
       var id = "checklist-item-" + i;
       var checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.id = id;
-      checkbox.checked = !!salvati[i];
+      checkbox.type = "checkbox"; checkbox.id = id; checkbox.checked = !!salvati[i];
       checkbox.addEventListener("change", function () {
         var stati = caricaJson(STORAGE_CHECKLIST, {});
         stati[i] = checkbox.checked;
         salvaJson(STORAGE_CHECKLIST, stati);
       });
       var label = document.createElement("label");
-      label.htmlFor = id;
-      label.textContent = voce;
-      li.appendChild(checkbox);
-      li.appendChild(label);
+      label.htmlFor = id; label.textContent = voce;
+      li.appendChild(checkbox); li.appendChild(label);
       lista.appendChild(li);
     });
   }
@@ -1403,28 +1460,22 @@
     var el = document.getElementById("foglio-stampa");
     if (!el) return;
     var html = '<h1>Fai della Paganella — Foglio d\'emergenza</h1><p>25-30 agosto 2026 · Hotel Arcobaleno, Via Cesare Battisti 45, tel. 0461583306</p>';
-
     html += '<h2>Numeri utili</h2><ul>';
     stato.numeriUtili.forEach(function (n) { html += '<li><strong>' + n.nome + ':</strong> ' + n.telefono + '</li>'; });
-    html += '</ul>';
-
-    html += '<h2>I sei giorni</h2>';
+    html += '</ul><h2>I sei giorni</h2>';
     GIORNI_ORDINE.forEach(function (g) {
       var luoghiGiorno = luoghiDelGiorno(g);
       html += '<h3>' + GIORNI_DATE[g] + '</h3>';
-      if (luoghiGiorno.length === 0) {
-        html += '<p>Nessuna tappa assegnata.</p>';
-      } else {
+      if (luoghiGiorno.length === 0) html += '<p>Nessuna tappa assegnata.</p>';
+      else {
         html += '<ol>';
         luoghiGiorno.forEach(function (l) { html += '<li>' + l.nome + ' (' + l.zona + ')</li>'; });
         html += '</ol>';
       }
     });
-
     html += '<h2>Farmacie e supermercati vicini</h2><ul>';
     stato.servizi.forEach(function (s) { html += '<li><strong>' + s.nome + '</strong> — ' + s.indirizzo + (s.telefono ? ' · ' + s.telefono : '') + '</li>'; });
     html += '</ul>';
-
     el.innerHTML = html;
   }
 
@@ -1433,23 +1484,14 @@
     var btn = document.getElementById("btn-condividi");
     if (!btn) return;
     btn.addEventListener("click", function () {
-      var url = window.location.href;
-      var testo = "Guida al soggiorno a Fai della Paganella (25-30 agosto 2026), passeggino-friendly";
-      if (navigator.share) {
-        navigator.share({ title: testo, url: url }).catch(function () {});
-      } else {
-        window.open("https://wa.me/?text=" + encodeURIComponent(testo + " " + url), "_blank", "noopener");
-      }
+      condividiTesto("Fai della Paganella con il passeggino", "Guida al soggiorno a Fai della Paganella (25-30 agosto 2026), passeggino-friendly", window.location.origin + window.location.pathname);
     });
   }
 
   function inizializzaStampa() {
     var btn = document.getElementById("btn-stampa");
     if (!btn) return;
-    btn.addEventListener("click", function () {
-      costruisciFoglioStampa();
-      window.print();
-    });
+    btn.addEventListener("click", function () { costruisciFoglioStampa(); window.print(); });
   }
 
   // ---------- Avvio ----------
@@ -1461,6 +1503,7 @@
     stato.visitati = caricaJson(STORAGE_VISITATI, {});
     stato.prenotazioniFatte = caricaJson(STORAGE_PRENOTAZIONI, {});
     stato.partenzePerGiorno = caricaJson(STORAGE_PARTENZE, {});
+    stato.diario = caricaJson(STORAGE_DIARIO, {});
 
     stato.servizi = (datiServizi && datiServizi.servizi) || [];
     stato.numeriUtili = (datiServizi && datiServizi.numeriUtili) || [];
@@ -1477,7 +1520,9 @@
     inizializzaCondivisione();
     inizializzaStampa();
     inizializzaMappaGenerale();
+    inizializzaRouter();
 
+    renderTestata();
     renderViaggio();
     renderPrenotazioni();
     renderGuestCard();
@@ -1491,49 +1536,37 @@
     renderGiorni();
     aggiornaBudget();
     renderOggi();
+    renderRicordo();
     caricaMeteo();
   }
 
   if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function () {});
-    });
+    window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
   }
 
   var timerRidimensionamento = null;
   window.addEventListener("resize", function () {
     clearTimeout(timerRidimensionamento);
-    timerRidimensionamento = setTimeout(function () {
-      if (stato.mappaGenerale) stato.mappaGenerale.invalidateSize();
-      Object.keys(stato.mappeGiorno).forEach(function (id) { stato.mappeGiorno[id].invalidateSize(); });
-    }, 200);
+    timerRidimensionamento = setTimeout(sistemaMappeVisibili, 200);
   });
 
   function fetchJsonSicuro(url, fallback) {
-    return fetch(url).then(function (r) {
-      if (!r.ok) throw new Error("Impossibile caricare " + url);
-      return r.json();
-    }).catch(function () { return fallback; });
+    return fetch(url).then(function (r) { if (!r.ok) throw new Error("Impossibile caricare " + url); return r.json(); }).catch(function () { return fallback; });
   }
 
   Promise.all([
-    fetch("data/luoghi.json").then(function (r) {
-      if (!r.ok) throw new Error("Impossibile caricare i dati dei luoghi");
-      return r.json();
-    }),
+    fetch("data/luoghi.json").then(function (r) { if (!r.ok) throw new Error("Impossibile caricare i dati dei luoghi"); return r.json(); }),
     fetchJsonSicuro("data/servizi.json", { servizi: [], numeriUtili: [] }),
     fetchJsonSicuro("data/locali.json", { locali: [] }),
     fetchJsonSicuro("data/eventi.json", { eventi: [] })
-  ])
-    .then(function (risultati) {
-      avvia(risultati[0], risultati[1], risultati[2], risultati[3]);
-    })
-    .catch(function (err) {
-      var main = document.getElementById("contenuto-principale");
-      var p = document.createElement("p");
-      p.className = "noscript-avviso";
-      p.style.display = "block";
-      p.textContent = "Non è stato possibile caricare l'elenco dei luoghi (" + err.message + "). Se hai aperto il file con doppio clic, alcuni browser bloccano il caricamento locale del JSON: prova ad aprirlo con un piccolo server locale oppure visita la versione pubblicata online.";
-      main.prepend(p);
-    });
+  ]).then(function (risultati) {
+    avvia(risultati[0], risultati[1], risultati[2], risultati[3]);
+  }).catch(function (err) {
+    var main = document.getElementById("contenuto-principale");
+    var p = document.createElement("p");
+    p.className = "noscript-avviso";
+    p.style.display = "block";
+    p.textContent = "Non è stato possibile caricare l'elenco dei luoghi (" + err.message + "). Se hai aperto il file con doppio clic, alcuni browser bloccano il caricamento locale del JSON: prova ad aprirlo con un piccolo server locale oppure visita la versione pubblicata online.";
+    main.prepend(p);
+  });
 })();

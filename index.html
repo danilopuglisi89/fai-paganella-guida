@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Fai della Paganella con il passeggino — Guida 25-30 agosto 2026</title>
 <meta name="description" content="Guida di viaggio per un soggiorno a Fai della Paganella dal 25 al 30 agosto 2026: luoghi valutati per il passeggino, giorni pianificati, meteo, poca auto.">
 
@@ -31,154 +31,175 @@
   </div>
 </noscript>
 
-<header class="testata">
-  <div class="container testata__inner">
+<header class="testata" id="testata">
+  <div class="testata__sfondo"></div>
+  <div class="container testata__inner" id="testata-contenuto">
     <h1>Fai della Paganella con il passeggino</h1>
     <p>Guida al soggiorno del 25–30 agosto 2026, base Hotel Arcobaleno. Due adulti, un bimbo di quattro mesi: si guida il meno possibile e ogni tappa è valutata rispetto al passeggino.</p>
-    <div class="testata__meta">
-      <span>📍 Fai della Paganella (TN)</span>
-      <span>📅 25–30 agosto 2026</span>
-      <span>🏨 Hotel Arcobaleno</span>
-    </div>
+    <div id="testata-countdown"></div>
     <div class="testata__condividi js-only">
       <button id="btn-condividi" class="btn btn-primario" type="button">Condividi su WhatsApp</button>
     </div>
   </div>
 </header>
 
-<nav class="nav-sezioni js-only" aria-label="Sezioni della guida">
-  <a href="#sezione-oggi">Oggi</a>
-  <a href="#sezione-viaggio">Viaggio</a>
-  <a href="#sezione-servizi">Servizi</a>
-  <a href="#sezione-mangiare">Mangiare</a>
-  <a href="#sezione-mappa">Mappa</a>
-  <a href="#sezione-meteo">Meteo</a>
-  <a href="#sezione-eventi">Eventi</a>
-  <a href="#sezione-luoghi">Luoghi</a>
-  <a href="#sezione-giorni">Giorni</a>
-  <a href="#sezione-numeri-utili">Utili</a>
-</nav>
+<main id="contenuto-principale">
 
-<main id="contenuto-principale" class="container">
+  <!-- ================= VISTA: OGGI ================= -->
+  <section class="vista" id="vista-oggi" data-vista="oggi">
+    <div class="container">
+      <div id="riquadro-oggi"></div>
 
-  <section class="js-only" id="sezione-oggi" aria-labelledby="titolo-oggi" hidden>
-    <div class="riquadro-oggi" id="riquadro-oggi"></div>
-  </section>
+      <div id="riquadro-ricordo"></div>
 
-  <section class="js-only" id="sezione-viaggio" aria-labelledby="titolo-viaggio">
-    <h2 id="titolo-viaggio">Il viaggio</h2>
-    <p class="sezione__intro">Andata e ritorno da Carrara, con le soste consigliate per un neonato di 4 mesi.</p>
-    <div id="contenuto-viaggio"></div>
-  </section>
+      <h2>Meteo dei sei giorni</h2>
+      <div id="meteo-contenuto">
+        <p>Caricamento previsioni…</p>
+      </div>
+      <div class="note-pratiche">
+        <h3>Note pratiche quota e meteo, con un neonato di 4 mesi</h3>
+        <ul>
+          <li>Sopra i 1500–2100 m (Doss Pelà, Pradel, Rifugio Dosson) la temperatura scende anche di 8-10°C rispetto al fondovalle: porta comunque una giacca a vento leggera per il bimbo anche in agosto.</li>
+          <li>Nelle ore centrali (12:00–15:00) il sole in quota è più intenso che in pianura: meglio le tappe in altura la mattina presto o nel tardo pomeriggio, con cappellino e ombrellino parasole sul passeggino.</li>
+          <li>Prima di salire con gli impianti sopra i 2000 m, è prudente sentire il pediatra: non è una controindicazione assoluta a 4 mesi, ma la scelta va valutata caso per caso.</li>
+          <li>In valle (900–1000 m) le temperature medie di agosto sono comprese tra 12°C di notte e 22-23°C di giorno, ma possono cambiare in fretta con un temporale: controlla il meteo la sera prima di ogni gita.</li>
+        </ul>
+      </div>
 
-  <section class="js-only" id="sezione-prenotazioni" aria-labelledby="titolo-prenotazioni">
-    <h2 id="titolo-prenotazioni">Da prenotare prima di partire</h2>
-    <p class="sezione__intro">Poche cose, ma con scadenze precise: senza prenotazione niente Lago di Tovel né Canyon Rio Sass.</p>
-    <ul class="checklist" id="lista-prenotazioni"></ul>
-  </section>
-
-  <section class="js-only" id="sezione-guestcard" aria-labelledby="titolo-guestcard">
-    <h2 id="titolo-guestcard">Paganella Guest Card</h2>
-    <div id="contenuto-guestcard"></div>
-  </section>
-
-  <section class="js-only" id="sezione-servizi" aria-labelledby="titolo-servizi">
-    <h2 id="titolo-servizi">Nei dintorni dell'hotel</h2>
-    <p class="sezione__intro">Farmacia e spesa a portata di mano. Gli orari fuori Fai della Paganella possono variare in stagione: prima di un giro apposta conviene una telefonata di conferma.</p>
-    <div id="griglia-servizi"></div>
-  </section>
-
-  <section class="js-only" id="sezione-mangiare" aria-labelledby="titolo-mangiare">
-    <h2 id="titolo-mangiare">Dove mangiare</h2>
-    <p class="sezione__intro">Ristoranti, pizzerie, bar, gelaterie e rifugi in quota, con le note utili quando si viaggia con un passeggino.</p>
-    <div class="filtri__riga" id="filtri-locali"></div>
-    <div id="griglia-locali"></div>
-  </section>
-
-  <section class="js-only" id="sezione-trasporti" aria-labelledby="titolo-trasporti">
-    <h2 id="titolo-trasporti">Autobus, senza guidare</h2>
-    <div id="contenuto-trasporti"></div>
-  </section>
-
-  <section class="js-only" id="sezione-mappa" aria-labelledby="titolo-mappa">
-    <h2 id="titolo-mappa">Mappa dei luoghi</h2>
-    <p class="sezione__intro">Segue gli stessi filtri della lista qui sotto. Verde, ambra e rosso indicano lo stesso giudizio sul passeggino dei badge nelle schede.</p>
-    <div id="mappa-generale" class="mappa mappa--generale"></div>
-  </section>
-
-  <section class="js-only" id="sezione-meteo" aria-labelledby="titolo-meteo">
-    <h2 id="titolo-meteo">Meteo dei sei giorni</h2>
-    <div id="meteo-contenuto">
-      <p>Caricamento previsioni…</p>
-    </div>
-    <div class="note-pratiche">
-      <h3>Note pratiche quota e meteo, con un neonato di 4 mesi</h3>
-      <ul>
-        <li>Sopra i 1500–2100 m (Doss Pelà, Pradel, Rifugio Dosson) la temperatura scende anche di 8-10°C rispetto al fondovalle: porta comunque una giacca a vento leggera per il bimbo anche in agosto.</li>
-        <li>Nelle ore centrali (12:00–15:00) il sole in quota è più intenso che in pianura: meglio le tappe in altura la mattina presto o nel tardo pomeriggio, con cappellino e ombrellino parasole sul passeggino.</li>
-        <li>Prima di salire con gli impianti sopra i 2000 m, è prudente sentire il pediatra: non è una controindicazione assoluta a 4 mesi, ma la scelta va valutata caso per caso.</li>
-        <li>In valle (900–1000 m) le temperature medie di agosto sono comprese tra 12°C di notte e 22-23°C di giorno, ma possono cambiare in fretta con un temporale: controlla il meteo la sera prima di ogni gita.</li>
-      </ul>
+      <h2>Eventi 25-30 agosto</h2>
+      <p class="sezione__intro" id="eventi-nota"></p>
+      <div id="griglia-eventi"></div>
     </div>
   </section>
 
-  <section class="js-only" id="sezione-eventi" aria-labelledby="titolo-eventi">
-    <h2 id="titolo-eventi">Eventi 25-30 agosto</h2>
-    <p class="sezione__intro" id="eventi-nota"></p>
-    <div id="griglia-eventi"></div>
-  </section>
+  <!-- ================= VISTA: LUOGHI ================= -->
+  <section class="vista" id="vista-luoghi" data-vista="luoghi">
+    <div class="container">
+      <p class="barra-progresso" id="progresso-luoghi"></p>
 
-  <section class="js-only" id="sezione-filtri" aria-labelledby="titolo-filtri">
-    <h2 id="titolo-filtri">Filtri</h2>
-    <p class="sezione__intro">Combina i filtri per trovare le tappe adatte alla giornata: passeggino, senza auto, al coperto per la pioggia, o per categoria.</p>
-    <input type="search" id="ricerca-luoghi" class="ricerca" placeholder="Cerca un luogo per nome o zona…" aria-label="Cerca un luogo per nome o zona">
-    <div class="filtri__riga" id="filtri-principali">
-      <button type="button" class="chip" data-filtro="passeggino" aria-pressed="false">🟢 Solo passeggino</button>
-      <button type="button" class="chip" data-filtro="senzaAuto" aria-pressed="false">🚶 Senza auto</button>
-      <button type="button" class="chip" data-filtro="coperto" aria-pressed="false">☂ Al coperto</button>
-      <button type="button" class="chip" data-filtro="breve" aria-pressed="false">⏱ Meno di 30 min</button>
+      <input type="search" id="ricerca-luoghi" class="ricerca" placeholder="Cerca un luogo per nome o zona…" aria-label="Cerca un luogo per nome o zona">
+      <div class="filtri__riga" id="filtri-principali">
+        <button type="button" class="chip" data-filtro="passeggino" aria-pressed="false">🟢 Solo passeggino</button>
+        <button type="button" class="chip" data-filtro="senzaAuto" aria-pressed="false">🚶 Senza auto</button>
+        <button type="button" class="chip" data-filtro="coperto" aria-pressed="false">☂ Al coperto</button>
+        <button type="button" class="chip" data-filtro="breve" aria-pressed="false">⏱ Meno di 30 min</button>
+      </div>
+      <div class="filtri__riga" id="filtri-categorie"></div>
+      <p class="filtri__contatore" id="filtri-contatore">Caricamento…</p>
+
+      <div id="mappa-generale" class="mappa mappa--generale"></div>
+
+      <div class="griglia-luoghi griglia-luoghi--compatta" id="griglia-luoghi"></div>
     </div>
-    <div class="filtri__riga" id="filtri-categorie"></div>
-    <p class="filtri__contatore" id="filtri-contatore">Caricamento…</p>
   </section>
 
-  <section class="js-only" id="sezione-luoghi" aria-labelledby="titolo-luoghi">
-    <h2 id="titolo-luoghi">Tutti i luoghi</h2>
-    <div class="griglia-luoghi" id="griglia-luoghi"></div>
+  <!-- ================= VISTA: GIORNI ================= -->
+  <section class="vista" id="vista-giorni" data-vista="giorni">
+    <div class="container">
+      <p class="barra-progresso" id="progresso-giorni"></p>
+      <p class="budget-totale" id="budget-totale"></p>
+      <div id="giorni-lista"></div>
+    </div>
   </section>
 
-  <section class="js-only" id="sezione-giorni" aria-labelledby="titolo-giorni">
-    <h2 id="titolo-giorni">I sei giorni</h2>
-    <p class="sezione__intro">Ogni luogo si può spostare da un giorno all'altro con il menu a tendina, e riordinare con le frecce: tutto resta salvato nel browser.</p>
-    <p class="budget-totale" id="budget-totale"></p>
-    <div id="giorni-lista"></div>
+  <!-- ================= VISTA: MANGIARE ================= -->
+  <section class="vista" id="vista-mangiare" data-vista="mangiare">
+    <div class="container">
+      <p class="sezione__intro">Ristoranti, pizzerie, bar, gelaterie e rifugi in quota, con le note utili quando si viaggia con un passeggino.</p>
+      <div class="filtri__riga" id="filtri-locali"></div>
+      <div id="griglia-locali"></div>
+    </div>
   </section>
 
-  <section class="js-only" id="sezione-numeri-utili" aria-labelledby="titolo-numeri-utili">
-    <h2 id="titolo-numeri-utili">Numeri utili ed emergenze</h2>
-    <p class="sezione__intro">Da salvare in rubrica prima di partire.</p>
-    <ul class="lista-numeri" id="lista-numeri-utili"></ul>
-  </section>
+  <!-- ================= VISTA: INFO ================= -->
+  <section class="vista" id="vista-info" data-vista="info">
+    <div class="container">
 
-  <section class="js-only" id="sezione-checklist" aria-labelledby="titolo-checklist">
-    <h2 id="titolo-checklist">Checklist bagaglio neonato</h2>
-    <p class="sezione__intro">Le spunte si salvano nel browser: puoi riaprire questa pagina mentre fai le valigie.</p>
-    <ul class="checklist" id="checklist-bagaglio"></ul>
-  </section>
+      <details class="accordion" open>
+        <summary>Il viaggio</summary>
+        <div class="accordion__corpo">
+          <p class="sezione__intro">Andata e ritorno da Carrara, con le soste consigliate per un neonato di 4 mesi.</p>
+          <div id="contenuto-viaggio"></div>
+        </div>
+      </details>
 
-  <section class="js-only" id="sezione-stampa" aria-labelledby="titolo-stampa">
-    <h2 id="titolo-stampa">Foglio d'emergenza</h2>
-    <p class="sezione__intro">Una pagina compatta da stampare o salvare in PDF: i sei giorni, i numeri utili, gli indirizzi essenziali. Senza foto né mappe, per stare in poche pagine, come piano B se il telefono si scarica.</p>
-    <button type="button" class="btn btn-primario" id="btn-stampa">Stampa il foglio d'emergenza</button>
+      <details class="accordion">
+        <summary>Da prenotare prima di partire</summary>
+        <div class="accordion__corpo">
+          <p class="sezione__intro">Poche cose, ma con scadenze precise: senza prenotazione niente Lago di Tovel né Canyon Rio Sass.</p>
+          <ul class="checklist" id="lista-prenotazioni"></ul>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary>Paganella Guest Card</summary>
+        <div class="accordion__corpo">
+          <div id="contenuto-guestcard"></div>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary>Autobus, senza guidare</summary>
+        <div class="accordion__corpo">
+          <div id="contenuto-trasporti"></div>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary>Nei dintorni dell'hotel</summary>
+        <div class="accordion__corpo">
+          <p class="sezione__intro">Farmacia e spesa a portata di mano. Gli orari fuori Fai della Paganella possono variare in stagione: prima di un giro apposta conviene una telefonata di conferma.</p>
+          <div id="griglia-servizi"></div>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary>Numeri utili ed emergenze</summary>
+        <div class="accordion__corpo">
+          <p class="sezione__intro">Da salvare in rubrica prima di partire.</p>
+          <ul class="lista-numeri" id="lista-numeri-utili"></ul>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary>Checklist bagaglio neonato</summary>
+        <div class="accordion__corpo">
+          <p class="sezione__intro">Le spunte si salvano nel browser: puoi riaprire questa pagina mentre fai le valigie.</p>
+          <ul class="checklist" id="checklist-bagaglio"></ul>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary>Foglio d'emergenza</summary>
+        <div class="accordion__corpo">
+          <p class="sezione__intro">Una pagina compatta da stampare o salvare in PDF: i sei giorni, i numeri utili, gli indirizzi essenziali. Senza foto né mappe, come piano B se il telefono si scarica.</p>
+          <button type="button" class="btn btn-primario" id="btn-stampa">Stampa il foglio d'emergenza</button>
+        </div>
+      </details>
+
+      <p class="info__footer">Guida creata per uso personale. Orari, prezzi e coordinate vanno sempre riverificati prima della partenza sui siti ufficiali collegati a ogni scheda.</p>
+    </div>
   </section>
 
 </main>
 
-<div id="foglio-stampa" class="solo-stampa" aria-hidden="true"></div>
+<!-- ================= OVERLAY DETTAGLIO LUOGO ================= -->
+<div id="overlay-dettaglio" class="overlay" hidden>
+  <div class="overlay__pannello">
+    <button type="button" class="overlay__chiudi" id="btn-chiudi-overlay" aria-label="Chiudi">✕</button>
+    <div id="overlay-contenuto"></div>
+  </div>
+</div>
 
-<footer class="container">
-  <p>Guida creata per uso personale. Orari, prezzi e coordinate vanno sempre riverificati prima della partenza sui siti ufficiali collegati a ogni scheda.</p>
-</footer>
+<nav class="tabbar js-only" id="tabbar" aria-label="Schede della guida">
+  <a href="#oggi" data-tab="oggi"><span class="tabbar__icona">🏠</span><span>Oggi</span></a>
+  <a href="#luoghi" data-tab="luoghi"><span class="tabbar__icona">📍</span><span>Luoghi</span></a>
+  <a href="#giorni" data-tab="giorni"><span class="tabbar__icona">📅</span><span>Giorni</span></a>
+  <a href="#mangiare" data-tab="mangiare"><span class="tabbar__icona">🍽</span><span>Mangiare</span></a>
+  <a href="#info" data-tab="info"><span class="tabbar__icona">ℹ️</span><span>Info</span></a>
+</nav>
+
+<div id="foglio-stampa" class="solo-stampa" aria-hidden="true"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="app.js"></script>
