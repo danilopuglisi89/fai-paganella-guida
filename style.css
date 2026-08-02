@@ -743,6 +743,228 @@ section h2 {
   font-size: .88rem;
 }
 
+.giorno__avviso-ritmo {
+  font-size: .82rem;
+  color: #8a6414;
+  background: var(--ambra-bg);
+  border-left: 3px solid var(--ambra);
+  padding: 6px 8px;
+  margin: 0 0 8px;
+}
+
+.giorno__partenza {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.giorno__partenza input[type="time"] {
+  font-family: var(--font-mono);
+  padding: 6px 8px;
+  border: 2px solid var(--roccia);
+  border-radius: var(--radius);
+  min-height: 36px;
+}
+
+.giorno__rientro {
+  font-size: .82rem;
+  color: var(--roccia);
+  margin: 10px 0 0;
+  font-style: italic;
+}
+
+.budget-totale {
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  background: #fff;
+  border: 1px solid #dbe0da;
+  border-left: 3px solid var(--genziana);
+  padding: 10px 12px;
+  margin: 0 0 14px;
+}
+
+/* ---------- Card: badge riga, apertura, servizi bimbo, parcheggio, visitato ---------- */
+.card__badge-riga {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.badge-apertura {
+  display: inline-flex;
+  align-items: center;
+  font-size: .74rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  padding: 4px 8px;
+}
+
+.badge-apertura--aperto { background: var(--verde-ok-bg); color: var(--verde-ok); }
+.badge-apertura--chiude-a-breve { background: var(--ambra-bg); color: #8a6414; }
+.badge-apertura--chiuso { background: var(--rosso-no-bg); color: var(--rosso-no); }
+
+.badge-prenotazione {
+  display: inline-flex;
+  align-items: center;
+  font-size: .74rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  padding: 4px 8px;
+  background: var(--ambra-bg);
+  color: #8a6414;
+}
+
+.card__servizi-bimbo {
+  font-size: .82rem;
+  color: var(--abete);
+  margin: 0;
+}
+
+.card__parcheggio {
+  font-size: .82rem;
+  color: var(--roccia);
+  margin: 0;
+  background: var(--neve);
+  border-left: 2px solid var(--ghiaccio);
+  padding: 6px 8px;
+}
+
+.card--visitato {
+  opacity: .55;
+}
+
+.card__visitato {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid #eef1ee;
+}
+
+.card__visitato input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--genziana);
+}
+
+.card__visitato label {
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+.card__nota-libera {
+  flex: 1 1 100%;
+  font-family: var(--font-testo);
+  font-size: .82rem;
+  padding: 6px 8px;
+  border: 1px solid #dbe0da;
+  border-radius: var(--radius);
+  min-height: 36px;
+}
+
+/* ---------- Riquadro Oggi ---------- */
+.riquadro-oggi {
+  background: var(--abete);
+  color: var(--neve);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-top: 16px;
+}
+
+.riquadro-oggi h2 {
+  color: var(--neve);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.riquadro-oggi__meteo {
+  font-family: var(--font-mono);
+  font-size: .9rem;
+  color: var(--ghiaccio);
+  margin: 0 0 8px;
+}
+
+.riquadro-oggi p { margin: 0 0 8px; }
+
+.riquadro-oggi #btn-suggerisci {
+  margin-top: 6px;
+}
+
+.suggeritore__motivo {
+  color: var(--ghiaccio);
+  font-size: .85rem;
+  margin-top: 12px !important;
+}
+
+.suggeritore__lista {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.suggeritore__lista li {
+  background: rgba(255,255,255,.08);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  font-size: .88rem;
+}
+
+/* ---------- Riquadro info (viaggio, guest card, trasporti) ---------- */
+.riquadro-info {
+  background: #fff;
+  border: 1px solid #dbe0da;
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.riquadro-info p {
+  margin: 0 0 10px;
+  font-size: .92rem;
+  line-height: 1.55;
+}
+
+.riquadro-info ul {
+  margin: 0 0 10px;
+  padding-left: 20px;
+  font-size: .9rem;
+}
+
+.riquadro-info ul li { margin-bottom: 4px; }
+
+.riquadro-info__nota {
+  font-size: .78rem;
+  color: var(--roccia);
+  font-style: italic;
+}
+
+/* ---------- Prenotazioni con scadenze ---------- */
+.checklist__voce--prenotazione {
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+.checklist__voce--prenotazione label {
+  cursor: default;
+}
+
+.prenotazione__dettaglio {
+  font-size: .8rem;
+  color: var(--roccia);
+  font-weight: 400;
+}
+
+/* ---------- Foglio stampabile ---------- */
+.solo-stampa { display: none; }
+
 /* ---------- Footer ---------- */
 footer {
   text-align: center;
@@ -758,4 +980,25 @@ footer {
   .card__azioni { flex-direction: column; }
   .btn-card { flex: 1 1 100%; }
   .mappa--generale { height: 280px; }
+  .numero-utile { flex-direction: column; align-items: flex-start; }
+}
+
+/* ---------- Stampa ---------- */
+@media print {
+  body * { visibility: hidden; }
+  .solo-stampa, .solo-stampa * { visibility: visible; }
+  .solo-stampa {
+    display: block;
+    position: absolute;
+    inset: 0;
+    color: #000;
+    background: #fff;
+    font-family: var(--font-testo);
+    padding: 0;
+  }
+  .solo-stampa h1 { font-family: var(--font-titoli); font-size: 1.4rem; margin-bottom: 4px; }
+  .solo-stampa h2 { font-family: var(--font-titoli); font-size: 1.1rem; margin: 16px 0 6px; border-bottom: 1px solid #000; }
+  .solo-stampa h3 { font-size: .95rem; margin: 10px 0 4px; }
+  .solo-stampa ul, .solo-stampa ol { margin: 0 0 8px; padding-left: 20px; font-size: .85rem; }
+  .solo-stampa p { font-size: .85rem; }
 }

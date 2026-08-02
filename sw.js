@@ -1,7 +1,7 @@
 "use strict";
 
-var CACHE_VERSIONE = "fai-paganella-v2";
-var CACHE_RUNTIME = "fai-paganella-runtime-v2";
+var CACHE_VERSIONE = "fai-paganella-v3";
+var CACHE_RUNTIME = "fai-paganella-runtime-v3";
 
 var RISORSE_PRECACHE = [
   "./",
@@ -9,7 +9,9 @@ var RISORSE_PRECACHE = [
   "style.css",
   "app.js",
   "data/luoghi.json",
-  "data/servizi.json"
+  "data/servizi.json",
+  "data/locali.json",
+  "data/eventi.json"
 ];
 
 self.addEventListener("install", function (evento) {

@@ -45,10 +45,11 @@ Il file `.nojekyll` nella root evita che GitHub Pages passi il sito attraverso J
 
 ## Aggiornare i dati
 
-Tutti i luoghi sono in `data/luoghi.json`. Ogni voce ha, tra gli altri campi, `giorno_suggerito` (1–6, dove 1 = 25 agosto) usato come assegnazione iniziale — l'utente può poi spostare i luoghi tra i giorni dall'interfaccia, e la scelta resta salvata nel browser (`localStorage`), non nel file. Il campo `immagine` (quando presente) punta a un file Wikimedia Commons con `autore`, `licenza` e `pagina_fonte` per l'attribuzione mostrata sotto la foto.
+- **`data/luoghi.json`** — i 27 luoghi. Oltre ai campi base: `giorno_suggerito` (1–6, assegnazione iniziale), `immagine` (Wikimedia Commons con `autore`/`licenza`/`pagina_fonte`), `punto_foto` (consiglio dove scattare), `parcheggio`, `servizi_bimbo` (fasciatoio/bagni/allattamento), `orari_struttura` (giorni di chiusura + fasce orarie, usato per il badge "aperto ora/chiude tra"), `prenotazione` (se obbligatoria, entro quando, come) e `costo_eur` (usato per il budget totale).
+- **`data/servizi.json`** — farmacie e supermercati (array `servizi`), numeri utili, `prenotazioni` (collegate a un luogo via `luogo_id`), `guestCard`, `trasportiPubblici` e `viaggio` (andata/ritorno da Carrara).
+- **`data/locali.json`** — ristoranti, pizzerie, bar, gelaterie e rifugi in quota.
+- **`data/eventi.json`** — eventi del 25-30 agosto, ognuno con `giorno` (1-6).
 
-Farmacia, supermercato, ristoranti/bar vicino all'hotel e i numeri utili sono in `data/servizi.json`.
+L'assegnazione ai giorni, l'ordine delle tappe, la checklist, le prenotazioni fatte, gli orari di partenza e le note "visitato" restano salvate nel browser (`localStorage`), non nei file.
 
-La checklist bagaglio e le note su quota/meteo sono contenuti statici dentro `index.html`/`app.js`: per modificarle si edita direttamente il codice, non serve toccare i JSON.
-
-Dopo una modifica ai file basta fare commit e push: GitHub Pages ripubblica automaticamente in un paio di minuti.
+Dopo una modifica ai file basta fare commit e push: GitHub Pages ripubblica automaticamente in un paio di minuti. Se cambi `sw.js`, aggiorna `CACHE_VERSIONE` per forzare l'aggiornamento della cache su chi ha già visitato il sito.

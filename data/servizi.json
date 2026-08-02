@@ -1,196 +1,85 @@
 {
   "servizi": [
-    {
-      "id": "farmacia-catanzaro",
-      "nome": "Farmacia Catanzaro",
-      "tipo": "farmacia",
-      "zona": "Fai della Paganella",
-      "indirizzo": "Via Villa 35, 38010 Fai della Paganella (TN)",
-      "telefono": "0461583342",
-      "orari": "Lun-Sab 9:00-12:30 e 15:00-19:30; Dom e festivi 10:00-12:00 e 17:00-19:00 (verificare, possibile turnazione)",
-      "note": null
-    },
-    {
-      "id": "farmacia-andalo",
-      "nome": "Farmacia Andalo (Farmacia delle Dolomiti)",
-      "tipo": "farmacia",
-      "zona": "Andalo",
-      "indirizzo": "Via Ponte Lambin 27, 38010 Andalo (TN), presso centro commerciale Il Maso",
-      "telefono": "0461585201",
-      "orari": "Lun-Sab 9:00-12:30 e 15:00-19:00; Dom e festivi solo se di turno",
-      "note": null
-    },
-    {
-      "id": "farmacia-molveno",
-      "nome": "Farmacia Dr. Ada Margonari",
-      "tipo": "farmacia",
-      "zona": "Molveno",
-      "indirizzo": "Piazza Scuole 2, 38018 Molveno (TN)",
-      "telefono": "0461586972",
-      "orari": null,
-      "note": null
-    },
-    {
-      "id": "farmacia-spormaggiore",
-      "nome": "Farmacia D'Andrea",
-      "tipo": "farmacia",
-      "zona": "Spormaggiore",
-      "indirizzo": "Piazza della Chiesa 1, 38010 Spormaggiore (TN)",
-      "telefono": "0461643020",
-      "orari": "Mar-Mer 8:30-12:10 e 15:30-19:00; Gio e Sab 8:30-12:10; Lun/Ven/Dom chiuso (orari insoliti per l'unica farmacia del paese, verificare)",
-      "note": "Comoda se si visita il Belpark."
-    },
-    {
-      "id": "farmacia-mezzolombardo",
-      "nome": "Farmacia Campagnola",
-      "tipo": "farmacia",
-      "zona": "Mezzolombardo",
-      "indirizzo": "Via Alcide De Gasperi 19/21, Mezzolombardo (TN)",
-      "telefono": "0461601032",
-      "orari": "Lun-Ven 8:30-12:15 e 15:00-19:15; Sab 8:30-12:15",
-      "note": "In fondovalle, sulla strada per Trento."
-    },
-    {
-      "id": "farmacia-mezzocorona",
-      "nome": "Farmacia Zanini",
-      "tipo": "farmacia",
-      "zona": "Mezzocorona",
-      "indirizzo": "Piazza San Gottardo 13, 38016 Mezzocorona (TN)",
-      "telefono": "0461605161",
-      "orari": "Lun-Ven 8:30-12:00 e 16:00-18:30; Sab 8:30-12:00",
-      "note": null
-    },
-    {
-      "id": "supermercato-conad-fai",
-      "nome": "Conad Margherita",
-      "tipo": "supermercato",
-      "zona": "Fai della Paganella",
-      "indirizzo": "Piazza Trentina 3, 38010 Fai della Paganella (TN)",
-      "telefono": "0461437708",
-      "orari": "Tutti i giorni, incl. domenica, 7:00-12:30 e 16:00-19:30",
-      "note": null
-    },
-    {
-      "id": "supermercato-coop-fai",
-      "nome": "Coop (Famiglia Cooperativa Brenta Paganella)",
-      "tipo": "supermercato",
-      "zona": "Fai della Paganella",
-      "indirizzo": "Via G. Marconi 12, 38010 Fai della Paganella (TN)",
-      "telefono": "0461583123",
-      "orari": "Lun/Mar/Ven 8:00-12:10; Mer/Gio/Sab 8:00-12:10 e 16:00-19:00; Dom chiuso",
-      "note": null
-    },
-    {
-      "id": "supermercato-despar-andalo",
-      "nome": "Despar",
-      "tipo": "supermercato",
-      "zona": "Andalo",
-      "indirizzo": "Via Maso Fovo 5, 38010 Andalo (TN)",
-      "telefono": "0461585540",
-      "orari": "Tutti i giorni 7:30-12:30 e 15:30-19:00",
-      "note": null
-    },
-    {
-      "id": "supermercato-conad-andalo",
-      "nome": "Conad City",
-      "tipo": "supermercato",
-      "zona": "Andalo",
-      "indirizzo": "Via Ponte Lambin 9, 38010 Andalo (TN)",
-      "telefono": "0461585909",
-      "orari": "Tutti i giorni 8:00-12:30 e 15:30-19:30",
-      "note": null
-    },
-    {
-      "id": "supermercato-coop-molveno",
-      "nome": "Coop (Famiglia Cooperativa Brenta Paganella)",
-      "tipo": "supermercato",
-      "zona": "Molveno",
-      "indirizzo": "Via Lungo Lago 32, 38018 Molveno (TN)",
-      "telefono": "0461586273",
-      "orari": "Lun-Mer 8:00-12:00 e 16:00-19:00; Gio 8:00-12:00; Ven-Sab 8:00-12:15/19:00; Dom chiuso",
-      "note": null
-    },
-    {
-      "id": "supermercato-spormaggiore",
-      "nome": "Famiglia Cooperativa Brenta Paganella",
-      "tipo": "supermercato",
-      "zona": "Spormaggiore",
-      "indirizzo": "Piazza di Fiera 2, 38010 Spormaggiore (TN)",
-      "telefono": "0461653122",
-      "orari": null,
-      "note": null
-    },
-    {
-      "id": "supermercato-despar-mezzolombardo",
-      "nome": "Despar",
-      "tipo": "supermercato",
-      "zona": "Mezzolombardo",
-      "indirizzo": "Piazza Erbe 7, 38017 Mezzolombardo (TN)",
-      "telefono": "0461603698",
-      "orari": "Lun-Sab 7:30-19:00; Dom chiuso",
-      "note": null
-    },
-    {
-      "id": "supermercato-eurospin-mezzolombardo",
-      "nome": "Eurospin",
-      "tipo": "supermercato",
-      "zona": "Mezzolombardo",
-      "indirizzo": "Via Alcide De Gasperi 40, 38017 Mezzolombardo (TN)",
-      "telefono": null,
-      "orari": "Lun-Sab 8:00-19:15; Dom chiuso",
-      "note": null
-    },
-    {
-      "id": "ristorante-agostini",
-      "nome": "Ristorante Pizzeria Agostini",
-      "tipo": "ristorante",
-      "zona": "Fai della Paganella",
-      "indirizzo": "Piazza Italia Unita 16, 38010 Fai della Paganella (TN)",
-      "telefono": "0461583301",
-      "orari": "12:00-14:30 e 18:00-22:30",
-      "note": "In centro paese, a piedi dall'hotel."
-    },
-    {
-      "id": "bar-locanda-centrale",
-      "nome": "Bar Locanda Centrale",
-      "tipo": "bar",
-      "zona": "Fai della Paganella",
-      "indirizzo": "Piazza principale, 38010 Fai della Paganella (TN)",
-      "telefono": null,
-      "orari": null,
-      "note": "Sulla piazza del paese, davanti alla chiesa."
-    }
+    { "id": "farmacia-catanzaro", "nome": "Farmacia Catanzaro", "tipo": "farmacia", "zona": "Fai della Paganella", "indirizzo": "Via Villa 35, 38010 Fai della Paganella (TN)", "telefono": "0461583342", "orari": "Lun-Sab 9:00-12:30 e 15:00-19:30; Dom e festivi 10:00-12:00 e 17:00-19:00 (verificare, possibile turnazione)", "note": null },
+    { "id": "farmacia-andalo", "nome": "Farmacia Andalo (Farmacia delle Dolomiti)", "tipo": "farmacia", "zona": "Andalo", "indirizzo": "Via Ponte Lambin 27, 38010 Andalo (TN), presso centro commerciale Il Maso", "telefono": "0461585201", "orari": "Lun-Sab 9:00-12:30 e 15:00-19:00; Dom e festivi solo se di turno", "note": null },
+    { "id": "farmacia-molveno", "nome": "Farmacia Dr. Ada Margonari", "tipo": "farmacia", "zona": "Molveno", "indirizzo": "Piazza Scuole 2, 38018 Molveno (TN)", "telefono": "0461586972", "orari": null, "note": null },
+    { "id": "farmacia-spormaggiore", "nome": "Farmacia D'Andrea", "tipo": "farmacia", "zona": "Spormaggiore", "indirizzo": "Piazza della Chiesa 1, 38010 Spormaggiore (TN)", "telefono": "0461643020", "orari": "Mar-Mer 8:30-12:10 e 15:30-19:00; Gio e Sab 8:30-12:10; Lun/Ven/Dom chiuso (orari insoliti per l'unica farmacia del paese, verificare)", "note": "Comoda se si visita il Belpark." },
+    { "id": "farmacia-mezzolombardo", "nome": "Farmacia Campagnola", "tipo": "farmacia", "zona": "Mezzolombardo", "indirizzo": "Via Alcide De Gasperi 19/21, Mezzolombardo (TN)", "telefono": "0461601032", "orari": "Lun-Ven 8:30-12:15 e 15:00-19:15; Sab 8:30-12:15", "note": "In fondovalle, sulla strada per Trento." },
+    { "id": "farmacia-mezzocorona", "nome": "Farmacia Zanini", "tipo": "farmacia", "zona": "Mezzocorona", "indirizzo": "Piazza San Gottardo 13, 38016 Mezzocorona (TN)", "telefono": "0461605161", "orari": "Lun-Ven 8:30-12:00 e 16:00-18:30; Sab 8:30-12:00", "note": null },
+    { "id": "supermercato-conad-fai", "nome": "Conad Margherita", "tipo": "supermercato", "zona": "Fai della Paganella", "indirizzo": "Piazza Trentina 3, 38010 Fai della Paganella (TN)", "telefono": "0461437708", "orari": "Tutti i giorni, incl. domenica, 7:00-12:30 e 16:00-19:30", "note": null },
+    { "id": "supermercato-coop-fai", "nome": "Coop (Famiglia Cooperativa Brenta Paganella)", "tipo": "supermercato", "zona": "Fai della Paganella", "indirizzo": "Via G. Marconi 12, 38010 Fai della Paganella (TN)", "telefono": "0461583123", "orari": "Lun/Mar/Ven 8:00-12:10; Mer/Gio/Sab 8:00-12:10 e 16:00-19:00; Dom chiuso", "note": null },
+    { "id": "supermercato-despar-andalo", "nome": "Despar", "tipo": "supermercato", "zona": "Andalo", "indirizzo": "Via Maso Fovo 5, 38010 Andalo (TN)", "telefono": "0461585540", "orari": "Tutti i giorni 7:30-12:30 e 15:30-19:00", "note": null },
+    { "id": "supermercato-conad-andalo", "nome": "Conad City", "tipo": "supermercato", "zona": "Andalo", "indirizzo": "Via Ponte Lambin 9, 38010 Andalo (TN)", "telefono": "0461585909", "orari": "Tutti i giorni 8:00-12:30 e 15:30-19:30", "note": null },
+    { "id": "supermercato-coop-molveno", "nome": "Coop (Famiglia Cooperativa Brenta Paganella)", "tipo": "supermercato", "zona": "Molveno", "indirizzo": "Via Lungo Lago 32, 38018 Molveno (TN)", "telefono": "0461586273", "orari": "Lun-Mer 8:00-12:00 e 16:00-19:00; Gio 8:00-12:00; Ven-Sab 8:00-12:15/19:00; Dom chiuso", "note": null },
+    { "id": "supermercato-spormaggiore", "nome": "Famiglia Cooperativa Brenta Paganella", "tipo": "supermercato", "zona": "Spormaggiore", "indirizzo": "Piazza di Fiera 2, 38010 Spormaggiore (TN)", "telefono": "0461653122", "orari": null, "note": null },
+    { "id": "supermercato-despar-mezzolombardo", "nome": "Despar", "tipo": "supermercato", "zona": "Mezzolombardo", "indirizzo": "Piazza Erbe 7, 38017 Mezzolombardo (TN)", "telefono": "0461603698", "orari": "Lun-Sab 7:30-19:00; Dom chiuso", "note": null },
+    { "id": "supermercato-eurospin-mezzolombardo", "nome": "Eurospin", "tipo": "supermercato", "zona": "Mezzolombardo", "indirizzo": "Via Alcide De Gasperi 40, 38017 Mezzolombardo (TN)", "telefono": null, "orari": "Lun-Sab 8:00-19:15; Dom chiuso", "note": null }
   ],
+
   "numeriUtili": [
-    {
-      "nome": "Emergenza unica",
-      "telefono": "112",
-      "nota": "Numero unico per ogni emergenza: ambulanza, vigili del fuoco, forze dell'ordine."
+    { "nome": "Emergenza unica", "telefono": "112", "nota": "Numero unico per ogni emergenza: ambulanza, vigili del fuoco, forze dell'ordine." },
+    { "nome": "Continuità assistenziale (guardia medica notturna e festiva)", "telefono": "116117", "nota": "Per problemi non urgenti fuori dall'orario degli ambulatori, di notte o nei festivi." },
+    { "nome": "Servizio medico turistico Altopiano della Paganella", "telefono": "3358234451", "nota": "Prenotazione visite, attivo 23 giugno - 12 settembre 2026, lun-ven 8:00-20:00. Visita ambulatoriale €30, a domicilio €40. Ambulatorio in Via Villa, Fai della Paganella." },
+    { "nome": "Pediatra di zona (dott.ssa Lorena Filippi)", "telefono": "3381971781", "nota": "Studio ad Andalo, verificare disponibilità e orario di ricevimento prima di chiamare." },
+    { "nome": "Hotel Arcobaleno", "telefono": "0461583306", "nota": "Via Cesare Battisti 45, Fai della Paganella." },
+    { "nome": "Farmacia Catanzaro", "telefono": "0461583342", "nota": "Via Villa 35, Fai della Paganella." }
+  ],
+
+  "prenotazioni": [
+    { "luogo_id": "lago-tovel", "cosa": "Parcheggio + navetta per il Lago di Tovel", "entro": "Entro le 6:00 del giorno stesso", "come": "Online su book.pnab.it, sezione Parcheggi", "nota": "Ad agosto la strada da Lavacel al lago è chiusa alle auto dalle 11:00 alle 14:30, anche avendo prenotato: bisogna salire prima o dopo quella fascia." },
+    { "luogo_id": "canyon-rio-sass", "cosa": "Visita guidata al Canyon Rio Sass", "entro": "Qualche giorno prima", "come": "Telefono 0463 850000 (Cooperativa Smeraldo)", "nota": "Solo visite guidate, con caschetto obbligatorio. Il passeggino non entra." },
+    { "luogo_id": "terrazza-delle-stelle", "cosa": "Serata di osservazione astronomica", "entro": "Appena esce il calendario delle serate", "come": "Sul sito muse.it", "nota": "Posti limitati, calendario variabile e soggetto al meteo." }
+  ],
+
+  "guestCard": {
+    "nome": "Paganella Guest Card (già Dolomiti Paganella Guest Card, stesso documento)",
+    "gratuita": true,
+    "comeSiOttiene": "La regala l'Hotel Arcobaleno al check-in: è gratuita, riservata agli ospiti delle strutture aderenti, e non si può acquistare. È digitale (si attiva sull'app \"Mio Trentino\" con un codice via email/SMS) oppure in versione cartacea per chi non ha smartphone.",
+    "validaPer": "Tutta la durata del soggiorno (25-30 agosto 2026).",
+    "trasportiInclusi": "Tutti gli autobus urbani ed extraurbani di Trentino Trasporti (compresa la linea B611 Trento-Fai-Andalo-Molveno), la ferrovia Trento-Malè, la funivia di Sardagna a Trento. Non inclusi: treni ES/EC/IC/Espressi e gli altri impianti di risalita (funivie/cabinovie della Paganella escluse, quelle sono solo scontate).",
+    "sconti": [
+      "Impianti di risalita Paganella e Molveno-Pradel: tessere andata/ritorno e Trek Pass scontati (es. funivia Molveno-Pradel 15,50 € invece di 17,00 €)",
+      "Andalo: Acquapark -38% adulti / -20% bambini, Bimbolandia -20%, minigolf -25%, Winter Park -20%, trenino turistico -20%",
+      "Molveno: Acqua Park a tariffa fissa agevolata (11 € adulti, 8 € fino a 13 anni), Dolomia Wellness, tennis, bocce, e-pedalò e canoa a tariffa fissa",
+      "Fai della Paganella: Parco del Respiro, tennis e padel indoor -10%, pattinaggio Black Ice -15%",
+      "Spormaggiore: Casa del Parco Orso GRATIS, Parco Faunistico Belpark a tariffa ridotta",
+      "Trento e dintorni: 1 ingresso gratuito al Museo Etnografico di San Michele all'Adige, sconti in cantine e distillerie"
+    ],
+    "noteBambini": "I bambini non hanno una card propria: sono sempre inclusi in quella di un adulto accompagnatore, quindi viaggiano gratis su bus e treni provinciali insieme a voi. Non esiste una soglia d'età ufficiale pubblicata per gli sconti sulle attività: verificare punto per punto.",
+    "note": "È la versione locale della Trentino Guest Card (che dà comunque trasporto pubblico gratuito e sconti su oltre 60 musei in tutta la provincia): ricevendo quella della Paganella avete già incluso tutto quello che darebbe la card provinciale, più il pacchetto sconti locale. Info: APT Paganella, tel. 0461 585836.",
+    "fonte": "https://ktips.visitpaganella.it/it/guest-card"
+  },
+
+  "trasportiPubblici": {
+    "lineaPrincipale": {
+      "nome": "Linea B611 \"Paganella Express\" (Trento - Mezzolombardo - Fai della Paganella - Andalo - Molveno)",
+      "fermataFai": "Fermata \"Fai della Paganella\", Piazza Italia Unita — circa 5-7 minuti a piedi dall'Hotel Arcobaleno.",
+      "frequenza": "Da Fai verso Andalo/Molveno circa 2 corse/ora (minuti :09 e :39, dalle 7:39 alle 22:39). Da Fai verso Trento circa 1 corsa/ora (minuti :15, prima corsa 7:15, ultima 23:45). Orario estivo valido 27/06-09/2026, copre tutto il soggiorno.",
+      "durata": "Fai → Andalo 16 min · Fai → Molveno 28 min · Fai → Trento 50 min",
+      "gratuitaConGuestCard": true,
+      "note": "È l'unica linea extraurbana che serve Fai della Paganella: attenzione, altre corse Trento-Molveno passano da Spormaggiore/Cavedago e non toccano Fai."
     },
-    {
-      "nome": "Continuità assistenziale (guardia medica notturna e festiva)",
-      "telefono": "116117",
-      "nota": "Per problemi non urgenti fuori dall'orario degli ambulatori, di notte o nei festivi."
+    "navettaLocale": "Non esiste una navetta gratuita separata per Fai: c'è però il \"Paganella Shuttle\" Andalo-Molveno (partenze da Andalo ai minuti :15 e :45), utile dopo essere arrivati ad Andalo con la B611.",
+    "passegginoSuiBus": "Punto da sapere: sull'extraurbano (a differenza dei bus urbani di Trento) non è espressamente garantito il passeggino aperto, e la salita è dalla porta anteriore. Il passeggino piegato (max 115x20x15 cm) viaggia sempre gratis in stiva. Consiglio: portare un passeggino leggero/ombrello richiudibile per i giorni in bus. Da confermare al call center Trentino Trasporti, tel. 0461 821000.",
+    "fonte": "https://www.trentinotrasporti.it/pdforari/extraurbani/linee/OrariDiDirettrice-E26E-611ESA.PDF"
+  },
+
+  "viaggio": {
+    "partenza": {
+      "indirizzo": "Via Fossone Basso 12/U, Carrara (MS)",
+      "lat": 44.0507,
+      "lng": 10.0975
     },
-    {
-      "nome": "Servizio medico turistico Altopiano della Paganella",
-      "telefono": "3358234451",
-      "nota": "Prenotazione visite, attivo 23 giugno - 12 settembre 2026, lun-ven 8:00-20:00. Visita ambulatoriale €30, a domicilio €40. Ambulatorio in Via Villa, Fai della Paganella."
+    "arrivo": {
+      "indirizzo": "Hotel Arcobaleno, Via Cesare Battisti 45, Fai della Paganella (TN)",
+      "lat": 46.1746,
+      "lng": 11.0657
     },
-    {
-      "nome": "Pediatra di zona (dott.ssa Lorena Filippi)",
-      "telefono": "3381971781",
-      "nota": "Studio ad Andalo, verificare disponibilità e orario di ricevimento prima di chiamare."
-    },
-    {
-      "nome": "Hotel Arcobaleno",
-      "telefono": "0461583306",
-      "nota": "Via Cesare Battisti 45, Fai della Paganella."
-    },
-    {
-      "nome": "Farmacia Catanzaro",
-      "telefono": "0461583342",
-      "nota": "Via Villa 35, Fai della Paganella."
-    }
-  ]
+    "distanzaKm": 355,
+    "durataMinuti": 260,
+    "percorso": "A12/SS1 fino a Sarzana, poi A15 Autostrada della Cisa fino a Parma, un breve tratto in A1 verso nord, quindi A22 del Brennero fino all'uscita di Mezzocorona/San Michele all'Adige. Da lì la SP64 sale con tornanti fino all'altopiano della Paganella: ultimi 15-20 km, circa 30-35 minuti in più rispetto al tempo autostradale.",
+    "pedaggioStimatoEur": 32,
+    "noteSoste": "Con un neonato di 4 mesi conviene spezzare le circa 4h20 di viaggio (autostrada + salita) in almeno 2 soste, una a metà circa (zona Parma/Reggio Emilia, aree di servizio con fasciatoio) e una prima dell'ultima salita (zona Mezzocorona), per cambio, poppata e sgranchirsi. Il tratto finale sulla SP64 è di tornanti: meglio non essere già nell'orario del sonnellino quando si affronta.",
+    "fonte": "Distanza e tempo calcolati da fonti di calcolo percorso stradale (calcolopercorso.it), da verificare con un navigatore il giorno della partenza per il traffico reale."
+  }
 }

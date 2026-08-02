@@ -47,21 +47,57 @@
 </header>
 
 <nav class="nav-sezioni js-only" aria-label="Sezioni della guida">
+  <a href="#sezione-oggi">Oggi</a>
+  <a href="#sezione-viaggio">Viaggio</a>
   <a href="#sezione-servizi">Servizi</a>
+  <a href="#sezione-mangiare">Mangiare</a>
   <a href="#sezione-mappa">Mappa</a>
   <a href="#sezione-meteo">Meteo</a>
+  <a href="#sezione-eventi">Eventi</a>
   <a href="#sezione-luoghi">Luoghi</a>
   <a href="#sezione-giorni">Giorni</a>
-  <a href="#sezione-numeri-utili">Numeri utili</a>
-  <a href="#sezione-checklist">Checklist</a>
+  <a href="#sezione-numeri-utili">Utili</a>
 </nav>
 
 <main id="contenuto-principale" class="container">
 
+  <section class="js-only" id="sezione-oggi" aria-labelledby="titolo-oggi" hidden>
+    <div class="riquadro-oggi" id="riquadro-oggi"></div>
+  </section>
+
+  <section class="js-only" id="sezione-viaggio" aria-labelledby="titolo-viaggio">
+    <h2 id="titolo-viaggio">Il viaggio</h2>
+    <p class="sezione__intro">Andata e ritorno da Carrara, con le soste consigliate per un neonato di 4 mesi.</p>
+    <div id="contenuto-viaggio"></div>
+  </section>
+
+  <section class="js-only" id="sezione-prenotazioni" aria-labelledby="titolo-prenotazioni">
+    <h2 id="titolo-prenotazioni">Da prenotare prima di partire</h2>
+    <p class="sezione__intro">Poche cose, ma con scadenze precise: senza prenotazione niente Lago di Tovel né Canyon Rio Sass.</p>
+    <ul class="checklist" id="lista-prenotazioni"></ul>
+  </section>
+
+  <section class="js-only" id="sezione-guestcard" aria-labelledby="titolo-guestcard">
+    <h2 id="titolo-guestcard">Paganella Guest Card</h2>
+    <div id="contenuto-guestcard"></div>
+  </section>
+
   <section class="js-only" id="sezione-servizi" aria-labelledby="titolo-servizi">
     <h2 id="titolo-servizi">Nei dintorni dell'hotel</h2>
-    <p class="sezione__intro">Farmacia, spesa, ristoranti e bar a portata di mano, per le necessità quotidiane senza dover programmare una gita. Gli orari fuori Fai della Paganella possono variare in stagione: prima di un giro apposta conviene una telefonata di conferma.</p>
+    <p class="sezione__intro">Farmacia e spesa a portata di mano. Gli orari fuori Fai della Paganella possono variare in stagione: prima di un giro apposta conviene una telefonata di conferma.</p>
     <div id="griglia-servizi"></div>
+  </section>
+
+  <section class="js-only" id="sezione-mangiare" aria-labelledby="titolo-mangiare">
+    <h2 id="titolo-mangiare">Dove mangiare</h2>
+    <p class="sezione__intro">Ristoranti, pizzerie, bar, gelaterie e rifugi in quota, con le note utili quando si viaggia con un passeggino.</p>
+    <div class="filtri__riga" id="filtri-locali"></div>
+    <div id="griglia-locali"></div>
+  </section>
+
+  <section class="js-only" id="sezione-trasporti" aria-labelledby="titolo-trasporti">
+    <h2 id="titolo-trasporti">Autobus, senza guidare</h2>
+    <div id="contenuto-trasporti"></div>
   </section>
 
   <section class="js-only" id="sezione-mappa" aria-labelledby="titolo-mappa">
@@ -86,6 +122,12 @@
     </div>
   </section>
 
+  <section class="js-only" id="sezione-eventi" aria-labelledby="titolo-eventi">
+    <h2 id="titolo-eventi">Eventi 25-30 agosto</h2>
+    <p class="sezione__intro" id="eventi-nota"></p>
+    <div id="griglia-eventi"></div>
+  </section>
+
   <section class="js-only" id="sezione-filtri" aria-labelledby="titolo-filtri">
     <h2 id="titolo-filtri">Filtri</h2>
     <p class="sezione__intro">Combina i filtri per trovare le tappe adatte alla giornata: passeggino, senza auto, al coperto per la pioggia, o per categoria.</p>
@@ -107,7 +149,8 @@
 
   <section class="js-only" id="sezione-giorni" aria-labelledby="titolo-giorni">
     <h2 id="titolo-giorni">I sei giorni</h2>
-    <p class="sezione__intro">Ogni luogo si può spostare da un giorno all'altro con il menu a tendina: la scelta resta salvata nel browser.</p>
+    <p class="sezione__intro">Ogni luogo si può spostare da un giorno all'altro con il menu a tendina, e riordinare con le frecce: tutto resta salvato nel browser.</p>
+    <p class="budget-totale" id="budget-totale"></p>
     <div id="giorni-lista"></div>
   </section>
 
@@ -123,7 +166,15 @@
     <ul class="checklist" id="checklist-bagaglio"></ul>
   </section>
 
+  <section class="js-only" id="sezione-stampa" aria-labelledby="titolo-stampa">
+    <h2 id="titolo-stampa">Foglio d'emergenza</h2>
+    <p class="sezione__intro">Una pagina compatta da stampare o salvare in PDF: i sei giorni, i numeri utili, gli indirizzi essenziali. Senza foto né mappe, per stare in poche pagine, come piano B se il telefono si scarica.</p>
+    <button type="button" class="btn btn-primario" id="btn-stampa">Stampa il foglio d'emergenza</button>
+  </section>
+
 </main>
+
+<div id="foglio-stampa" class="solo-stampa" aria-hidden="true"></div>
 
 <footer class="container">
   <p>Guida creata per uso personale. Orari, prezzi e coordinate vanno sempre riverificati prima della partenza sui siti ufficiali collegati a ogni scheda.</p>

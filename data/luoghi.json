@@ -37,7 +37,17 @@
       "giorno_suggerito": 2,
       "priorita": "alta",
       "immagine": null,
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "belvedere-parco-giochi-fai",
@@ -70,7 +80,22 @@
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Fai_della_Paganella-panorama_from_Mezzocorona.jpg"
       },
-      "punto_foto": "Dalla terrazza del Sentiero dei Belvedere, meglio la mattina presto quando la luce arriva frontale sulla valle e non si scatta in controluce verso ovest."
+      "punto_foto": "Dalla terrazza del Sentiero dei Belvedere, meglio la mattina presto quando la luce arriva frontale sulla valle e non si scatta in controluce verso ovest.",
+      "parcheggio": null,
+      "servizi_bimbo": {
+        "fasciatoio": null,
+        "bagni": null,
+        "allattamento": "Il sentiero dei Belvedere e' una passeggiata in bosco fitto e ombroso, con molte panchine dove fermarsi.",
+        "nota": "Alla localita' Capannina c'e' un parco giochi con area verde per il pic-nic. Bagni pubblici non documentati: chiedere all'ufficio turistico di Fai."
+      },
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "centro-fai",
@@ -103,7 +128,17 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Fai_della_Paganella,_chiesa_di_San_Nicolò_01.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "ciclopedonale-fai-andalo",
@@ -136,35 +171,55 @@
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:View_mountains_Fai_della_Paganella.JPG"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "terrazza-delle-stelle",
-      "nome": "Terrazza delle Stelle (osservatorio)",
-      "zona": "Fai della Paganella",
+      "nome": "Terrazza delle Stelle (osservatorio MUSE)",
+      "zona": "Monte Bondone",
       "categoria": "museo",
-      "descrizione": "Osservatorio astronomico dell'altopiano, con serate di osservazione su prenotazione. Piazzale d'ingresso pianeggiante, ultimo tratto verso le postazioni sterrato.",
+      "descrizione": "Osservatorio astronomico del MUSE alle Viote del Monte Bondone, con serate di osservazione al telescopio su prenotazione. Non e' sull'altopiano della Paganella: sta dall'altra parte della Val d'Adige, oltre un'ora d'auto da Fai, di sera e al buio.",
       "durata_minuti": 120,
-      "distanza_km": 4,
-      "tempo_viaggio_minuti": 15,
+      "distanza_km": 50,
+      "tempo_viaggio_minuti": 70,
       "mezzo": [
         "auto"
       ],
       "passeggino": "parziale",
       "passeggino_nota": "Piazzale d'ingresso accessibile, l'ultimo tratto verso le postazioni di osservazione è sterrato.",
-      "quota_m": 1400,
+      "quota_m": 1560,
       "coperto": false,
       "costo": null,
       "orari": null,
-      "lat": 46.161,
-      "lng": 11.064,
+      "lat": 46.0175,
+      "lng": 11.0364,
       "place_id": null,
       "sito": "https://www.terrazzadellestelle.it/",
       "telefono": null,
       "giorno_suggerito": null,
       "priorita": "bassa",
       "immagine": null,
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": null,
+      "prenotazione": {
+        "obbligatoria": true,
+        "entro": "Appena esce il calendario delle serate",
+        "come": "Prenotazione tramite il MUSE, muse.it",
+        "nota": "Le serate di osservazione hanno posti limitati e calendario variabile."
+      },
+      "costo_eur": null
     },
     {
       "id": "lago-andalo",
@@ -198,7 +253,25 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lago_di_Andalo_-_Andalo,_Trento,_Italia_-_2_Giugno_2025.jpg"
       },
-      "punto_foto": "Sponda est del lago, all'alba o nel tardo pomeriggio: la luce radente mette in risalto i profili montuosi riflessi sull'acqua (l'effetto specchio dipende però dal livello stagionale del lago)."
+      "punto_foto": "Sponda est del lago, all'alba o nel tardo pomeriggio: la luce radente mette in risalto i profili montuosi riflessi sull'acqua (l'effetto specchio dipende però dal livello stagionale del lago).",
+      "parcheggio": {
+        "testo": "Parcheggi del centro e di Andalo Life: 2 EUR/ora, 13 EUR al giorno. In localita' Laghet c'e' lo sconto del 50% per chi usa gli impianti.",
+        "costo_eur": 4
+      },
+      "servizi_bimbo": {
+        "fasciatoio": null,
+        "bagni": true,
+        "allattamento": "Anello pianeggiante immerso nel verde, con prati e boschi intorno: molti punti ombreggiati dove fermarsi.",
+        "nota": "Bagni e bar nelle strutture di Andalo Life, a pochi passi. Il fasciatoio certo e' negli spogliatoi dell'AcquaIn poco distante. Il laghetto non e' balneabile."
+      },
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "life-park-andalo",
@@ -232,7 +305,20 @@
         "licenza": "CC BY 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Andalo_-_Andalo,_Trento_Italy_-_January_1,_2012_03.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": {
+        "testo": "Parcheggi comunali di Andalo a pochi minuti: 2 EUR/ora, 13 EUR al giorno.",
+        "costo_eur": 6
+      },
+      "servizi_bimbo": {
+        "fasciatoio": true,
+        "bagni": true,
+        "allattamento": "Parco esterno di 130.000 mq con prati e alberi; zone per cambiare e allattare in tranquillita' presso l'AcquaIn.",
+        "nota": "Fasciatoio e seggioloni negli spogliatoi dell'AcquaIn. I passeggini non entrano negli spogliatoi, ma si puo' portare l'ovetto senza ruote. Ingresso gratuito fino a 1 anno."
+      },
+      "orari_struttura": null,
+      "prenotazione": null,
+      "costo_eur": null
     },
     {
       "id": "piscine-andalo-life",
@@ -261,7 +347,20 @@
       "giorno_suggerito": null,
       "priorita": "media",
       "immagine": null,
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": {
+        "testo": "Parcheggi comunali di Andalo: 2 EUR/ora, 13 EUR al giorno.",
+        "costo_eur": 4
+      },
+      "servizi_bimbo": {
+        "fasciatoio": true,
+        "bagni": true,
+        "allattamento": "Zone dedicate per cambiare e allattare presso l'AcquaIn.",
+        "nota": "Fasciatoio e seggioloni d'appoggio negli spogliatoi. I passeggini non possono entrare negli spogliatoi."
+      },
+      "orari_struttura": null,
+      "prenotazione": null,
+      "costo_eur": null
     },
     {
       "id": "cabinovia-andalo-doss-pela",
@@ -296,7 +395,15 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Seilbahn_albi_de_mez_paganella_2019-08-30.jpg"
       },
-      "punto_foto": "Proseguendo fino alla Cima Paganella (2.125 m, oltre il Doss Pelà) la vista è a 360°: nelle giornate più limpide si vedono sia il Lago di Molveno sia, in lontananza, il Lago di Garda. Meglio la mattina presto, prima che si formi foschia in valle."
+      "punto_foto": "Proseguendo fino alla Cima Paganella (2.125 m, oltre il Doss Pelà) la vista è a 360°: nelle giornate più limpide si vedono sia il Lago di Molveno sia, in lontananza, il Lago di Garda. Meglio la mattina presto, prima che si formi foschia in valle.",
+      "parcheggio": {
+        "testo": "Parcheggio della telecabina in Via Rindole 3: GRATUITO per chi usa gli impianti. Il piazzale tra la Scuola Materna e l'Hotel Andalo e' proprio davanti alla partenza, in piano.",
+        "costo_eur": 0
+      },
+      "servizi_bimbo": null,
+      "orari_struttura": null,
+      "prenotazione": null,
+      "costo_eur": 37
     },
     {
       "id": "andalo-centro",
@@ -330,7 +437,20 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Andalo_-_Andalo,_Trento,_Italia_-_2_Gennaio_2024.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": {
+        "testo": "Parcheggi comunali: 2 EUR/ora, 13 EUR al giorno, a pagamento 8:00-19:00 fino al 13 settembre. In Via Crosare i primi 40 minuti sono gratuiti ritirando il ticket.",
+        "costo_eur": 4
+      },
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "rifugio-dosson",
@@ -365,7 +485,25 @@
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Paganella.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": {
+        "testo": "Si arriva con la cabinovia da Andalo: il parcheggio della telecabina e' gratuito per chi usa gli impianti.",
+        "costo_eur": 0
+      },
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [],
+        "fasce": [
+          [
+            "08:45",
+            "17:30"
+          ]
+        ],
+        "nota": "Segue l'orario della cabinovia."
+      },
+      "prenotazione": null,
+      "costo_eur": null
     },
     {
       "id": "lago-molveno",
@@ -398,7 +536,25 @@
         "licenza": "CC BY 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lake_Molveno_-_Molveno,_Trento,_Italy_-_July_11,_2021.jpg"
       },
-      "punto_foto": "Sponda sud del lago verso il \"Ponte Romano\" lungo il giro del lago, dove l'acqua turchese fa da primo piano alle guglie del Brenta; oppure dall'alto, salendo con la funivia fino all'altopiano di Pradel."
+      "punto_foto": "Sponda sud del lago verso il \"Ponte Romano\" lungo il giro del lago, dove l'acqua turchese fa da primo piano alle guglie del Brenta; oppure dall'alto, salendo con la funivia fino all'altopiano di Pradel.",
+      "parcheggio": {
+        "testo": "Parcheggi comunali (Lungolago, Ischia, Bior, Centro): 1,80 EUR/ora, 10 EUR al giorno in agosto, a pagamento 8:00-18:00. Ad agosto si riempiono presto, meglio arrivare entro le 9:30. Dal parcheggio Ponte sul Bior parte il tratto di riva pianeggiante accessibile col passeggino.",
+        "costo_eur": 10
+      },
+      "servizi_bimbo": {
+        "fasciatoio": null,
+        "bagni": true,
+        "allattamento": "Sulla sponda nord una lunga fascia di prati con alberi e aree pic-nic: facile trovare un punto ombreggiato e tranquillo.",
+        "nota": "Sulle rive ci sono servizi igienici, docce, noleggi e punti ristoro. Alcune recensioni segnalano bagni poco curati nei picchi di agosto."
+      },
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "funivia-molveno-pradel",
@@ -432,7 +588,30 @@
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Cestovia_Molveno-Pradel.JPG"
       },
-      "punto_foto": "Dal \"Balcone delle Dolomiti\" vicino al rifugio Montanara, poco oltre il rifugio Pradel: nel tardo pomeriggio la luce radente illumina di rosa/arancio le pareti del Brenta (effetto enrosadira)."
+      "punto_foto": "Dal \"Balcone delle Dolomiti\" vicino al rifugio Montanara, poco oltre il rifugio Pradel: nel tardo pomeriggio la luce radente illumina di rosa/arancio le pareti del Brenta (effetto enrosadira).",
+      "parcheggio": {
+        "testo": "Parcheggio Funivia a Molveno, tariffa comunale 1,80 EUR/ora, 10 EUR al giorno in agosto.",
+        "costo_eur": 10
+      },
+      "servizi_bimbo": {
+        "fasciatoio": null,
+        "bagni": null,
+        "allattamento": "In quota prati e boschi: ombra nel bosco del Forest Park, mentre il prato davanti al Rifugio La Montanara e' esposto al sole.",
+        "nota": "In cima ci sono due rifugi dove e' plausibile trovare i bagni, ma non c'e' conferma ufficiale: meglio chiamare Funivie Molveno allo 0461 587008 prima di salire col neonato."
+      },
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [],
+        "fasce": [
+          [
+            "08:00",
+            "18:45"
+          ]
+        ],
+        "nota": "Orario 27 giugno - 6 settembre 2026, prima sezione."
+      },
+      "prenotazione": null,
+      "costo_eur": 31
     },
     {
       "id": "lido-molveno",
@@ -465,7 +644,25 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Molveno_-_Badeplatz_am_See.JPG"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": {
+        "testo": "Parcheggio Ischia (Via Lungolago) e' il piu' comodo per la spiaggia e il lido: 1,80 EUR/ora, 10 EUR al giorno in agosto.",
+        "costo_eur": 10
+      },
+      "servizi_bimbo": {
+        "fasciatoio": null,
+        "bagni": true,
+        "allattamento": "Molti alberi lungo il lido danno ombra anche nelle giornate piu' calde, su 12 ettari di prato.",
+        "nota": "Spiaggia libera attrezzata con servizi igienici e docce. Attenzione: il fasciatoio che si trova cercando online e' dell'Hotel Lido, non della spiaggia."
+      },
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "lago-nembia",
@@ -499,7 +696,17 @@
         "licenza": "CC BY 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lago_di_Nembia_-_San_Lorenzo_in_Banale,_Trento,_Italy_-_July_25,_2021.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "belpark-spormaggiore",
@@ -532,7 +739,30 @@
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Orso_bruno_presso_Parco_Faunistico_Spormaggiore_01.JPG"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": {
+        "testo": "Parcheggiare a Castel Belfort (GRATUITO): da li' c'e' una passeggiata pianeggiante di 10-15 minuti nel bosco fino all'ingresso, la scelta giusta col passeggino. Dal centro paese sono invece 600 m in salita, da evitare. In auto non si arriva all'ingresso: c'e' il divieto.",
+        "costo_eur": 0
+      },
+      "servizi_bimbo": {
+        "fasciatoio": true,
+        "bagni": true,
+        "allattamento": "Baby point dedicato dove cambiare, lavare e allattare in tranquillita', piu' tavoli e angoli relax all'ombra.",
+        "nota": "Il posto meglio attrezzato di tutta la guida per un neonato: i fasciatoi sono in un baby point riservato, non nei bagni comuni."
+      },
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [],
+        "fasce": [
+          [
+            "09:30",
+            "18:30"
+          ]
+        ],
+        "nota": "Orario 1 giugno - 27 settembre 2026."
+      },
+      "prenotazione": null,
+      "costo_eur": 22
     },
     {
       "id": "piazza-duomo-trento",
@@ -565,7 +795,25 @@
         "licenza": "CC BY-SA 2.5",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Piazza_Duomo_Trento_Italy.JPG"
       },
-      "punto_foto": "Con le spalle al Duomo, verso il centro della piazza, per l'inquadratura classica con Fontana del Nettuno, Palazzo Pretorio e Torre Civica; per la vista dall'alto si salgono i 156 gradini della Torre Civica. Meglio mattina presto o tardo pomeriggio, quando il sole basso illumina le facciate affrescate senza abbagliare."
+      "punto_foto": "Con le spalle al Duomo, verso il centro della piazza, per l'inquadratura classica con Fontana del Nettuno, Palazzo Pretorio e Torre Civica; per la vista dall'alto si salgono i 156 gradini della Torre Civica. Meglio mattina presto o tardo pomeriggio, quando il sole basso illumina le facciate affrescate senza abbagliare.",
+      "parcheggio": {
+        "testo": "Parcheggio Duomo (P5), Piazza Ezio Mosna: le prime 2 ore sono GRATUITE (7:00-20:30), poi 0,80 EUR/ora. E' il piu' vicino alla piazza. Limite di altezza 195 cm. Il centro storico e' ZTL: in auto non si entra.",
+        "costo_eur": 0
+      },
+      "servizi_bimbo": {
+        "fasciatoio": null,
+        "bagni": false,
+        "allattamento": "La piazza e' in gran parte assolata: ombra sotto i portici laterali e nei dehors dei bar.",
+        "nota": "In Piazza Duomo NON ci sono bagni pubblici. Il piu' vicino e' in via Torre Vanga 13 presso l'ufficio turistico (1 EUR, 9-19), a circa 400 m. Ripiego migliore: i musei della piazza o il MUSE."
+      },
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "muse-trento",
@@ -598,7 +846,30 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:MUSE_(Trento).jpg"
       },
-      "punto_foto": "Dal lato verso il fiume Adige e lo storico Palazzo delle Albere, dove il volume vetrato della serra tropicale si affianca al palazzo cinquecentesco. Meglio nel tardo pomeriggio, quando la luce radente accentua le linee inclinate del tetto e le vetrate riflettono il cielo."
+      "punto_foto": "Dal lato verso il fiume Adige e lo storico Palazzo delle Albere, dove il volume vetrato della serra tropicale si affianca al palazzo cinquecentesco. Meglio nel tardo pomeriggio, quando la luce radente accentua le linee inclinate del tetto e le vetrate riflettono il cielo.",
+      "parcheggio": {
+        "testo": "Il MUSE ha un parcheggio sotterraneo proprio (2 EUR/ora, solo pagamenti elettronici) con accesso diretto e pianeggiante al museo. Ci sono due posti riservati a famiglie con bimbi sotto i 2 anni. Limite di altezza 2 m.",
+        "costo_eur": 6
+      },
+      "servizi_bimbo": {
+        "fasciatoio": true,
+        "bagni": true,
+        "allattamento": "Due spazi appositi e tranquilli per allattare, uno al Piano 0 e uno dentro il Maxi Ooh! con due poltrone. Museo climatizzato.",
+        "nota": "Fasciatoi su tutti i piani, anche nel bagno degli uomini. Percorso senza barriere, prestito di passeggini e marsupi su richiesta. Si puo' uscire e rientrare in giornata."
+      },
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [],
+        "fasce": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "nota": "Orario estivo 3-28 agosto e weekend successivi."
+      },
+      "prenotazione": null,
+      "costo_eur": 22
     },
     {
       "id": "castello-buonconsiglio",
@@ -631,7 +902,32 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Castello_del_Buonconsiglio_Trento_2017.jpg"
       },
-      "punto_foto": "Dalla Fossa dei Martiri o dal piazzale antistante, con le torri e le logge affrescate in primo piano. Dall'interno, la Loggia Veneziana offre la vista migliore sulla città al crepuscolo."
+      "punto_foto": "Dalla Fossa dei Martiri o dal piazzale antistante, con le torri e le logge affrescate in primo piano. Dall'interno, la Loggia Veneziana offre la vista migliore sulla città al crepuscolo.",
+      "parcheggio": {
+        "testo": "Autosilo Buonconsiglio (P3), Via Petrarca 1/5: 1,60 EUR/ora di giorno, massimo 20 EUR al giorno. Meno di 10 minuti a piedi dal castello, che non ha un parcheggio proprio.",
+        "costo_eur": 5
+      },
+      "servizi_bimbo": {
+        "fasciatoio": true,
+        "bagni": true,
+        "allattamento": "Spazio Family con angolo dedicato all'allattamento e angolo gioco.",
+        "nota": "Servizi igienici dedicati alle famiglie col fasciatoio. Il percorso di visita ha pero' scale e fondi irregolari: meglio la fascia o il marsupio."
+      },
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [
+          1
+        ],
+        "fasce": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "nota": "Chiuso il lunedi (nel vostro soggiorno non cade nessun lunedi)."
+      },
+      "prenotazione": null,
+      "costo_eur": 20
     },
     {
       "id": "gallerie-piedicastello",
@@ -664,7 +960,32 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:300_metri_di_mostra_in_galleria.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": {
+        "testo": "Parcheggio nei pressi di Piazza di Piedicastello; in alternativa l'area ex Zuffo (gratuita) con la navetta per il centro.",
+        "costo_eur": 0
+      },
+      "servizi_bimbo": {
+        "fasciatoio": null,
+        "bagni": true,
+        "allattamento": "Gallerie al coperto, buie e fresche, con punti di sosta e sedie avvolgenti pensate per un po' di privacy.",
+        "nota": "Ingresso gratuito e senza barriere. All'entrata prestano gratuitamente passeggini e sedie a rotelle. Il fasciatoio non e' documentato: chiedere allo 0461 230482."
+      },
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [
+          1
+        ],
+        "fasce": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "nota": "Chiuso il lunedi."
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "funivia-sardagna",
@@ -698,7 +1019,22 @@
         "licenza": "CC BY 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Seilbahn_Funivia_Trento_-_Sardagna_-_panoramio.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [],
+        "fasce": [
+          [
+            "07:00",
+            "22:30"
+          ]
+        ],
+        "nota": "Sospesa con forte vento, sostituita dai bus."
+      },
+      "prenotazione": null,
+      "costo_eur": 10
     },
     {
       "id": "parco-gocciadoro",
@@ -731,7 +1067,17 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Gocciadoro-01.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "lago-tovel",
@@ -765,7 +1111,30 @@
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Lago_di_Tovel.JPG"
       },
-      "punto_foto": "Lungo il sentiero delle Glare, accessibile dal parcheggio Capriolo: fotogenico ad ogni ora, con colori più intensi in autunno; essendo zona a bassissimo inquinamento luminoso è adatto anche a scatti notturni della Via Lattea."
+      "punto_foto": "Lungo il sentiero delle Glare, accessibile dal parcheggio Capriolo: fotogenico ad ogni ora, con colori più intensi in autunno; essendo zona a bassissimo inquinamento luminoso è adatto anche a scatti notturni della Via Lattea.",
+      "parcheggio": {
+        "testo": "Parcheggio 'Lago' (il piu' vicino, 400 m di stradina asfaltata dal lago): 10 EUR feriale / 12 EUR weekend prenotando online, 12-14 EUR sul posto. Da prenotare su book.pnab.it entro le 6:00 del giorno stesso. I parcheggi a valle costano meno e hanno navetta interna gratuita.",
+        "costo_eur": 12
+      },
+      "servizi_bimbo": {
+        "fasciatoio": null,
+        "bagni": true,
+        "allattamento": "La Casa del Parco e' sulla riva circondata da un bosco di abeti; il sentiero lungolago e' in buona parte ombreggiato.",
+        "nota": "Bagni al parcheggio del Lago, alla Casa del Parco e agli spogliatoi Tamburello."
+      },
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": "Il lago e' sempre accessibile, ma la strada e' chiusa alle auto 11:00-14:30."
+      },
+      "prenotazione": {
+        "obbligatoria": true,
+        "entro": "Entro le 6:00 del giorno stesso",
+        "come": "Online su book.pnab.it, sezione Parcheggi",
+        "nota": "Ad agosto la strada da Lavacel al lago e' chiusa alle auto dalle 11:00 alle 14:30: bisogna salire prima delle 11 o dopo le 14:30, anche avendo prenotato."
+      },
+      "costo_eur": 0
     },
     {
       "id": "santuario-san-romedio",
@@ -798,7 +1167,22 @@
         "licenza": "CC BY 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Santuario_di_San_Romedio_-_panoramio.jpg"
       },
-      "punto_foto": "Vista frontale dal basso: dal sentiero proprio davanti all'ingresso del santuario. Per una vista dall'alto, il breve sentiero del Croz de l'Anzol da Salter. Meglio la mattina, quando il sole illumina la parete rocciosa frontalmente."
+      "punto_foto": "Vista frontale dal basso: dal sentiero proprio davanti all'ingresso del santuario. Per una vista dall'alto, il breve sentiero del Croz de l'Anzol da Salter. Meglio la mattina, quando il sole illumina la parete rocciosa frontalmente.",
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [],
+        "fasce": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "nota": "Orario indicativo di luglio-agosto, da confermare allo 0463 536198."
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     },
     {
       "id": "canyon-rio-sass",
@@ -831,7 +1215,27 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Canyon_del_rio_Sass_-_Cascata_del_Lago_Smeraldo.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [],
+        "fasce": [
+          [
+            "09:00",
+            "16:30"
+          ]
+        ],
+        "nota": "Partenze guidate ogni 30-60 minuti, prenotazione obbligatoria."
+      },
+      "prenotazione": {
+        "obbligatoria": true,
+        "entro": "Qualche giorno prima, meglio appena decisa la data",
+        "come": "Telefono 0463 850000 (Cooperativa Smeraldo)",
+        "nota": "Visita solo guidata e con caschetto. Il passeggino non entra."
+      },
+      "costo_eur": null
     },
     {
       "id": "castel-thun",
@@ -864,7 +1268,24 @@
         "licenza": "CC BY-SA 3.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Castel_Thun4.JPG"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": false,
+        "giorni_chiusura": [
+          1
+        ],
+        "fasce": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "nota": "Chiuso il lunedi."
+      },
+      "prenotazione": null,
+      "costo_eur": 16
     },
     {
       "id": "lago-smeraldo",
@@ -897,7 +1318,17 @@
         "licenza": "CC BY-SA 4.0",
         "pagina_fonte": "https://commons.wikimedia.org/wiki/File:Fondo_-_Lago_Smeraldo_06.jpg"
       },
-      "punto_foto": null
+      "punto_foto": null,
+      "parcheggio": null,
+      "servizi_bimbo": null,
+      "orari_struttura": {
+        "sempre_aperto": true,
+        "giorni_chiusura": [],
+        "fasce": [],
+        "nota": null
+      },
+      "prenotazione": null,
+      "costo_eur": 0
     }
   ]
 }
