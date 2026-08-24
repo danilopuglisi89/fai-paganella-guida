@@ -1,0 +1,17 @@
+{
+  "name": "Fai della Paganella con il passeggino",
+  "short_name": "Paganella",
+  "description": "Guida al soggiorno del 25-30 agosto 2026 a Fai della Paganella: luoghi valutati per il passeggino, giorni pianificati, meteo, poca auto.",
+  "lang": "it",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EDF1EE",
+  "theme_color": "#12312A",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

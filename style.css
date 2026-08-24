@@ -123,14 +123,18 @@ select:focus-visible,
 }
 
 .testata__countdown {
+  display: inline-block;
   margin: 14px 0 0;
   font-family: var(--font-mono);
-  font-size: 1.05rem;
+  font-size: .95rem;
   font-weight: 600;
-  color: var(--ambra);
+  color: var(--abete);
+  background: var(--ambra);
+  border-radius: 999px;
+  padding: 6px 16px;
 }
 
-.testata__countdown a { color: var(--ambra); }
+.testata__countdown a { color: var(--abete); }
 
 .testata__condividi {
   margin-top: 20px;
@@ -232,9 +236,15 @@ select:focus-visible,
   font-weight: 600;
 }
 
-.tabbar__icona { font-size: 1.25rem; }
+.tabbar__icona {
+  font-size: 1.25rem;
+  padding: 2px 14px;
+  border-radius: 999px;
+  line-height: 1.3;
+}
 
-.tabbar__voce--attiva { color: var(--genziana); }
+.tabbar__voce--attiva { color: var(--genziana); font-weight: 700; }
+.tabbar__voce--attiva .tabbar__icona { background: var(--genziana); }
 
 /* ---------- Overlay dettaglio luogo ---------- */
 .overlay {
@@ -399,7 +409,7 @@ section h2 {
   border: 2px solid var(--roccia);
   background: transparent;
   color: var(--abete);
-  border-radius: var(--radius);
+  border-radius: 999px;
   padding: 8px 14px;
   cursor: pointer;
   min-height: 40px;
@@ -1270,22 +1280,36 @@ footer {
   box-shadow: var(--ombra);
 }
 
-.btn, .chip, .giorno__voce select, .giorno__partenza input[type="time"],
+.btn, .giorno__voce select, .giorno__partenza input[type="time"],
 .giorno__voce-riordina button, .ricerca, .card__nota-libera, .giorno__diario textarea {
   border-radius: var(--radius-piccolo);
 }
 
-/* ---------- Mobile 360px ---------- */
+/* ---------- Mobile ---------- */
+@media (max-width: 640px) {
+  .testata { padding: 30px 0 22px; }
+  .testata p { font-size: .9rem; }
+  .meteo__griglia {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .meteo__giorno { flex: 0 0 100px; }
+}
+
 @media (max-width: 400px) {
   .container { padding: 0 12px; }
-  .testata { padding: 28px 0 24px; }
+  .testata { padding: 26px 0 20px; }
   .card__azioni { flex-direction: column; }
   .btn-card { flex: 1 1 100%; }
   .mappa--generale { height: 280px; }
   .numero-utile { flex-direction: column; align-items: flex-start; }
   .griglia-luoghi--compatta { grid-template-columns: repeat(2, 1fr); }
   .tabbar a { font-size: .62rem; }
-  .tabbar__icona { font-size: 1.1rem; }
+  .tabbar__icona { font-size: 1.1rem; padding: 2px 12px; }
 }
 
 /* ---------- Stampa ---------- */

@@ -4,6 +4,8 @@ Guida di viaggio a Fai della Paganella (TN), base Hotel Arcobaleno, per il soggi
 
 È una piccola app a schede (Oggi · Luoghi · Giorni · Mangiare · Info) con navigazione fissa in basso: il "routing" tra schede e il dettaglio di ogni luogo (`#luogo/<id>`, condivisibile come link diretto) sono gestiti via `location.hash` in `app.js`, senza librerie. Un countdown in testata cambia da solo prima/durante/dopo il soggiorno (25-30 agosto 2026).
 
+È anche una **PWA installabile**: `manifest.webmanifest` + icone in `icons/` (generate dal glifo montagna della favicon, inclusa la variante maskable per Android e la apple-touch-icon per iOS). Su Android/Chrome compare "Aggiungi a schermata Home"/"Installa app"; su iPhone si installa da Safari → Condividi → "Aggiungi a Home". Una volta installata si apre a tutto schermo senza barra del browser, e grazie al service worker funziona anche offline.
+
 La mappa interattiva usa [Leaflet](https://leafletjs.com/) con le tile di OpenStreetMap, caricati via CDN (`unpkg.com`) — l'unica dipendenza esterna del sito, richiede una connessione internet per il primo caricamento (non è installata via npm, nessun build step). Le foto dei luoghi vengono da Wikimedia Commons, con licenza e autore riportati sotto ogni immagine.
 
 Un service worker (`sw.js`) mette in cache pagina, dati e mappa dopo la prima visita: una volta aperta almeno una volta con rete, la guida resta consultabile anche con poco segnale in montagna (i dati meteo restano quelli dell'ultimo aggiornamento disponibile). Se modifichi i file, aggiorna `CACHE_VERSIONE` in cima a `sw.js` per forzare la sostituzione della cache sui dispositivi che hanno già visitato il sito.

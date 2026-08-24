@@ -1,13 +1,18 @@
 "use strict";
 
-var CACHE_VERSIONE = "fai-paganella-v4";
-var CACHE_RUNTIME = "fai-paganella-runtime-v4";
+var CACHE_VERSIONE = "fai-paganella-v5";
+var CACHE_RUNTIME = "fai-paganella-runtime-v5";
 
 var RISORSE_PRECACHE = [
   "./",
   "index.html",
   "style.css",
   "app.js",
+  "manifest.webmanifest",
+  "icons/icon-192.png",
+  "icons/icon-512.png",
+  "icons/icon-maskable-512.png",
+  "icons/apple-touch-icon.png",
   "data/luoghi.json",
   "data/servizi.json",
   "data/locali.json",
