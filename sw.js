@@ -1,7 +1,7 @@
 "use strict";
 
-var CACHE_VERSIONE = "fai-paganella-v5";
-var CACHE_RUNTIME = "fai-paganella-runtime-v5";
+var CACHE_VERSIONE = "fai-paganella-v7";
+var CACHE_RUNTIME = "fai-paganella-runtime-v7";
 
 var RISORSE_PRECACHE = [
   "./",
