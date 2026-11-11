@@ -1,0 +1,22 @@
+# Trasloco 11/11/2026: segreti, database, dati personali e file generati restano sul PC
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.esempio
+*.pem
+*.keystore
+*.jks
+*.p12
+signing-key-info.txt
+*-chiave.txt
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.db
+*.db-shm
+*.db-wal
+.claude/worktrees/
+.deploy/
+Thumbs.db
+desktop.ini
